@@ -1,3 +1,12 @@
 #canvasid {
     border: 1px solid blue;
 }   
+
+canvas{
+    float: left; 
+    margin: 0 20px;
+  }
+.game_name {
+    width: 300px;
+    text-align: center;
+}

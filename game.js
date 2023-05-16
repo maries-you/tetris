@@ -183,9 +183,18 @@ document.addEventListener('keydown', (event) => {
         x += SQ_SIZE;
     }
     if (keyName === 'ArrowUp') {
+        // повернуть
+        // проверить на коллизию
+        // если ок, то ничего не делать
+        // если не ок, то вернуть как было
+        let temp_figure = current_figure
         current_figure = turn(current_figure);
+        if (is_collision(0, 0)){
+            current_figure = temp_figure;
+        }
+        
     }
-    if (keyName === 'ArrowDown') {
+    if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
         y += SQ_SIZE;
     }
     draw_full_figure();
@@ -306,7 +315,7 @@ const interval = setInterval(() => {
         x = SQ_SIZE;
         console.log('save');
     }
-}, 100);
+}, 500);
 
 
 current_figure = figure();

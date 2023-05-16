@@ -238,10 +238,10 @@ function restore() {
         }
     }
 }
-
+let count_row = 0;
 function delete_row() {
     for (let i = 0; i < arr.length; i++) {
-        let count = 0;
+        let count = 0;   
         for (let j = 0; j < arr[0].length; j++) {
             if (arr[i][j] === 0) {
                 count++;
@@ -252,6 +252,8 @@ function delete_row() {
             let empty_row = new Array(arr[0].length).fill(0);
             arr.splice(i, 1);
             arr.unshift(empty_row);
+            count_row++;
+            console.log(count_row);
         }
 
     }
@@ -292,6 +294,9 @@ function turn(matrix) {
     }
     return result;
 }
+
+
+
 
 const interval = setInterval(() => {
     draw_full_figure();

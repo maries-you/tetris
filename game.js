@@ -253,6 +253,7 @@ function delete_row() {
             arr.splice(i, 1);
             arr.unshift(empty_row);
             count_row++;
+            document.getElementById("count_row").innerHTML = count_row;
             console.log(count_row);
         }
 

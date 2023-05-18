@@ -64,54 +64,37 @@ function figure() {
     switch (getRandom(0, 7)) {
         case 0:
             current_figure = figure1;
+            current_color = 'green';
             break;
         case 1:
             current_figure = figure2;
+            current_color = 'red';
             break;
         case 2:
             current_figure = figure3;
+            current_color = 'yellow';
             break;
         case 3:
             current_figure = figure4;
+            current_color = 'pink';
             break;
         case 4:
             current_figure = figure5;
+            current_color = '#ec12a8';
             break;
         case 5:
-            current_figure = figure6
+            current_figure = figure6;
+            current_color = 'brown'
             break;
         default:
             current_figure = figure7;
+            current_color = 'blue';
     }
     return current_figure;
 }
-function getColor() {
-    let color;
-    switch (getRandom(0, 7)) {
-        case 0:
-            color = 'green';
-            break;
-        case 1:
-            color = 'red';
-            break;
-        case 2:
-            color = 'yellow';
-            break;
-        case 3:
-            color = 'pink';
-            break;
-        case 4:
-            color = '#ec12a8';
-            break;
-        case 5:
-            color = 'brown'
-            break;
-        default:
-            color = 'blue';
-    }
-    return color;
-}
-figure()
+
+    
+figure();
 function draw(x, y, color) {
     if (canvas.getContext) {
         let ctx = canvas.getContext('2d');
@@ -136,7 +119,7 @@ function draw_full_figure() {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (current_figure[i][j] === 1) {
-                draw(x + i * SQ_SIZE, y + j * SQ_SIZE, color)
+                draw(x + i * SQ_SIZE, y + j * SQ_SIZE, current_color)
             }
         }
     }
@@ -213,7 +196,7 @@ function save() {
     for (let i = 0; i < current_figure.length; i++) {
         for (let j = 0; j < current_figure[0].length; j++) {
             if (current_figure[i][j] === 1 && y >= 0) {
-                arr[y / SQ_SIZE + j][x / SQ_SIZE + i] = color;
+                arr[y / SQ_SIZE + j][x / SQ_SIZE + i] = current_color;
             }
         }
     }
@@ -238,6 +221,7 @@ function restore() {
         }
     }
 }
+
 let count_row = 0;
 function delete_row() {
     for (let i = 0; i < arr.length; i++) {
@@ -315,7 +299,7 @@ const interval = setInterval(() => {
         save();
         console.log(arr);
         current_figure = figure();
-        color = getColor();
+        
         y = -SQ_SIZE * (height_figure() + 1);
         // y = 0
         x = SQ_SIZE;
@@ -327,4 +311,3 @@ const interval = setInterval(() => {
 current_figure = figure();
 y = -SQ_SIZE * height_figure()
 
-color = getColor();

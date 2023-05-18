@@ -1,3 +1,5 @@
+diasjbfowesd'f;hwbesdofhcjpedszf'
+celskdjifxohcoiwejd[zx]
 const SQ_SIZE = 30;
 const MAX_HEIGHT = 600;
 const MAX_WIDTH = 300;

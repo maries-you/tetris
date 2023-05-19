@@ -16,7 +16,7 @@ function draw_lines() {
         ctx.beginPath();
         ctx.moveTo(SQ_SIZE * i, 0);
         ctx.lineTo(SQ_SIZE * i, MAX_HEIGHT);
-        ctx.stroke();  
+        ctx.stroke();
     }
     for (let j = 0; j < MAX_HEIGHT/SQ_SIZE; j++) {
         ctx.beginPath();

@@ -3,6 +3,7 @@
     "lint": "eslint . --ext .js"
   },
   "devDependencies": {
-    "eslint": "^7.31.0"
+    "eslint": "^8.40.0",
+    "eslint-config-google": "^0.14.0"
   }
 }

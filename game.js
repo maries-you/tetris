@@ -7,7 +7,7 @@ const canvas = document.getElementById('canvasid');
 let x = SQ_SIZE;
 let y = 0;
 
-function draw_lines(){
+function draw_lines() {
     const ctx = canvas.getContext('2d');
 
     ctx.strokeStyle = '#dfe2e8'
@@ -16,15 +16,14 @@ function draw_lines(){
         ctx.beginPath();
         ctx.moveTo(SQ_SIZE * i, 0);
         ctx.lineTo(SQ_SIZE * i, MAX_HEIGHT);
-        ctx.stroke();  
+        ctx.stroke();
     }
-    for (let j = 0; j < MAX_HEIGHT/SQ_SIZE; j++){
+    for (let j = 0; j < MAX_HEIGHT/SQ_SIZE; j++) {
         ctx.beginPath();
         ctx.moveTo(0, SQ_SIZE * j);
         ctx.lineTo(MAX_WIDTH, SQ_SIZE * j);
         ctx.stroke();
     }
-        
 }
 
 function getRandom(min, max) {
@@ -113,11 +112,9 @@ function figure() {
     return current_figure;
 }
 
-    
-figure();
 function draw(x, y, color) {
     if (canvas.getContext) {
-        let ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d');
         ctx.fillStyle = "black";
         ctx.fillRect(x, y, SQ_SIZE, SQ_SIZE);
         ctx.fillStyle = color;
@@ -127,7 +124,7 @@ function draw(x, y, color) {
 
 function clear() {
     if (canvas.getContext) {
-        let ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
     }
 }
@@ -145,25 +142,12 @@ function draw_full_figure() {
     }
 }
 
-
-function width_figure() {
-    let myArray = [];
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-            if (current_figure[i][j] === 1) {
-                myArray.push(i);
-            }
-        }
-    }
-    return Math.max.apply(null, myArray);
-}
 function height_figure() {
-    let myArray = [];
+    const myArray = [];
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (current_figure[i][j] === 1) {
                 myArray.push(j);
-
             }
         }
     }
@@ -175,7 +159,7 @@ document.addEventListener('keydown', (event) => {
     if (is_game_over) return;
     const keyName = event.key;
     console.log('Событие keydown: ' + keyName);
-    
+
     // убраны странные условия на max_width
     if (keyName === 'ArrowLeft' && !is_collision(-1, 0)) {
         x -= SQ_SIZE;
@@ -190,12 +174,11 @@ document.addEventListener('keydown', (event) => {
         // проверить на коллизию
         // если ок, то ничего не делать
         // если не ок, то вернуть как было
-        let temp_figure = current_figure
+        const temp_figure = current_figure
         current_figure = turn(current_figure);
-        if (is_collision(0, 0)){
+        if (is_collision(0, 0)) {
             current_figure = temp_figure;
         }
-        
     }
     if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
         y += SQ_SIZE;
@@ -203,7 +186,7 @@ document.addEventListener('keydown', (event) => {
     draw_full_figure();
     draw_lines();
 });
-let arr = new Array();
+const arr = new Array();
 for (let i = 0; i < MAX_HEIGHT / SQ_SIZE; i++) {
     arr[i] = new Array(MAX_WIDTH / SQ_SIZE);
     for (let j = 0; j < MAX_WIDTH / SQ_SIZE; j++) {
@@ -237,7 +220,6 @@ function restore() {
         for (let j = 0; j < arr[0].length; j++) {
             if (arr[i][j] !== 0) {
                 draw(j * SQ_SIZE, i * SQ_SIZE, arr[i][j])
-
             }
         }
     }
@@ -246,7 +228,7 @@ function restore() {
 let count_row = 0;
 function delete_row() {
     for (let i = 0; i < arr.length; i++) {
-        let count = 0;   
+        let count = 0;
         for (let j = 0; j < arr[0].length; j++) {
             if (arr[i][j] === 0) {
                 count++;
@@ -254,27 +236,25 @@ function delete_row() {
         }
         if (count === 0) {
             // прокачано удаление строк
-            let empty_row = new Array(arr[0].length).fill(0);
+            const empty_row = new Array(arr[0].length).fill(0);
             arr.splice(i, 1);
             arr.unshift(empty_row);
             count_row++;
             document.getElementById("count_row").innerHTML = count_row;
             console.log(count_row);
         }
-
     }
-
 }
 
 function is_collision(dx, dy) {
     for (let i = 0; i < current_figure.length; i++) {
         for (let j = 0; j < current_figure[0].length; j++) {
             if (current_figure[i][j] === 1 && y >= 0) {
-                //дописана коллизия
-                let calculated_x = x + (i + dx) * SQ_SIZE;
-                let calculated_y = y + (j + dy + 1) * SQ_SIZE;
+                // дописана коллизия
+                const calculated_x = x + (i + dx) * SQ_SIZE;
+                const calculated_y = y + (j + dy + 1) * SQ_SIZE;
                 if (
-                    calculated_y > MAX_HEIGHT || 
+                    calculated_y > MAX_HEIGHT ||
                     calculated_x < 0 || calculated_x > MAX_WIDTH
                 ) {
                     return true;
@@ -289,19 +269,17 @@ function is_collision(dx, dy) {
 }
 
 function turn(matrix) {
-    let result = [];
+    const result = [];
     for (let i = matrix.length - 1; i >= 0; i--) {
-      for (let j = 0; j < matrix[i].length; j++) {
-        if (!result[j]) {
-          result[j] = [];
+        for (let j = 0; j < matrix[i].length; j++) {
+            if (!result[j]) {
+                result[j] = [];
+            }
+            result[j].push(matrix[i][j]);
         }
-        result[j].push(matrix[i][j]);
-      }
     }
     return result;
 }
-
-
 
 
 const interval = setInterval(() => {
@@ -321,7 +299,7 @@ const interval = setInterval(() => {
         save();
         console.log(arr);
         current_figure = figure();
-        
+
         y = -SQ_SIZE * (height_figure() + 1);
         // y = 0
         x = SQ_SIZE;

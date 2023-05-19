@@ -7,6 +7,26 @@ const canvas = document.getElementById('canvasid');
 let x = SQ_SIZE;
 let y = 0;
 
+function draw_lines(){
+    const ctx = canvas.getContext('2d');
+
+    ctx.strokeStyle = '#dfe2e8'
+
+    for (let i = 0; i < MAX_WIDTH/SQ_SIZE; i++) {
+        ctx.beginPath();
+        ctx.moveTo(SQ_SIZE * i, 0);
+        ctx.lineTo(SQ_SIZE * i, MAX_HEIGHT);
+        ctx.stroke();  
+    }
+    for (let j = 0; j < MAX_HEIGHT/SQ_SIZE; j++){
+        ctx.beginPath();
+        ctx.moveTo(0, SQ_SIZE * j);
+        ctx.lineTo(MAX_WIDTH, SQ_SIZE * j);
+        ctx.stroke();
+    }
+        
+}
+
 function getRandom(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -181,6 +201,7 @@ document.addEventListener('keydown', (event) => {
         y += SQ_SIZE;
     }
     draw_full_figure();
+    draw_lines();
 });
 let arr = new Array();
 for (let i = 0; i < MAX_HEIGHT / SQ_SIZE; i++) {
@@ -286,6 +307,7 @@ function turn(matrix) {
 const interval = setInterval(() => {
     draw_full_figure();
     delete_row();
+    draw_lines();
     if (is_stop()) {
         console.log('!game over!')
         clearInterval(interval)
@@ -311,3 +333,4 @@ const interval = setInterval(() => {
 current_figure = figure();
 y = -SQ_SIZE * height_figure()
 
+draw_lines();

@@ -6,11 +6,18 @@
     <link rel="stylesheet" href="game.css">
   </head>
   <body>
+  <center>
     <div class="game_name">
       <h1 >Tetris</h1>
-      <canvas id="canvasid" height="600" width="300"></canvas>
+      <canvas id="canvasid" height="600" width="300"></canvas> 	<button id = "pause" >Пауза</button> </br>
+	  <button id = "plusSpeed" >+ к скорости игры </button> <button id = "minusSpeed" >- к скорости игры</button>
+	  
+	  <canvas id = nextFigure></canvas>
     </div>
     <script src="game.js"></script>
-    <h2>Счет - <span id="count_row">0</span> </h2>
+    <h2>Счет - <span id="count_row">0</span> <h2>
+	<p> Скорость игры: &nbsp <output id = "outSpeed" value = "1">1</output></p>
+	</center>
+	
   </body>
 </html>

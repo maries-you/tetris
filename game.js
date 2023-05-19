@@ -7,7 +7,7 @@ const canvas = document.getElementById('canvasid');
 let x = SQ_SIZE;
 let y = 0;
 
-function draw_lines(){
+function draw_lines(){                           // рисует сетку на поле 
     const ctx = canvas.getContext('2d');
 
     ctx.strokeStyle = '#dfe2e8'
@@ -27,12 +27,12 @@ function draw_lines(){
         
 }
 
-function getRandom(min, max) {
+function getRandom(min, max) {              ////////  генератор для рандом фигур  
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
-console.log(getRandom(0, 7))
+console.log(getRandom(0, 7))              
 let current_color;
 
 
@@ -79,6 +79,8 @@ const figure7 = [
     [1, 0, 0, 0],
     [0, 0, 0, 0],
 ]
+
+
 function figure() {
     let current_figure;
     switch (getRandom(0, 7)) {
@@ -116,6 +118,7 @@ function figure() {
     
 figure();
 function draw(x, y, color) {
+    if(pause==false){
     if (canvas.getContext) {
         let ctx = canvas.getContext('2d');
         ctx.fillStyle = "black";
@@ -123,6 +126,7 @@ function draw(x, y, color) {
         ctx.fillStyle = color;
         ctx.fillRect(x + 2, y + 2, SQ_SIZE - 4, SQ_SIZE - 4);
     }
+}
 }
 
 function clear() {
@@ -134,6 +138,8 @@ function clear() {
 
 
 function draw_full_figure() {
+
+    if(pause==false){
     clear();
     restore();
     for (let i = 0; i < 4; i++) {
@@ -142,8 +148,10 @@ function draw_full_figure() {
                 draw(x + i * SQ_SIZE, y + j * SQ_SIZE, current_color)
             }
         }
-    }
+    }    
 }
+}
+
 
 
 function width_figure() {
@@ -156,6 +164,7 @@ function width_figure() {
         }
     }
     return Math.max.apply(null, myArray);
+
 }
 function height_figure() {
     let myArray = [];
@@ -171,11 +180,68 @@ function height_figure() {
 }
 
 
+let keyPause = document.querySelector("#pause")  // кнопка паузы
+let pause = false 
+
+function editPause (){       // меняем переменнйо паузу.
+    if (pause == false){
+        pause = true
+        return pause
+    } else {
+        pause = false 
+        return pause
+    }
+}
+keyPause.addEventListener("click", editPause) // вызываем изменение переменной паузы кликом по кнопке 
+
+const level = {levelNumber:1, timeOfTurn:1000}  // объект уровень, значения в начале игры
+            
+let outSpeedInfo = document.querySelector("#outSpeed")   // индикатор скоростью игры
+
+let keySpeedUp = document.querySelector("#plusSpeed")
+let keySpeedDown = document.querySelector("#minusSpeed")
+
+
+const blockLevel  = [1,2,3,4,5]     // список скоростей
+const blockTimeOfTurn = [1000,650,500,300,160]  // список времени ожидения хода фигуры
+
+function plusGameSpeed(){
+ if (level.levelNumber<5){
+    level.levelNumber = level.levelNumber + 1
+    level.timeOfTurn = blockTimeOfTurn[level.levelNumber-1]
+
+    document.getElementById("outSpeed").innerHTML = level.levelNumber
+    console.log(level.timeOfTurn)
+    console.log(level)
+
+    clearInterval(interval)
+    interval = setInterval (funcInterval, level.timeOfTurn )
+    }
+}
+
+function minusGameSpeed(){
+    if (level.levelNumber>1){
+        level.levelNumber = level.levelNumber - 1
+        level.timeOfTurn = blockTimeOfTurn[level.levelNumber-1]
+    
+        document.getElementById("outSpeed").innerHTML = level.levelNumber
+        console.log(level.timeOfTurn)
+        console.log(level)
+
+        clearInterval(interval)
+        interval = setInterval (funcInterval, level.timeOfTurn )
+    }
+}
+
+keySpeedUp.addEventListener("click", plusGameSpeed)
+keySpeedDown.addEventListener("click", minusGameSpeed)
+
+
 document.addEventListener('keydown', (event) => {
     if (is_game_over) return;
     const keyName = event.key;
     console.log('Событие keydown: ' + keyName);
-    
+    if(pause==false){
     // убраны странные условия на max_width
     if (keyName === 'ArrowLeft' && !is_collision(-1, 0)) {
         x -= SQ_SIZE;
@@ -202,7 +268,12 @@ document.addEventListener('keydown', (event) => {
     }
     draw_full_figure();
     draw_lines();
+
+}
 });
+
+
+
 let arr = new Array();
 for (let i = 0; i < MAX_HEIGHT / SQ_SIZE; i++) {
     arr[i] = new Array(MAX_WIDTH / SQ_SIZE);
@@ -243,8 +314,10 @@ function restore() {
     }
 }
 
-let count_row = 0;
+let conutRow = {count:0, nextLevelCount:2}   // счетчик очков (линий)/ переменная, для блокировки авторазнога уровня сразу до максиума 
+   
 function delete_row() {
+    xx = 0 
     for (let i = 0; i < arr.length; i++) {
         let count = 0;   
         for (let j = 0; j < arr[0].length; j++) {
@@ -257,16 +330,56 @@ function delete_row() {
             let empty_row = new Array(arr[0].length).fill(0);
             arr.splice(i, 1);
             arr.unshift(empty_row);
-            count_row++;
-            document.getElementById("count_row").innerHTML = count_row;
-            console.log(count_row);
+            conutRow.count++;
+            
+            document.getElementById("count_row").innerHTML = conutRow.count;
+            console.log(conutRow.count);
+            return conutRow.count
+        }
+
+        if (conutRow.count==5 && conutRow.nextLevelCount == 2 ){      // АВТОМАТИЧЕСКОЕ накидывание уровня 
+            plusGameSpeed()
+            conutRow.nextLevelCount++
+    
+            console.log('nextLevelConnt')
+            console.log(conutRow.nextLevelCount)
+        }
+            if (conutRow.count==10 && conutRow.nextLevelCount == 3 ){
+                plusGameSpeed()
+                conutRow.nextLevelCount++
+        
+                console.log('nextLevelConnt')
+                console.log(conutRow.nextLevelCount)
+        
+        }
+        if (conutRow.count==15 && conutRow.nextLevelCount == 4 ){
+            plusGameSpeed()
+            conutRow.nextLevelCount++
+    
+            console.log('nextLevelConnt')
+            console.log(conutRow.nextLevelCount)
+    
+        }
+        if (conutRow.count==20 && conutRow.nextLevelCount == 5 ){
+            plusGameSpeed()
+            conutRow.nextLevelCount++
+    
+            console.log('nextLevelConnt')
+            console.log(conutRow.nextLevelCount)
         }
 
     }
-
+    
+    
+    
 }
 
+
+
+
 function is_collision(dx, dy) {
+if (pause==false){
+
     for (let i = 0; i < current_figure.length; i++) {
         for (let j = 0; j < current_figure[0].length; j++) {
             if (current_figure[i][j] === 1 && y >= 0) {
@@ -287,9 +400,14 @@ function is_collision(dx, dy) {
     }
     return false
 }
+}
+
 
 function turn(matrix) {
+if(pause==false){
+
     let result = [];
+
     for (let i = matrix.length - 1; i >= 0; i--) {
       for (let j = 0; j < matrix[i].length; j++) {
         if (!result[j]) {
@@ -300,20 +418,13 @@ function turn(matrix) {
     }
     return result;
 }
+}
 
-
-
-
-const interval = setInterval(() => {
+function funcInterval () {
+    if(pause== false){                           // пауза в игре
     draw_full_figure();
     delete_row();
     draw_lines();
-    if (is_stop()) {
-        console.log('!game over!')
-        clearInterval(interval)
-        is_game_over = true
-    }
-
     // убраны странные условия на max_height
     if (!is_collision(0, 1)) {
         y += SQ_SIZE;
@@ -322,15 +433,21 @@ const interval = setInterval(() => {
         console.log(arr);
         current_figure = figure();
         
+        if (is_stop()) {
+            alert('!game over!')  // сообщение о конце игры 
+            clearInterval(interval)
+            is_game_over = true
+        }
         y = -SQ_SIZE * (height_figure() + 1);
-        // y = 0
         x = SQ_SIZE;
         console.log('save');
     }
-}, 500);
+    
+}
+}
 
+let  interval = setInterval (funcInterval, level.timeOfTurn ) // таймер обновления шага фигуры                             
 
 current_figure = figure();
 y = -SQ_SIZE * height_figure()
-
 draw_lines();

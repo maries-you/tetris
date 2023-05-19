@@ -7,7 +7,7 @@ const canvas = document.getElementById('canvasid');
 let x = SQ_SIZE;
 let y = 0;
 
-function draw_lines(){
+function draw_lines() {
     const ctx = canvas.getContext('2d');
 
     ctx.strokeStyle = '#dfe2e8'
@@ -18,13 +18,12 @@ function draw_lines(){
         ctx.lineTo(SQ_SIZE * i, MAX_HEIGHT);
         ctx.stroke();  
     }
-    for (let j = 0; j < MAX_HEIGHT/SQ_SIZE; j++){
+    for (let j = 0; j < MAX_HEIGHT/SQ_SIZE; j++) {
         ctx.beginPath();
         ctx.moveTo(0, SQ_SIZE * j);
         ctx.lineTo(MAX_WIDTH, SQ_SIZE * j);
         ctx.stroke();
     }
-        
 }
 
 function getRandom(min, max) {
@@ -237,7 +236,7 @@ function delete_row() {
         }
         if (count === 0) {
             // прокачано удаление строк
-            let empty_row = new Array(arr[0].length).fill(0);
+            const empty_row = new Array(arr[0].length).fill(0);
             arr.splice(i, 1);
             arr.unshift(empty_row);
             count_row++;

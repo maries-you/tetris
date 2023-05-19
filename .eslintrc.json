@@ -16,7 +16,7 @@
         "quotes": "warn",
         "no-array-constructor": "warn",
         "no-console": "warn",
-        "semi": "warn",
+        "semi": "off",
         "linebreak-style": "off",
         "require-jsdoc": "off"
     }

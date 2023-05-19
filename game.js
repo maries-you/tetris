@@ -27,12 +27,11 @@ function draw_lines(){                           // рисует сетку на
         
 }
 
-function getRandom(min, max) {              ////////  генератор для рандом фигур  
+function getRandom(min, max) {   
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
-}
-console.log(getRandom(0, 7))              
+}           
 let current_color;
 
 
@@ -138,7 +137,6 @@ function clear() {
 
 
 function draw_full_figure() {
-
     if(pause==false){
     clear();
     restore();
@@ -151,8 +149,6 @@ function draw_full_figure() {
     }    
 }
 }
-
-
 
 function width_figure() {
     let myArray = [];
@@ -179,7 +175,6 @@ function height_figure() {
     return Math.max.apply(null, myArray);
 }
 
-
 let keyPause = document.querySelector("#pause")  // кнопка паузы
 let pause = false 
 
@@ -197,7 +192,6 @@ keyPause.addEventListener("click", editPause) // вызываем изменен
 const level = {levelNumber:1, timeOfTurn:1000}  // объект уровень, значения в начале игры
             
 let outSpeedInfo = document.querySelector("#outSpeed")   // индикатор скоростью игры
-
 let keySpeedUp = document.querySelector("#plusSpeed")
 let keySpeedDown = document.querySelector("#minusSpeed")
 
@@ -242,6 +236,7 @@ document.addEventListener('keydown', (event) => {
     const keyName = event.key;
     console.log('Событие keydown: ' + keyName);
     if(pause==false){
+    
     // убраны странные условия на max_width
     if (keyName === 'ArrowLeft' && !is_collision(-1, 0)) {
         x -= SQ_SIZE;
@@ -266,10 +261,9 @@ document.addEventListener('keydown', (event) => {
     if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
         y += SQ_SIZE;
     }
+    }
     draw_full_figure();
     draw_lines();
-
-}
 });
 
 
@@ -284,7 +278,6 @@ for (let i = 0; i < MAX_HEIGHT / SQ_SIZE; i++) {
 
 
 function save() {
-    console.log(current_figure)
     for (let i = 0; i < current_figure.length; i++) {
         for (let j = 0; j < current_figure[0].length; j++) {
             if (current_figure[i][j] === 1 && y >= 0) {
@@ -317,7 +310,6 @@ function restore() {
 let conutRow = {count:0, nextLevelCount:2}   // счетчик очков (линий)/ переменная, для блокировки авторазнога уровня сразу до максиума 
    
 function delete_row() {
-    xx = 0 
     for (let i = 0; i < arr.length; i++) {
         let count = 0;   
         for (let j = 0; j < arr[0].length; j++) {
@@ -367,19 +359,13 @@ function delete_row() {
             console.log('nextLevelConnt')
             console.log(conutRow.nextLevelCount)
         }
-
     }
-    
-    
-    
 }
 
 
 
 
 function is_collision(dx, dy) {
-if (pause==false){
-
     for (let i = 0; i < current_figure.length; i++) {
         for (let j = 0; j < current_figure[0].length; j++) {
             if (current_figure[i][j] === 1 && y >= 0) {
@@ -400,14 +386,9 @@ if (pause==false){
     }
     return false
 }
-}
-
 
 function turn(matrix) {
-if(pause==false){
-
     let result = [];
-
     for (let i = matrix.length - 1; i >= 0; i--) {
       for (let j = 0; j < matrix[i].length; j++) {
         if (!result[j]) {
@@ -417,7 +398,6 @@ if(pause==false){
       }
     }
     return result;
-}
 }
 
 function funcInterval () {
@@ -448,6 +428,6 @@ function funcInterval () {
 
 let  interval = setInterval (funcInterval, level.timeOfTurn ) // таймер обновления шага фигуры                             
 
-current_figure = figure();
+current_figure = figure()
 y = -SQ_SIZE * height_figure()
-draw_lines();
+draw_lines()

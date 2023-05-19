@@ -1,0 +1,23 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": [
+        "google"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "rules": {
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "camelcase": "warn",
+        "quotes": "warn",
+        "no-array-constructor": "warn",
+        "no-console": "warn",
+        "semi": "warn",
+        "linebreak-style": "warn",
+        "require-jsdoc": "off"
+    }
+}

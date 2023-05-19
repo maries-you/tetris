@@ -11,9 +11,10 @@
         "ecmaVersion": 12
     },
     "rules": {
+        "indent": ["error", 4],
+        "camelcase": "warn",
         "no-console": "warn",
         "semi": "warn",
         "require-jsdoc": "off"
-    },
-    "indent": ["error", 4]
+    }
 }

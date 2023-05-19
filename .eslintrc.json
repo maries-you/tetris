@@ -17,7 +17,7 @@
         "no-array-constructor": "warn",
         "no-console": "warn",
         "semi": "warn",
-        "linebreak-style": "warn",
+        "linebreak-style": "off",
         "require-jsdoc": "off"
     }
 }

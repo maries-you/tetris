@@ -1,9 +1,8 @@
 {
-    "name": "my-cool-package",
-    "devDependencies": {
-      "standard": "*"
-    },
     "scripts": {
-      "test": "standard"
+      "lint": "eslint . --ext .js"
+    },
+    "devDependencies": {
+      "eslint": "^7.31.0"
     }
 }

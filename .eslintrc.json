@@ -11,8 +11,10 @@
         "ecmaVersion": 12
     },
     "rules": {
-        "indent": ["error", 4],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
         "camelcase": "warn",
+        "quotes": "warn",
+        "no-array-constructor": "warn",
         "no-console": "warn",
         "semi": "warn",
         "require-jsdoc": "off"

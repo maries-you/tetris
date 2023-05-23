@@ -116,7 +116,7 @@ if (listFigure.concat.length < 2) {
     listFigure.push(currentFigure0)
 }
 
-let next_figure;
+let nextFigure;
 
 function figure() {
     let currentFigure0;
@@ -151,8 +151,8 @@ function figure() {
     }
     listFigure.unshift(currentFigure0)
     delete listFigure[2]
-    next_figure = listFigure[0]
-    console.log(next_figure)
+    nextFigure = listFigure[0]
+    console.log(nextFigure)
     turnNextFigure = 0
     return listFigure[1]
 }
@@ -177,13 +177,13 @@ function clear() {
     }
 }
 
-function draw_full_figure() {
+function drawFullFigure() {
     if (pause == false) {
         clear();
         restore();
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
-                if (current_figure[i][j] === 1) {
+                if (currentFigure[i][j] === 1) {
                     draw(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, currentColor)
                 }
             }
@@ -229,7 +229,7 @@ function drawNextFigure() {
     restoreNext();
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-            if (next_figure[i][j] === 1) {
+            if (nextFigure[i][j] === 1) {
                 drawNext(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, currentColor)
             }
         }
@@ -240,7 +240,7 @@ function height_figure() {
     const myArray = [];
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-            if (current_figure[i][j] === 1) {
+            if (currentFigure[i][j] === 1) {
                 myArray.push(j);
             }
         }
@@ -310,17 +310,17 @@ document.addEventListener('keydown', (event) => {
         x += SQUARE_SIZE;
     }
     if (keyName === 'ArrowUp') {
-        const temp_figure = current_figure;
-        current_figure = turn(current_figure);
+        const temp_figure = currentFigure;
+        currentFigure = turn(currentFigure);
         if (is_collision(0, 0)) {
-            current_figure = temp_figure;
+            currentFigure = temp_figure;
         }
     }
     if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
         y += SQUARE_SIZE;
     }
 
-    draw_full_figure();
+    drawFullFigure();
     drawLines();
 });
 
@@ -337,17 +337,17 @@ document.addEventListener('key', (event) => {
         x += SQUARE_SIZE;
     }
     if (keyName === 'ArrowUp') {
-        const temp_figure = current_figure;
-        current_figure = turn(current_figure);
+        const temp_figure = currentFigure;
+        currentFigure = turn(currentFigure);
         if (is_collision(0, 0)) {
-            current_figure = temp_figure;
+            currentFigure = temp_figure;
         }
     }
     if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
         y += SQUARE_SIZE;
     }
 
-    draw_full_figure();
+    drawFullFigure();
     drawLines();
 });
 
@@ -360,9 +360,9 @@ for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
 }
 
 function save() {
-    for (let i = 0; i < current_figure.length; i++) {
-        for (let j = 0; j < current_figure[0].length; j++) {
-            if (current_figure[i][j] === 1 && y >= 0) {
+    for (let i = 0; i < currentFigure.length; i++) {
+        for (let j = 0; j < currentFigure[0].length; j++) {
+            if (currentFigure[i][j] === 1 && y >= 0) {
                 arr[y / SQUARE_SIZE + j][x / SQUARE_SIZE + i] = currentColor;
             }
         }
@@ -430,9 +430,9 @@ function delete_row() {
 }
 
 function is_collision(dx, dy) {
-    for (let i = 0; i < current_figure.length; i++) {
-        for (let j = 0; j < current_figure[0].length; j++) {
-            if (current_figure[i][j] === 1 && y >= 0) {
+    for (let i = 0; i < currentFigure.length; i++) {
+        for (let j = 0; j < currentFigure[0].length; j++) {
+            if (currentFigure[i][j] === 1 && y >= 0) {
                 const calculatedX = x + (i + dx) * SQUARE_SIZE;
                 const calculatedY = y + (j + dy + 1) * SQUARE_SIZE;
                 if (
@@ -468,7 +468,7 @@ let turnNextFigure = 0 // счетчик подачи след. фигуры
 function funcInterval() {
     if (pause) return;
 
-    draw_full_figure();
+    drawFullFigure();
     delete_row();
     drawLines();
 
@@ -482,8 +482,7 @@ function funcInterval() {
     } else {
         save();
         console.log(arr);
-        current_figure = figure();
-        next_figure
+        currentFigure = figure();
         if (is_stop()) {
             alert('!game over!')
             clearInterval(interval)
@@ -495,8 +494,8 @@ function funcInterval() {
     }
 }
 // таймер обновления шага фигуры
-let interval = setInterval(funcInterval, level.timeOfTurn)
+let interval = setInterval(funcInterval, level.timeOfTurn);
 
-current_figure = figure()
-y = -SQUARE_SIZE * height_figure()
-drawLines()
+currentFigure = figure();
+y = -SQUARE_SIZE * height_figure();
+drawLines();

@@ -324,33 +324,6 @@ document.addEventListener('keydown', (event) => {
     drawLines();
 });
 
-document.addEventListener('key', (event) => {
-    if (isGameOver || pause) return;
-    const keyName = event.key;
-    console.log('Событие keydown: ' + keyName);
-
-    if (keyName === 'ArrowLeft' && !isCollision(-1, 0)) {
-        x -= SQUARE_SIZE;
-    }
-
-    if (keyName === 'ArrowRight' && !isCollision(1, 0)) {
-        x += SQUARE_SIZE;
-    }
-    if (keyName === 'ArrowUp') {
-        const tempFigure = currentFigure;
-        currentFigure = turn(currentFigure);
-        if (isCollision(0, 0)) {
-            currentFigure = tempFigure;
-        }
-    }
-    if (keyName === 'ArrowDown' && !isCollision(0, 1)) {
-        y += SQUARE_SIZE;
-    }
-
-    drawFullFigure();
-    drawLines();
-});
-
 const arr = new Array();
 for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
     arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);

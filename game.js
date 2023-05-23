@@ -7,7 +7,7 @@ let isGameOver = false;
 const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
 
-const keyRestart = document.querySelector("#restart")
+const keyRestart = document.querySelector('#restart')
 keyRestart.addEventListener('click', () => location.reload());
 
 let x = SQUARE_SIZE;
@@ -164,7 +164,7 @@ function draw(x, y, color) {
     if (pause == false) {
         if (canvas.getContext) {
             const ctx = canvas.getContext('2d');
-            ctx.fillStyle = "#555555";
+            ctx.fillStyle = '#555555';
             ctx.fillRect(x, y, SQUARE_SIZE, SQUARE_SIZE);
             ctx.fillStyle = color;
             ctx.fillRect(x + 2, y + 2, SQUARE_SIZE - 6, SQUARE_SIZE - 6);
@@ -212,7 +212,7 @@ function restoreNext() {
 function drawNext(x, y, color) {
     if (canvasNextFigure.getContext) {
         const ctx = canvasNextFigure.getContext('2d');
-        ctx.fillStyle = "#454545";
+        ctx.fillStyle = '#454545';
         ctx.fillRect(x, y, SQUARE_SIZE + 2, SQUARE_SIZE); // рисует квадрат заливки
         ctx.fillStyle = color;
         ctx.fillRect(x + 1, y + 1, SQUARE_SIZE - 6, SQUARE_SIZE - 6);
@@ -250,7 +250,7 @@ function height_figure() {
     return Math.max.apply(null, myArray);
 }
 // кнопка паузы
-const keyPause = document.querySelector("#pause");
+const keyPause = document.querySelector('#pause');
 let pause = false;
 // меняем переменную паузы.
 function editPause() {
@@ -258,12 +258,12 @@ function editPause() {
     return pause;
 }
 // вызываем изменение переменной паузы кликом по кнопке
-keyPause.addEventListener("click", editPause);
+keyPause.addEventListener('click', editPause);
 // объект уровень, значения в начале игры
 const level = {levelNumber: 1, timeOfTurn: 1000};
 
-const keySpeedUp = document.querySelector("#plusSpeed");
-const keySpeedDown = document.querySelector("#minusSpeed");
+const keySpeedUp = document.querySelector('#plusSpeed');
+const keySpeedDown = document.querySelector('#minusSpeed');
 
 // список скоростей
 // список времени ожидения хода фигуры
@@ -274,7 +274,7 @@ function plusGameSpeed() {
         level.levelNumber = level.levelNumber + 1
         level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1]
 
-        document.getElementById("outSpeed").innerHTML = level.levelNumber
+        document.getElementById('outSpeed').innerHTML = level.levelNumber
         console.log(level.timeOfTurn)
         console.log(level)
 
@@ -288,7 +288,7 @@ function minusGameSpeed() {
         level.levelNumber = level.levelNumber - 1
         level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1]
 
-        document.getElementById("outSpeed").innerHTML = level.levelNumber
+        document.getElementById('outSpeed').innerHTML = level.levelNumber
         console.log(level.timeOfTurn)
         console.log(level)
 
@@ -297,8 +297,8 @@ function minusGameSpeed() {
     }
 }
 
-keySpeedUp.addEventListener("click", plusGameSpeed)
-keySpeedDown.addEventListener("click", minusGameSpeed)
+keySpeedUp.addEventListener('click', plusGameSpeed)
+keySpeedDown.addEventListener('click', minusGameSpeed)
 
 document.addEventListener('keydown', (event) => {
     if (isGameOver || pause) return;
@@ -407,7 +407,7 @@ function delete_row() {
             arr.unshift(empty_row);
             countRow.count++;
 
-            document.getElementById("count_row").innerHTML = countRow.count;
+            document.getElementById('count_row').innerHTML = countRow.count;
             console.log(countRow.count);
             return countRow.count
         }

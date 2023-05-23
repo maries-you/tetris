@@ -1,9 +1,9 @@
-const SQ_SIZE = 30;
+const SQUARE_SIZE = 30;
 const MAX_HEIGHT = 600;
 const MAX_WIDTH = 300;
-const maxHightNetx = 120
-const maxWidthNext = 150
-let is_game_over = false;
+const MAX_HEIGHT_NEXT_FIGURE = 120;
+const MAX_WIDTH_NEXT_FIGURE = 150;
+let isGameOver = false;
 const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
 
@@ -12,23 +12,23 @@ keyRestart.addEventListener('click', function () {
     location.reload();
 })
 
-let x = SQ_SIZE;
+let x = SQUARE_SIZE;
 let y = 0;
 // рисует сетку на поле 
 function draw_lines() {
     const ctx = canvas.getContext('2d');
     ctx.strokeStyle = '#dfe2e8'
 
-    for (let i = 0; i < MAX_WIDTH / SQ_SIZE; i++) {
+    for (let i = 0; i < MAX_WIDTH / SQUARE_SIZE; i++) {
         ctx.beginPath();
-        ctx.moveTo(SQ_SIZE * i, 0);
-        ctx.lineTo(SQ_SIZE * i, MAX_HEIGHT);
+        ctx.moveTo(SQUARE_SIZE * i, 0);
+        ctx.lineTo(SQUARE_SIZE * i, MAX_HEIGHT);
         ctx.stroke();
     }
-    for (let j = 0; j < MAX_HEIGHT / SQ_SIZE; j++) {
+    for (let j = 0; j < MAX_HEIGHT / SQUARE_SIZE; j++) {
         ctx.beginPath();
-        ctx.moveTo(0, SQ_SIZE * j);
-        ctx.lineTo(MAX_WIDTH, SQ_SIZE * j);
+        ctx.moveTo(0, SQUARE_SIZE * j);
+        ctx.lineTo(MAX_WIDTH, SQUARE_SIZE * j);
         ctx.stroke();
     }
 
@@ -84,7 +84,7 @@ const figure7 = [
     [0, 0, 0, 0],
 ]
 
-let listFigure = [] // буфер фигур
+const listFigure = []; // буфер фигур
 // первичное заполнение буфера фигурами
 if (listFigure.concat.length < 2) {
     switch (getRandom(0, 7)) {
@@ -119,7 +119,7 @@ if (listFigure.concat.length < 2) {
     listFigure.push(current_figure0)
 }
 
-let next_figure //................................. следующая фигурa
+let next_figure;
 
 function figure() {
     let current_figure
@@ -168,9 +168,9 @@ function draw(x, y, color) {
         if (canvas.getContext) {
             let ctx = canvas.getContext('2d');
             ctx.fillStyle = "#555555";
-            ctx.fillRect(x, y, SQ_SIZE, SQ_SIZE);
+            ctx.fillRect(x, y, SQUARE_SIZE, SQUARE_SIZE);
             ctx.fillStyle = color;
-            ctx.fillRect(x + 2, y + 2, SQ_SIZE - 6, SQ_SIZE - 6);
+            ctx.fillRect(x + 2, y + 2, SQUARE_SIZE - 6, SQUARE_SIZE - 6);
         }
     }
 }
@@ -189,7 +189,7 @@ function draw_full_figure() {
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 if (current_figure[i][j] === 1) {
-                    draw(x + i * SQ_SIZE, y + j * SQ_SIZE, current_color)
+                    draw(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, current_color)
                 }
             }
         }
@@ -197,9 +197,9 @@ function draw_full_figure() {
 }
 // функции следующей фигуры
 let arrNext = new Array(); // array plus pole
-for (let i = 0; i < 150 / SQ_SIZE; i++) {
-    arrNext[i] = new Array(150 / SQ_SIZE);
-    for (let j = 0; j < 150 / SQ_SIZE; j++) {
+for (let i = 0; i < 4; i++) {
+    arrNext[i] = new Array(4);
+    for (let j = 0; j < 4; j++) {
         arrNext[i][j] = 0;
     }
 }
@@ -216,16 +216,16 @@ function drawNext(x, y, color) {
     if (canvasNextFigure.getContext) {
         let ctx = canvasNextFigure.getContext('2d');
         ctx.fillStyle = "#454545";
-        ctx.fillRect(x, y, SQ_SIZE + 2, SQ_SIZE); // рисует квадрат заливки 
+        ctx.fillRect(x, y, SQUARE_SIZE + 2, SQUARE_SIZE); // рисует квадрат заливки 
         ctx.fillStyle = color;
-        ctx.fillRect(x + 1, y + 1, SQ_SIZE - 6, SQ_SIZE - 6);
+        ctx.fillRect(x + 1, y + 1, SQUARE_SIZE - 6, SQUARE_SIZE - 6);
     }
 }
 
 function clearNext() {
     if (canvasNextFigure.getContext) {
         let ctx = canvasNextFigure.getContext('2d');
-        ctx.clearRect(0, 0, maxWidthNext, maxHightNetx);
+        ctx.clearRect(0, 0, MAX_WIDTH_NEXT_FIGURE, MAX_HEIGHT_NEXT_FIGURE);
     }
 }
 
@@ -235,7 +235,7 @@ function drawNextFigure() {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (next_figure[i][j] === 1) {
-                drawNext(x + i * SQ_SIZE, y + j * SQ_SIZE, current_color)
+                drawNext(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, current_color)
             }
         }
     }
@@ -269,13 +269,8 @@ let keyPause = document.querySelector("#pause")
 let pause = false
 // меняем переменную паузы.
 function editPause() {
-    if (pause == false) {
-        pause = true
-        return pause
-    } else {
-        pause = false
-        return pause
-    }
+    pause = !pause;
+    return pause;
 }
 // вызываем изменение переменной паузы кликом по кнопке 
 keyPause.addEventListener("click", editPause)
@@ -323,62 +318,53 @@ keySpeedUp.addEventListener("click", plusGameSpeed)
 keySpeedDown.addEventListener("click", minusGameSpeed)
 
 document.addEventListener('keydown', (event) => {
-    if (is_game_over) return;
+    if (isGameOver || pause) return;
     const keyName = event.key;
     console.log('Событие keydown:' + keyName);
-    if (pause == false) {
 
-        // убраны странные условия на max_width
-        if (keyName === 'ArrowLeft' && !is_collision(-1, 0)) {
-            x -= SQ_SIZE;
-        }
-
-        // убраны странные условия на max_width
-        if (keyName === 'ArrowRight' && !is_collision(1, 0)) {
-            x += SQ_SIZE;
-        }
-        if (keyName === 'ArrowUp') {
-            // повернуть
-            // проверить на коллизию
-            // если ок, то ничего не делать
-            // если не ок, то вернуть как было
-            let temp_figure = current_figure
-            current_figure = turn(current_figure);
-            if (is_collision(0, 0)) {
-                current_figure = temp_figure;
-            }
-
-        }
-        if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
-            y += SQ_SIZE;
+    if (keyName === 'ArrowLeft' && !is_collision(-1, 0)) {
+        x -= SQUARE_SIZE;
+    }
+    if (keyName === 'ArrowRight' && !is_collision(1, 0)) {
+        x += SQUARE_SIZE;
+    }
+    if (keyName === 'ArrowUp') {
+        let temp_figure = current_figure
+        current_figure = turn(current_figure);
+        if (is_collision(0, 0)) {
+            current_figure = temp_figure;
         }
 
     }
+    if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
+        y += SQUARE_SIZE;
+    }
+
     draw_full_figure();
     draw_lines();
 });
 
 document.addEventListener('key', (event) => {
-    if (is_game_over) return;
+    if (isGameOver) return;
     const keyName = event.key;
     console.log('Событие keydown: ' + keyName);
     if (pause == false) {
 
         // убраны странные условия на max_width
         if (keyName === 'ArrowLeft' && !is_collision(-1, 0)) {
-            x -= SQ_SIZE;
+            x -= SQUARE_SIZE;
         }
 
         // убраны странные условия на max_width
         if (keyName === 'ArrowRight' && !is_collision(1, 0)) {
-            x += SQ_SIZE;
+            x += SQUARE_SIZE;
         }
         if (keyName === 'ArrowUp') {
             // повернуть
             // проверить на коллизию
             // если ок, то ничего не делать
             // если не ок, то вернуть как было
-            let temp_figure = current_figure
+            let temp_figure = current_figure;
             current_figure = turn(current_figure);
             if (is_collision(0, 0)) {
                 current_figure = temp_figure;
@@ -386,7 +372,7 @@ document.addEventListener('key', (event) => {
 
         }
         if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
-            y += SQ_SIZE;
+            y += SQUARE_SIZE;
         }
     }
     draw_full_figure();
@@ -394,9 +380,9 @@ document.addEventListener('key', (event) => {
 });
 
 let arr = new Array();
-for (let i = 0; i < MAX_HEIGHT / SQ_SIZE; i++) {
-    arr[i] = new Array(MAX_WIDTH / SQ_SIZE);
-    for (let j = 0; j < MAX_WIDTH / SQ_SIZE; j++) {
+for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
+    arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);
+    for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
         arr[i][j] = 0;
     }
 }
@@ -405,7 +391,7 @@ function save() {
     for (let i = 0; i < current_figure.length; i++) {
         for (let j = 0; j < current_figure[0].length; j++) {
             if (current_figure[i][j] === 1 && y >= 0) {
-                arr[y / SQ_SIZE + j][x / SQ_SIZE + i] = current_color;
+                arr[y / SQUARE_SIZE + j][x / SQUARE_SIZE + i] = current_color;
             }
         }
     }
@@ -420,18 +406,19 @@ function is_stop() {
     return false
 }
 
-function restore() {                            // сохранение поставленной фигуры
+function restore() {
     for (let i = 0; i < arr.length; i++) {
         for (let j = 0; j < arr[0].length; j++) {
             if (arr[i][j] !== 0) {
-                draw(j * SQ_SIZE, i * SQ_SIZE, arr[i][j])
+                draw(j * SQUARE_SIZE, i * SQUARE_SIZE, arr[i][j])
 
             }
         }
     }
 }
 
-let conutRow = { count: 0, nextLevelCount: 2 }   // счетчик очков (линий)/ переменная, для блокировки авторазнога уровня сразу до максиума 
+// счетчик очков (линий)/ переменная, для блокировки авторазнога уровня сразу до максиума
+let countRow = { count: 0, nextLevelCount: 2 }
 
 function delete_row() {
     for (let i = 0; i < arr.length; i++) {
@@ -446,42 +433,30 @@ function delete_row() {
             let empty_row = new Array(arr[0].length).fill(0);
             arr.splice(i, 1);
             arr.unshift(empty_row);
-            conutRow.count++;
+            countRow.count++;
 
-            document.getElementById("count_row").innerHTML = conutRow.count;
-            console.log(conutRow.count);
-            return conutRow.count
+            document.getElementById("count_row").innerHTML = countRow.count;
+            console.log(countRow.count);
+            return countRow.count
         }
 
-        if (conutRow.count == 5 && conutRow.nextLevelCount == 2) {      // АВТОМАТИЧЕСКОЕ накидывание уровня 
+        if (countRow.count == 5 && countRow.nextLevelCount == 2) {
             plusGameSpeed()
-            conutRow.nextLevelCount++
-
-            console.log('nextLevelConnt')
-            console.log(conutRow.nextLevelCount)
+            countRow.nextLevelCount++
         }
-        if (conutRow.count == 10 && conutRow.nextLevelCount == 3) {
+        if (countRow.count == 10 && countRow.nextLevelCount == 3) {
             plusGameSpeed()
-            conutRow.nextLevelCount++
-
-            console.log('nextLevelConnt')
-            console.log(conutRow.nextLevelCount)
+            countRow.nextLevelCount++
 
         }
-        if (conutRow.count == 15 && conutRow.nextLevelCount == 4) {
+        if (countRow.count == 15 && countRow.nextLevelCount == 4) {
             plusGameSpeed()
-            conutRow.nextLevelCount++
-
-            console.log('nextLevelConnt')
-            console.log(conutRow.nextLevelCount)
+            countRow.nextLevelCount++
 
         }
-        if (conutRow.count == 20 && conutRow.nextLevelCount == 5) {
+        if (countRow.count == 20 && countRow.nextLevelCount == 5) {
             plusGameSpeed()
-            conutRow.nextLevelCount++
-
-            console.log('nextLevelConnt')
-            console.log(conutRow.nextLevelCount)
+            countRow.nextLevelCount++
         }
     }
 }
@@ -491,15 +466,15 @@ function is_collision(dx, dy) {
         for (let j = 0; j < current_figure[0].length; j++) {
             if (current_figure[i][j] === 1 && y >= 0) {
                 //дописана коллизия
-                let calculated_x = x + (i + dx) * SQ_SIZE;
-                let calculated_y = y + (j + dy + 1) * SQ_SIZE;
+                let calculated_x = x + (i + dx) * SQUARE_SIZE;
+                let calculated_y = y + (j + dy + 1) * SQUARE_SIZE;
                 if (
                     calculated_y > MAX_HEIGHT ||
                     calculated_x < 0 || calculated_x > MAX_WIDTH
                 ) {
                     return true;
                 }
-                if (arr[y / SQ_SIZE + j + dy][x / SQ_SIZE + i + dx] !== 0) {
+                if (arr[y / SQUARE_SIZE + j + dy][x / SQUARE_SIZE + i + dx] !== 0) {
                     return true
                 }
             }
@@ -509,7 +484,7 @@ function is_collision(dx, dy) {
 }
 
 function turn(matrix) {
-    let result = [];
+    const result = [];
     for (let i = matrix.length - 1; i >= 0; i--) {
         for (let j = 0; j < matrix[i].length; j++) {
             if (!result[j]) {
@@ -534,7 +509,7 @@ function funcInterval() {
         }
         // убраны странные условия на max_height
         if (!is_collision(0, 1)) {
-            y += SQ_SIZE;
+            y += SQUARE_SIZE;
         } else {
             save();
             console.log(arr);
@@ -543,16 +518,16 @@ function funcInterval() {
             if (is_stop()) {
                 alert('!game over!')  // сообщение о конце игры 
                 clearInterval(interval)
-                is_game_over = true
+                isGameOver = true
             }
-            y = -SQ_SIZE * (height_figure() + 1);
-            x = SQ_SIZE;
+            y = -SQUARE_SIZE * (height_figure() + 1);
+            x = SQUARE_SIZE;
             console.log('save');
         }
     }
 }
-let interval = setInterval(funcInterval, level.timeOfTurn) // таймер обновления шага фигуры                             
+let interval = setInterval(funcInterval, level.timeOfTurn) // таймер обновления шага фигуры
 
-current_figure = figure()  // следующая фигура, что пойдет - самая первая фигура.
-y = -SQ_SIZE * height_figure()
+current_figure = figure() // следующая фигура, что пойдет - самая первая фигура.
+y = -SQUARE_SIZE * height_figure()
 draw_lines()

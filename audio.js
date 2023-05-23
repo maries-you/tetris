@@ -1,9 +1,9 @@
-const audio = document.querySelector('audio')
-const backgroundSound = document.getElementById('backgroundSound')
+const audio = document.querySelector('audio');
+const backgroundSound = document.getElementById('backgroundSound');
 // звук падения находится на 292 строке
 
-const playBtn = document.querySelector('.play')
-const pauseBtn = document.querySelector('.pause')
+const playBtn = document.querySelector('.play');
+const pauseBtn = document.querySelector('.pause');
 
 audio.addEventListener('canplaythrough', () => {
     playBtn.addEventListener('click', () => {

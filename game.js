@@ -196,7 +196,7 @@ function draw_full_figure() {
     }
 }
 // функции следующей фигуры
-let arrNext = new Array(); // array plus pole
+const arrNext = new Array(); // array plus pole
 for (let i = 0; i < 4; i++) {
     arrNext[i] = new Array(4);
     for (let j = 0; j < 4; j++) {
@@ -265,26 +265,25 @@ function height_figure() {
     return Math.max.apply(null, myArray);
 }
 // кнопка паузы
-let keyPause = document.querySelector("#pause")
-let pause = false
+const keyPause = document.querySelector("#pause");
+let pause = false;
 // меняем переменную паузы.
 function editPause() {
     pause = !pause;
     return pause;
 }
 // вызываем изменение переменной паузы кликом по кнопке 
-keyPause.addEventListener("click", editPause)
+keyPause.addEventListener("click", editPause);
 // объект уровень, значения в начале игры
-const level = { levelNumber: 1, timeOfTurn: 1000 }
+const level = {levelNumber: 1, timeOfTurn: 1000};
 
-let outSpeedInfo = document.querySelector("#outSpeed")
-let keySpeedUp = document.querySelector("#plusSpeed")
-let keySpeedDown = document.querySelector("#minusSpeed")
+const outSpeedInfo = document.querySelector("#outSpeed");
+const keySpeedUp = document.querySelector("#plusSpeed");
+const keySpeedDown = document.querySelector("#minusSpeed");
 
 // список скоростей
 // список времени ожидения хода фигуры
-const blockLevel = [1, 2, 3, 4, 5]
-const blockTimeOfTurn = [1000, 650, 500, 300, 160]
+const blockTimeOfTurn = [1000, 650, 500, 300, 160];
 
 function plusGameSpeed() {
     if (level.levelNumber < 5) {
@@ -345,41 +344,33 @@ document.addEventListener('keydown', (event) => {
 });
 
 document.addEventListener('key', (event) => {
-    if (isGameOver) return;
+    if (isGameOver || pause) return;
     const keyName = event.key;
     console.log('Событие keydown: ' + keyName);
-    if (pause == false) {
 
-        // убраны странные условия на max_width
-        if (keyName === 'ArrowLeft' && !is_collision(-1, 0)) {
-            x -= SQUARE_SIZE;
-        }
+    if (keyName === 'ArrowLeft' && !is_collision(-1, 0)) {
+        x -= SQUARE_SIZE;
+    }
 
-        // убраны странные условия на max_width
-        if (keyName === 'ArrowRight' && !is_collision(1, 0)) {
-            x += SQUARE_SIZE;
-        }
-        if (keyName === 'ArrowUp') {
-            // повернуть
-            // проверить на коллизию
-            // если ок, то ничего не делать
-            // если не ок, то вернуть как было
-            let temp_figure = current_figure;
-            current_figure = turn(current_figure);
-            if (is_collision(0, 0)) {
-                current_figure = temp_figure;
-            }
-
-        }
-        if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
-            y += SQUARE_SIZE;
+    if (keyName === 'ArrowRight' && !is_collision(1, 0)) {
+        x += SQUARE_SIZE;
+    }
+    if (keyName === 'ArrowUp') {
+        let temp_figure = current_figure;
+        current_figure = turn(current_figure);
+        if (is_collision(0, 0)) {
+            current_figure = temp_figure;
         }
     }
+    if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
+        y += SQUARE_SIZE;
+    }
+
     draw_full_figure();
     draw_lines();
 });
 
-let arr = new Array();
+const arr = new Array();
 for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
     arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);
     for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
@@ -411,14 +402,13 @@ function restore() {
         for (let j = 0; j < arr[0].length; j++) {
             if (arr[i][j] !== 0) {
                 draw(j * SQUARE_SIZE, i * SQUARE_SIZE, arr[i][j])
-
             }
         }
     }
 }
 
 // счетчик очков (линий)/ переменная, для блокировки авторазнога уровня сразу до максиума
-let countRow = { count: 0, nextLevelCount: 2 }
+const countRow = {count: 0, nextLevelCount: 2}
 
 function delete_row() {
     for (let i = 0; i < arr.length; i++) {
@@ -429,8 +419,7 @@ function delete_row() {
             }
         }
         if (count === 0) {
-            // прокачано удаление строк
-            let empty_row = new Array(arr[0].length).fill(0);
+            const empty_row = new Array(arr[0].length).fill(0);
             arr.splice(i, 1);
             arr.unshift(empty_row);
             countRow.count++;
@@ -447,12 +436,10 @@ function delete_row() {
         if (countRow.count == 10 && countRow.nextLevelCount == 3) {
             plusGameSpeed()
             countRow.nextLevelCount++
-
         }
         if (countRow.count == 15 && countRow.nextLevelCount == 4) {
             plusGameSpeed()
             countRow.nextLevelCount++
-
         }
         if (countRow.count == 20 && countRow.nextLevelCount == 5) {
             plusGameSpeed()
@@ -465,12 +452,11 @@ function is_collision(dx, dy) {
     for (let i = 0; i < current_figure.length; i++) {
         for (let j = 0; j < current_figure[0].length; j++) {
             if (current_figure[i][j] === 1 && y >= 0) {
-                //дописана коллизия
-                let calculated_x = x + (i + dx) * SQUARE_SIZE;
-                let calculated_y = y + (j + dy + 1) * SQUARE_SIZE;
+                const calculatedX = x + (i + dx) * SQUARE_SIZE;
+                const calculatedY = y + (j + dy + 1) * SQUARE_SIZE;
                 if (
-                    calculated_y > MAX_HEIGHT ||
-                    calculated_x < 0 || calculated_x > MAX_WIDTH
+                    calculatedY > MAX_HEIGHT ||
+                    calculatedX < 0 || calculatedX > MAX_WIDTH
                 ) {
                     return true;
                 }
@@ -496,38 +482,40 @@ function turn(matrix) {
     return result;
 }
 
-let turnNextFigure = 0   // счетчик подачи след. фигуры 
-function funcInterval() {
-    if (pause == false) {                           // пауза в игре
-        draw_full_figure();
-        delete_row();
-        draw_lines();
+let turnNextFigure = 0 // счетчик подачи след. фигуры
 
-        if (turnNextFigure < 4) {
-            drawNextFigure()
-            turnNextFigure++
+function funcInterval() {
+    if (pause) return;
+
+    draw_full_figure();
+    delete_row();
+    draw_lines();
+
+    if (turnNextFigure < 4) {
+        drawNextFigure()
+        turnNextFigure++
+    }
+    // убраны странные условия на max_height
+    if (!is_collision(0, 1)) {
+        y += SQUARE_SIZE;
+    } else {
+        save();
+        console.log(arr);
+        current_figure = figure();
+        next_figure
+        if (is_stop()) {
+            alert('!game over!')
+            clearInterval(interval)
+            isGameOver = true
         }
-        // убраны странные условия на max_height
-        if (!is_collision(0, 1)) {
-            y += SQUARE_SIZE;
-        } else {
-            save();
-            console.log(arr);
-            current_figure = figure();
-            next_figure
-            if (is_stop()) {
-                alert('!game over!')  // сообщение о конце игры 
-                clearInterval(interval)
-                isGameOver = true
-            }
-            y = -SQUARE_SIZE * (height_figure() + 1);
-            x = SQUARE_SIZE;
-            console.log('save');
-        }
+        y = -SQUARE_SIZE * (height_figure() + 1);
+        x = SQUARE_SIZE;
+        console.log('save');
     }
 }
-let interval = setInterval(funcInterval, level.timeOfTurn) // таймер обновления шага фигуры
+// таймер обновления шага фигуры
+let interval = setInterval(funcInterval, level.timeOfTurn)
 
-current_figure = figure() // следующая фигура, что пойдет - самая первая фигура.
+current_figure = figure()
 y = -SQUARE_SIZE * height_figure()
 draw_lines()

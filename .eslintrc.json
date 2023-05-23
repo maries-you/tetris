@@ -18,6 +18,7 @@
         "no-console": "warn",
         "semi": "off",
         "linebreak-style": "off",
-        "require-jsdoc": "off"
+        "require-jsdoc": "off",
+        "max-len": "off"
     }
 }

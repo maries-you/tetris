@@ -6,8 +6,6 @@ const MAX_WIDTH_NEXT_FIGURE = 120;
 let isGameOver = false;
 const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
-const lineClearSound = new Audio('./audio/line.wav');
-const gameOverSound = new Audio('./audio/gameover.wav');
 
 // const keyRestart = document.querySelector('#restart')
 // keyRestart.addEventListener('click', () => location.reload());
@@ -17,7 +15,7 @@ let y = 0;
 // рисует сетку на поле
 function drawLines() {
     const ctx = canvas.getContext('2d');
-    ctx.strokeStyle = '#dfe2e8';
+    ctx.strokeStyle = '#dfe2e8'
 
     for (let i = 0; i < MAX_WIDTH / SQUARE_SIZE; i++) {
         ctx.beginPath();
@@ -38,6 +36,8 @@ function getRandom(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
+let currentFigure;
+let colorFigure;
 let currentColor;
 
 const figure1 = [
@@ -45,120 +45,125 @@ const figure1 = [
     [0, 1, 1, 0],
     [0, 1, 1, 0],
     [0, 0, 0, 0],
-];
+]
 const figure2 = [
     [0, 0, 0, 0],
     [0, 1, 1, 0],
     [0, 1, 0, 0],
     [0, 1, 0, 0],
-];
+]
 const figure3 = [
     [0, 1, 0, 0],
     [0, 1, 0, 0],
     [0, 1, 0, 0],
     [0, 1, 0, 0],
-];
+]
 const figure4 = [
     [0, 0, 0, 0],
     [1, 1, 1, 0],
     [0, 1, 0, 0],
     [0, 0, 0, 0],
-];
+]
 const figure5 = [
     [0, 0, 0, 0],
     [0, 1, 0, 0],
     [0, 1, 1, 0],
     [0, 0, 1, 0],
-];
+]
 const figure6 = [
     [0, 0, 0, 0],
     [1, 1, 0, 0],
     [0, 1, 1, 0],
     [0, 0, 0, 0],
-];
+]
 const figure7 = [
     [0, 0, 0, 0],
     [1, 1, 1, 0],
     [1, 0, 0, 0],
     [0, 0, 0, 0],
-];
+]
 
 const listFigure = []; // буфер фигур
+const listColor = []; // буфер цвета
 // первичное заполнение буфера фигурами
 if (listFigure.concat.length < 2) {
     switch (getRandom(0, 7)) {
         case 0:
             currentFigure0 = figure1;
-            currentColor = 'green';
+            colorFigure = 'green';
             break;
         case 1:
             currentFigure0 = figure2;
-            currentColor = 'red';
+            colorFigure = 'red';
             break;
         case 2:
             currentFigure0 = figure3;
-            currentColor = 'yellow';
+            colorFigure = 'yellow';
             break;
         case 3:
             currentFigure0 = figure4;
-            currentColor = 'pink';
+            colorFigure = 'pink';
             break;
         case 4:
             currentFigure0 = figure5;
-            currentColor = '#ec12a8';
+            colorFigure = '#ec12a8';
             break;
         case 5:
             currentFigure0 = figure6;
-            currentColor = 'brown';
+            colorFigure = 'brown';
             break;
         default:
             currentFigure0 = figure7;
-            currentColor = 'blue';
+            colorFigure = 'blue';
     }
-    listFigure.push(currentFigure0);
+    listFigure.push(currentFigure0)
+    listColor.push(colorFigure)
 }
 
 let nextFigure;
+let nextColor;
 
 function figure() {
     let currentFigure0;
     switch (getRandom(0, 7)) {
         case 0:
             currentFigure0 = figure1;
-            currentColor = 'green';
+            colorFigure = 'green';
             break;
         case 1:
             currentFigure0 = figure2;
-            currentColor = 'red';
+            colorFigure = 'red';
             break;
         case 2:
             currentFigure0 = figure3;
-            currentColor = 'yellow';
+            colorFigure = 'yellow';
             break;
         case 3:
             currentFigure0 = figure4;
-            currentColor = 'pink';
+            colorFigure = 'pink';
             break;
         case 4:
             currentFigure0 = figure5;
-            currentColor = '#ec12a8';
+            colorFigure = '#ec12a8';
             break;
         case 5:
             currentFigure0 = figure6;
-            currentColor = 'brown';
+            colorFigure = 'brown';
             break;
         default:
             currentFigure0 = figure7;
-            currentColor = 'blue';
+            colorFigure = 'blue';
     }
     listFigure.unshift(currentFigure0);
     delete listFigure[2];
     nextFigure = listFigure[0];
     console.log(nextFigure);
-    turnNextFigure = 0;
-    return listFigure[1];
+    currentFigure = listFigure[1];
+    listColor.unshift(colorFigure);
+    delete listColor[2];
+    nextColor = listColor[0];
+    return currentFigure;
 }
-
 function internalDraw(x, y, color, canvas) {
     if (canvas.getContext) {
         const ctx = canvas.getContext('2d');
@@ -172,25 +177,22 @@ function internalDraw(x, y, color, canvas) {
         );
     }
 }
-
 function draw(x, y, color) {
     internalDraw(x, y, color, canvas);
 }
-
 function drawNext(x, y, color) {
     internalDraw(x, y, color, canvasNextFigure);
 }
-
 function clear() {
     if (canvas.getContext) {
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
     }
 }
-
 function drawFullFigure() {
     clear();
     restore();
+    currentColor = listColor[1];
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (currentFigure[i][j] === 1) {
@@ -216,15 +218,15 @@ function restoreNext() {
         }
     }
 }
-
 function clearNext() {
     if (canvasNextFigure.getContext) {
         const ctx = canvasNextFigure.getContext('2d');
         ctx.clearRect(0, 0, MAX_WIDTH_NEXT_FIGURE, MAX_HEIGHT_NEXT_FIGURE);
     }
 }
-
 function drawNextFigure() {
+    //идентификация цвета, присyщего следующей фигуре
+    currentColor = listColor[0];
     clearNext();
     restoreNext();
     for (let i = 0; i < 4; i++) {
@@ -263,40 +265,39 @@ const level = {levelNumber: 1, timeOfTurn: 1000};
 const keySpeedUp = document.querySelector('#plusSpeed');
 const keySpeedDown = document.querySelector('#minusSpeed');
 
-// список скоростей
 // список времени ожидения хода фигуры
 const blockTimeOfTurn = [1000, 650, 500, 300, 160];
 
 function plusGameSpeed() {
     if (level.levelNumber < 5) {
-        level.levelNumber = level.levelNumber + 1;
-        level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1];
+        level.levelNumber = level.levelNumber + 1
+        level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1]
 
-        document.getElementById('outSpeed').innerHTML = level.levelNumber;
-        console.log(level.timeOfTurn);
-        console.log(level);
+        document.getElementById('outSpeed').innerHTML = level.levelNumber
+        console.log(level.timeOfTurn)
+        console.log(level)
 
-        clearInterval(interval);
-        interval = setInterval(funcInterval, level.timeOfTurn);
+        clearInterval(interval)
+        interval = setInterval(funcInterval, level.timeOfTurn)
     }
 }
 
 function minusGameSpeed() {
     if (level.levelNumber > 1) {
-        level.levelNumber = level.levelNumber - 1;
-        level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1];
+        level.levelNumber = level.levelNumber - 1
+        level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1]
 
-        document.getElementById('outSpeed').innerHTML = level.levelNumber;
-        console.log(level.timeOfTurn);
-        console.log(level);
+        document.getElementById('outSpeed').innerHTML = level.levelNumber
+        console.log(level.timeOfTurn)
+        console.log(level)
 
-        clearInterval(interval);
-        interval = setInterval(funcInterval, level.timeOfTurn);
+        clearInterval(interval)
+        interval = setInterval(funcInterval, level.timeOfTurn)
     }
 }
 
-keySpeedUp.addEventListener('click', plusGameSpeed);
-keySpeedDown.addEventListener('click', minusGameSpeed);
+keySpeedUp.addEventListener('click', plusGameSpeed)
+keySpeedDown.addEventListener('click', minusGameSpeed)
 
 document.addEventListener('keydown', (event) => {
     if (isGameOver || pause) return;
@@ -333,6 +334,7 @@ for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
 }
 
 function save() {
+    currentColor = listColor[1];
     for (let i = 0; i < currentFigure.length; i++) {
         for (let j = 0; j < currentFigure[0].length; j++) {
             if (currentFigure[i][j] === 1 && y >= 0) {
@@ -345,24 +347,24 @@ function save() {
 function isStop() {
     for (let i = 0; i < arr[0].length; i++) {
         if (arr[0][i] !== 0) {
-            return true;
+            return true
         }
     }
-    return false;
+    return false
 }
 
 function restore() {
     for (let i = 0; i < arr.length; i++) {
         for (let j = 0; j < arr[0].length; j++) {
             if (arr[i][j] !== 0) {
-                draw(j * SQUARE_SIZE, i * SQUARE_SIZE, arr[i][j]);
+                draw(j * SQUARE_SIZE, i * SQUARE_SIZE, arr[i][j])
             }
         }
     }
 }
 
 // счетчик очков (линий)/ переменная, для блокировки авторазнога уровня сразу до максиума
-const countRow = {count: 0, nextLevelCount: 2};
+const countRow = {count: 0, nextLevelCount: 2}
 
 function deleteRow() {
     for (let i = 0; i < arr.length; i++) {
@@ -377,7 +379,7 @@ function deleteRow() {
             arr.splice(i, 1);
             arr.unshift(emptyRow);
             countRow.count++;
-            lineClearSound.play();
+
             document.getElementById('count_row').innerHTML = countRow.count;
             console.log(countRow.count);
             return countRow.count;
@@ -415,12 +417,12 @@ function isCollision(dx, dy) {
                     return true;
                 }
                 if (arr[y / SQUARE_SIZE + j + dy][x / SQUARE_SIZE + i + dx] !== 0) {
-                    return true;
+                    return true
                 }
             }
         }
     }
-    return false;
+    return false
 }
 
 function turn(matrix) {
@@ -436,7 +438,7 @@ function turn(matrix) {
     return result;
 }
 
-let turnNextFigure = 0; // счетчик подачи след. фигуры
+let turnNextFigure = 0 // счетчик подачи след. фигуры
 
 function funcInterval() {
     if (pause) return;
@@ -444,23 +446,18 @@ function funcInterval() {
     drawFullFigure();
     deleteRow();
     drawLines();
-
-    if (turnNextFigure < 4) {
-        drawNextFigure();
-        turnNextFigure++;
-    }
+    drawNextFigure();
     // убраны странные условия на max_height
     if (!isCollision(0, 1)) {
         y += SQUARE_SIZE;
     } else {
         save();
         console.log(arr);
-        currentFigure = figure();
+        figure(); 
         if (isStop()) {
-            gameOverSound.play();
-            alert('!game over!');
-            clearInterval(interval);
-            isGameOver = true;
+            alert('!game over!')
+            clearInterval(interval)
+            isGameOver = true
         }
         y = -SQUARE_SIZE * (heightFigure() + 1);
         x = SQUARE_SIZE;
@@ -470,6 +467,6 @@ function funcInterval() {
 // таймер обновления шага фигуры
 let interval = setInterval(funcInterval, level.timeOfTurn);
 
-currentFigure = figure();
+figure();
 y = -SQUARE_SIZE * heightFigure();
 drawLines();

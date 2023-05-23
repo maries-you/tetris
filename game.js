@@ -8,13 +8,11 @@ const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
 
 const keyRestart = document.querySelector("#restart")
-keyRestart.addEventListener('click', function () {
-    location.reload();
-})
+keyRestart.addEventListener('click', () => location.reload());
 
 let x = SQUARE_SIZE;
 let y = 0;
-// рисует сетку на поле 
+// рисует сетку на поле
 function draw_lines() {
     const ctx = canvas.getContext('2d');
     ctx.strokeStyle = '#dfe2e8'
@@ -31,7 +29,6 @@ function draw_lines() {
         ctx.lineTo(MAX_WIDTH, SQUARE_SIZE * j);
         ctx.stroke();
     }
-
 }
 
 function getRandom(min, max) {
@@ -166,7 +163,7 @@ function figure() {
 function draw(x, y, color) {
     if (pause == false) {
         if (canvas.getContext) {
-            let ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d');
             ctx.fillStyle = "#555555";
             ctx.fillRect(x, y, SQUARE_SIZE, SQUARE_SIZE);
             ctx.fillStyle = color;
@@ -177,7 +174,7 @@ function draw(x, y, color) {
 
 function clear() {
     if (canvas.getContext) {
-        let ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
     }
 }
@@ -214,9 +211,9 @@ function restoreNext() {
 }
 function drawNext(x, y, color) {
     if (canvasNextFigure.getContext) {
-        let ctx = canvasNextFigure.getContext('2d');
+        const ctx = canvasNextFigure.getContext('2d');
         ctx.fillStyle = "#454545";
-        ctx.fillRect(x, y, SQUARE_SIZE + 2, SQUARE_SIZE); // рисует квадрат заливки 
+        ctx.fillRect(x, y, SQUARE_SIZE + 2, SQUARE_SIZE); // рисует квадрат заливки
         ctx.fillStyle = color;
         ctx.fillRect(x + 1, y + 1, SQUARE_SIZE - 6, SQUARE_SIZE - 6);
     }
@@ -224,7 +221,7 @@ function drawNext(x, y, color) {
 
 function clearNext() {
     if (canvasNextFigure.getContext) {
-        let ctx = canvasNextFigure.getContext('2d');
+        const ctx = canvasNextFigure.getContext('2d');
         ctx.clearRect(0, 0, MAX_WIDTH_NEXT_FIGURE, MAX_HEIGHT_NEXT_FIGURE);
     }
 }
@@ -239,18 +236,6 @@ function drawNextFigure() {
             }
         }
     }
-}
-
-function width_figure() {
-    let myArray = [];
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-            if (current_figure[i][j] === 1) {
-                myArray.push(i);
-            }
-        }
-    }
-    return Math.max.apply(null, myArray);
 }
 
 function height_figure() {

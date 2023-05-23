@@ -165,8 +165,8 @@ function internalDraw(x, y, color, canvas) {
         ctx.fillStyle = color;
         const borderSize = 2;
         ctx.fillRect(
-            x + borderSize, y + borderSize, 
-            SQUARE_SIZE - 2 * borderSize, SQUARE_SIZE - 2 * borderSize
+            x + borderSize, y + borderSize,
+            SQUARE_SIZE - 2 * borderSize, SQUARE_SIZE - 2 * borderSize,
         );
     }
 }

@@ -13,7 +13,7 @@ keyRestart.addEventListener('click', () => location.reload());
 let x = SQUARE_SIZE;
 let y = 0;
 // рисует сетку на поле
-function draw_lines() {
+function drawLines() {
     const ctx = canvas.getContext('2d');
     ctx.strokeStyle = '#dfe2e8'
 
@@ -36,7 +36,7 @@ function getRandom(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
-let current_color;
+let currentColor;
 
 const figure1 = [
     [0, 0, 0, 0],
@@ -86,70 +86,70 @@ const listFigure = []; // буфер фигур
 if (listFigure.concat.length < 2) {
     switch (getRandom(0, 7)) {
         case 0:
-            current_figure0 = figure1;
-            current_color = 'green';
+            currentFigure0 = figure1;
+            currentColor = 'green';
             break;
         case 1:
-            current_figure0 = figure2;
-            current_color = 'red';
+            currentFigure0 = figure2;
+            currentColor = 'red';
             break;
         case 2:
-            current_figure0 = figure3;
-            current_color = 'yellow';
+            currentFigure0 = figure3;
+            currentColor = 'yellow';
             break;
         case 3:
-            current_figure0 = figure4;
-            current_color = 'pink';
+            currentFigure0 = figure4;
+            currentColor = 'pink';
             break;
         case 4:
-            current_figure0 = figure5;
-            current_color = '#ec12a8';
+            currentFigure0 = figure5;
+            currentColor = '#ec12a8';
             break;
         case 5:
-            current_figure0 = figure6;
-            current_color = 'brown'
+            currentFigure0 = figure6;
+            currentColor = 'brown'
             break;
         default:
-            current_figure0 = figure7;
-            current_color = 'blue';
+            currentFigure0 = figure7;
+            currentColor = 'blue';
     }
-    listFigure.push(current_figure0)
+    listFigure.push(currentFigure0)
 }
 
 let next_figure;
 
 function figure() {
-    let current_figure0;
+    let currentFigure0;
     switch (getRandom(0, 7)) {
         case 0:
-            current_figure0 = figure1;
-            current_color = 'green';
+            currentFigure0 = figure1;
+            currentColor = 'green';
             break;
         case 1:
-            current_figure0 = figure2;
-            current_color = 'red';
+            currentFigure0 = figure2;
+            currentColor = 'red';
             break;
         case 2:
-            current_figure0 = figure3;
-            current_color = 'yellow';
+            currentFigure0 = figure3;
+            currentColor = 'yellow';
             break;
         case 3:
-            current_figure0 = figure4;
-            current_color = 'pink';
+            currentFigure0 = figure4;
+            currentColor = 'pink';
             break;
         case 4:
-            current_figure0 = figure5;
-            current_color = '#ec12a8';
+            currentFigure0 = figure5;
+            currentColor = '#ec12a8';
             break;
         case 5:
-            current_figure0 = figure6;
-            current_color = 'brown'
+            currentFigure0 = figure6;
+            currentColor = 'brown'
             break;
         default:
-            current_figure0 = figure7;
-            current_color = 'blue';
+            currentFigure0 = figure7;
+            currentColor = 'blue';
     }
-    listFigure.unshift(current_figure0)
+    listFigure.unshift(currentFigure0)
     delete listFigure[2]
     next_figure = listFigure[0]
     console.log(next_figure)
@@ -184,7 +184,7 @@ function draw_full_figure() {
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 if (current_figure[i][j] === 1) {
-                    draw(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, current_color)
+                    draw(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, currentColor)
                 }
             }
         }
@@ -230,7 +230,7 @@ function drawNextFigure() {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (next_figure[i][j] === 1) {
-                drawNext(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, current_color)
+                drawNext(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, currentColor)
             }
         }
     }
@@ -321,7 +321,7 @@ document.addEventListener('keydown', (event) => {
     }
 
     draw_full_figure();
-    draw_lines();
+    drawLines();
 });
 
 document.addEventListener('key', (event) => {
@@ -348,7 +348,7 @@ document.addEventListener('key', (event) => {
     }
 
     draw_full_figure();
-    draw_lines();
+    drawLines();
 });
 
 const arr = new Array();
@@ -363,7 +363,7 @@ function save() {
     for (let i = 0; i < current_figure.length; i++) {
         for (let j = 0; j < current_figure[0].length; j++) {
             if (current_figure[i][j] === 1 && y >= 0) {
-                arr[y / SQUARE_SIZE + j][x / SQUARE_SIZE + i] = current_color;
+                arr[y / SQUARE_SIZE + j][x / SQUARE_SIZE + i] = currentColor;
             }
         }
     }
@@ -470,7 +470,7 @@ function funcInterval() {
 
     draw_full_figure();
     delete_row();
-    draw_lines();
+    drawLines();
 
     if (turnNextFigure < 4) {
         drawNextFigure()
@@ -499,4 +499,4 @@ let interval = setInterval(funcInterval, level.timeOfTurn)
 
 current_figure = figure()
 y = -SQUARE_SIZE * height_figure()
-draw_lines()
+drawLines()

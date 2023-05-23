@@ -14,10 +14,11 @@
         "indent": ["error", 4, { "SwitchCase": 1 }],
         "camelcase": "warn",
         "quotes": "warn",
-        "no-array-constructor": "warn",
-        "no-console": "warn",
-        "semi": "warn",
-        "linebreak-style": "warn",
-        "require-jsdoc": "off"
+        "no-console": "off",
+        "no-array-constructor": "off",
+        "semi": "off",
+        "linebreak-style": "off",
+        "require-jsdoc": "off",
+        "max-len": "off"
     }
 }

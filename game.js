@@ -154,7 +154,7 @@ function height_figure() {
     return Math.max.apply(null, myArray);
 }
 
-
+const fallingFigureSound = new Audio("./audio/fall.wav");
 document.addEventListener('keydown', (event) => {
     if (is_game_over) return;
     const keyName = event.key;
@@ -182,6 +182,7 @@ document.addEventListener('keydown', (event) => {
     }
     if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
         y += SQ_SIZE;
+        fallingFigureSound.play();
     }
     draw_full_figure();
     draw_lines();
@@ -237,8 +238,10 @@ function delete_row() {
         if (count === 0) {
             // прокачано удаление строк
             const empty_row = new Array(arr[0].length).fill(0);
+            const lineClearSound = new Audio("./audio/line.wav")
             arr.splice(i, 1);
             arr.unshift(empty_row);
+            lineClearSound.play()
             count_row++;
             document.getElementById("count_row").innerHTML = count_row;
             console.log(count_row);
@@ -286,12 +289,16 @@ const interval = setInterval(() => {
     draw_full_figure();
     delete_row();
     draw_lines();
+    fallingFigureSound.play();          //если идет кровь из ушей, то убрать эту строчку
+    
     if (is_stop()) {
+        const gameOverSound = new Audio("./audio/gameover.wav")
+        gameOverSound.play
         console.log('!game over!')
         clearInterval(interval)
         is_game_over = true
     }
-
+    fallingFigureSound.pay();
     // убраны странные условия на max_height
     if (!is_collision(0, 1)) {
         y += SQ_SIZE;

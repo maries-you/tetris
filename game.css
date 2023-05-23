@@ -1,12 +1,36 @@
 #canvasid {
     border: 1px solid blue;
 }   
+#nextFigure {
+    border: 1px solid red;
+} 
 
 canvas{
-    float: left; 
-    margin: 0 20px;
-  }
-.game_name {
+  float: center; 
+ //margin: 20 20px;
+//position: center
+//  }
+....game_name11 {
     width: 300px;
     text-align: center;
+	float: center; 
 }
+ .layout {
+    width: 60%; /* Ширина всей таблицы */
+   }
+   TD {
+    vertical-align: top; /* Вертикальное выравнивание в ячейках */
+    padding: 10px; /* Поля вокруг ячеек */
+   }
+   TD.leftcol {
+    width: 400px; /* Ширина левой колонки */
+
+   }
+   TD.rightcol {
+   width: 400px
+    background: #fc3; /* Цвет фона правой колонки */
+   }
+   p {
+		font-size: 2em
+   }
+	

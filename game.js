@@ -8,7 +8,7 @@ const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
 
 const keyRestart = document.querySelector('#restart')
-keyRestart.addEventListener('click', () => location.reload());
+// keyRestart.addEventListener('click', () => location.reload());
 
 let x = SQUARE_SIZE;
 let y = 0;

@@ -239,7 +239,7 @@ function drawNextFigure() {
 }
 
 function height_figure() {
-    let myArray = [];
+    const myArray = [];
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (current_figure[i][j] === 1) {
@@ -257,12 +257,11 @@ function editPause() {
     pause = !pause;
     return pause;
 }
-// вызываем изменение переменной паузы кликом по кнопке 
+// вызываем изменение переменной паузы кликом по кнопке
 keyPause.addEventListener("click", editPause);
 // объект уровень, значения в начале игры
 const level = {levelNumber: 1, timeOfTurn: 1000};
 
-const outSpeedInfo = document.querySelector("#outSpeed");
 const keySpeedUp = document.querySelector("#plusSpeed");
 const keySpeedDown = document.querySelector("#minusSpeed");
 
@@ -313,12 +312,11 @@ document.addEventListener('keydown', (event) => {
         x += SQUARE_SIZE;
     }
     if (keyName === 'ArrowUp') {
-        let temp_figure = current_figure
+        const temp_figure = current_figure;
         current_figure = turn(current_figure);
         if (is_collision(0, 0)) {
             current_figure = temp_figure;
         }
-
     }
     if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
         y += SQUARE_SIZE;
@@ -341,7 +339,7 @@ document.addEventListener('key', (event) => {
         x += SQUARE_SIZE;
     }
     if (keyName === 'ArrowUp') {
-        let temp_figure = current_figure;
+        const temp_figure = current_figure;
         current_figure = turn(current_figure);
         if (is_collision(0, 0)) {
             current_figure = temp_figure;

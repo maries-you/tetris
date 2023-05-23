@@ -157,17 +157,26 @@ function figure() {
     return listFigure[1]
 }
 
+function internalDraw(x, y, color, canvas) {
+    if (canvas.getContext) {
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#555555';
+        ctx.fillRect(x, y, SQUARE_SIZE, SQUARE_SIZE);
+        ctx.fillStyle = color;
+        const borderSize = 2;
+        ctx.fillRect(
+            x + borderSize, y + borderSize, 
+            SQUARE_SIZE - 2 * borderSize, SQUARE_SIZE - 2 * borderSize
+        );
+    }
+}
 
 function draw(x, y, color) {
-    if (pause == false) {
-        if (canvas.getContext) {
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#555555';
-            ctx.fillRect(x, y, SQUARE_SIZE, SQUARE_SIZE);
-            ctx.fillStyle = color;
-            ctx.fillRect(x + 2, y + 2, SQUARE_SIZE - 6, SQUARE_SIZE - 6);
-        }
-    }
+    internalDraw(x, y, color, canvas);
+}
+
+function drawNext(x, y, color) {
+    internalDraw(x, y, color, canvasNextFigure);
 }
 
 function clear() {
@@ -178,14 +187,12 @@ function clear() {
 }
 
 function drawFullFigure() {
-    if (pause == false) {
-        clear();
-        restore();
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                if (currentFigure[i][j] === 1) {
-                    draw(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, currentColor)
-                }
+    clear();
+    restore();
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (currentFigure[i][j] === 1) {
+                draw(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, currentColor);
             }
         }
     }
@@ -207,15 +214,6 @@ function restoreNext() {
         }
     }
 }
-function drawNext(x, y, color) {
-    if (canvasNextFigure.getContext) {
-        const ctx = canvasNextFigure.getContext('2d');
-        ctx.fillStyle = '#454545';
-        ctx.fillRect(x, y, SQUARE_SIZE + 2, SQUARE_SIZE); // рисует квадрат заливки
-        ctx.fillStyle = color;
-        ctx.fillRect(x + 1, y + 1, SQUARE_SIZE - 6, SQUARE_SIZE - 6);
-    }
-}
 
 function clearNext() {
     if (canvasNextFigure.getContext) {
@@ -230,7 +228,7 @@ function drawNextFigure() {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (nextFigure[i][j] === 1) {
-                drawNext(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, currentColor)
+                drawNext(i * SQUARE_SIZE, j * SQUARE_SIZE, currentColor);
             }
         }
     }

@@ -236,7 +236,7 @@ function drawNextFigure() {
     }
 }
 
-function height_figure() {
+function heightFigure() {
     const myArray = [];
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
@@ -303,20 +303,20 @@ document.addEventListener('keydown', (event) => {
     const keyName = event.key;
     console.log('Событие keydown:' + keyName);
 
-    if (keyName === 'ArrowLeft' && !is_collision(-1, 0)) {
+    if (keyName === 'ArrowLeft' && !isCollision(-1, 0)) {
         x -= SQUARE_SIZE;
     }
-    if (keyName === 'ArrowRight' && !is_collision(1, 0)) {
+    if (keyName === 'ArrowRight' && !isCollision(1, 0)) {
         x += SQUARE_SIZE;
     }
     if (keyName === 'ArrowUp') {
-        const temp_figure = currentFigure;
+        const tempFigure = currentFigure;
         currentFigure = turn(currentFigure);
-        if (is_collision(0, 0)) {
-            currentFigure = temp_figure;
+        if (isCollision(0, 0)) {
+            currentFigure = tempFigure;
         }
     }
-    if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
+    if (keyName === 'ArrowDown' && !isCollision(0, 1)) {
         y += SQUARE_SIZE;
     }
 
@@ -329,21 +329,21 @@ document.addEventListener('key', (event) => {
     const keyName = event.key;
     console.log('Событие keydown: ' + keyName);
 
-    if (keyName === 'ArrowLeft' && !is_collision(-1, 0)) {
+    if (keyName === 'ArrowLeft' && !isCollision(-1, 0)) {
         x -= SQUARE_SIZE;
     }
 
-    if (keyName === 'ArrowRight' && !is_collision(1, 0)) {
+    if (keyName === 'ArrowRight' && !isCollision(1, 0)) {
         x += SQUARE_SIZE;
     }
     if (keyName === 'ArrowUp') {
-        const temp_figure = currentFigure;
+        const tempFigure = currentFigure;
         currentFigure = turn(currentFigure);
-        if (is_collision(0, 0)) {
-            currentFigure = temp_figure;
+        if (isCollision(0, 0)) {
+            currentFigure = tempFigure;
         }
     }
-    if (keyName === 'ArrowDown' && !is_collision(0, 1)) {
+    if (keyName === 'ArrowDown' && !isCollision(0, 1)) {
         y += SQUARE_SIZE;
     }
 
@@ -369,7 +369,7 @@ function save() {
     }
 }
 
-function is_stop() {
+function isStop() {
     for (let i = 0; i < arr[0].length; i++) {
         if (arr[0][i] !== 0) {
             return true
@@ -391,7 +391,7 @@ function restore() {
 // счетчик очков (линий)/ переменная, для блокировки авторазнога уровня сразу до максиума
 const countRow = {count: 0, nextLevelCount: 2}
 
-function delete_row() {
+function deleteRow() {
     for (let i = 0; i < arr.length; i++) {
         let count = 0;
         for (let j = 0; j < arr[0].length; j++) {
@@ -429,7 +429,7 @@ function delete_row() {
     }
 }
 
-function is_collision(dx, dy) {
+function isCollision(dx, dy) {
     for (let i = 0; i < currentFigure.length; i++) {
         for (let j = 0; j < currentFigure[0].length; j++) {
             if (currentFigure[i][j] === 1 && y >= 0) {
@@ -469,7 +469,7 @@ function funcInterval() {
     if (pause) return;
 
     drawFullFigure();
-    delete_row();
+    deleteRow();
     drawLines();
 
     if (turnNextFigure < 4) {
@@ -477,18 +477,18 @@ function funcInterval() {
         turnNextFigure++
     }
     // убраны странные условия на max_height
-    if (!is_collision(0, 1)) {
+    if (!isCollision(0, 1)) {
         y += SQUARE_SIZE;
     } else {
         save();
         console.log(arr);
         currentFigure = figure();
-        if (is_stop()) {
+        if (isStop()) {
             alert('!game over!')
             clearInterval(interval)
             isGameOver = true
         }
-        y = -SQUARE_SIZE * (height_figure() + 1);
+        y = -SQUARE_SIZE * (heightFigure() + 1);
         x = SQUARE_SIZE;
         console.log('save');
     }
@@ -497,5 +497,5 @@ function funcInterval() {
 let interval = setInterval(funcInterval, level.timeOfTurn);
 
 currentFigure = figure();
-y = -SQUARE_SIZE * height_figure();
+y = -SQUARE_SIZE * heightFigure();
 drawLines();

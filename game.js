@@ -119,7 +119,6 @@ if (listFigure.concat.length < 2) {
 let next_figure;
 
 function figure() {
-    let current_figure
     let current_figure0;
     switch (getRandom(0, 7)) {
         case 0:
@@ -154,9 +153,8 @@ function figure() {
     delete listFigure[2]
     next_figure = listFigure[0]
     console.log(next_figure)
-    current_figure = listFigure[1]
     turnNextFigure = 0
-    return current_figure
+    return listFigure[1]
 }
 
 

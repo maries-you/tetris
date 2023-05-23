@@ -6,6 +6,9 @@ const MAX_WIDTH_NEXT_FIGURE = 150;
 let isGameOver = false;
 const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
+const fallingFigureSound = new Audio("./audio/fall.wav");
+const lineClearSound = new Audio("./audio/line.wav");
+const gameOverSound = new Audio("./audio/gameover.wav");
 
 // const keyRestart = document.querySelector('#restart')
 // keyRestart.addEventListener('click', () => location.reload());
@@ -375,7 +378,7 @@ function deleteRow() {
             arr.splice(i, 1);
             arr.unshift(emptyRow);
             countRow.count++;
-
+            lineClearSound.play();
             document.getElementById('count_row').innerHTML = countRow.count;
             console.log(countRow.count);
             return countRow.count
@@ -455,6 +458,7 @@ function funcInterval() {
         console.log(arr);
         currentFigure = figure();
         if (isStop()) {
+            gameOverSound.play();
             alert('!game over!')
             clearInterval(interval)
             isGameOver = true

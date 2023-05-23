@@ -373,9 +373,9 @@ function deleteRow() {
             }
         }
         if (count === 0) {
-            const empty_row = new Array(arr[0].length).fill(0);
+            const emptyRow = new Array(arr[0].length).fill(0);
             arr.splice(i, 1);
-            arr.unshift(empty_row);
+            arr.unshift(emptyRow);
             countRow.count++;
 
             document.getElementById('count_row').innerHTML = countRow.count;

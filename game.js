@@ -6,6 +6,8 @@ const MAX_WIDTH_NEXT_FIGURE = 150;
 let isGameOver = false;
 const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
+const lineClearSound = new Audio('./audio/line.wav');
+const gameOverSound = new Audio('./audio/gameover.wav');
 
 // const keyRestart = document.querySelector('#restart')
 // keyRestart.addEventListener('click', () => location.reload());
@@ -15,7 +17,7 @@ let y = 0;
 // рисует сетку на поле
 function drawLines() {
     const ctx = canvas.getContext('2d');
-    ctx.strokeStyle = '#dfe2e8'
+    ctx.strokeStyle = '#dfe2e8';
 
     for (let i = 0; i < MAX_WIDTH / SQUARE_SIZE; i++) {
         ctx.beginPath();
@@ -43,43 +45,43 @@ const figure1 = [
     [0, 1, 1, 0],
     [0, 1, 1, 0],
     [0, 0, 0, 0],
-]
+];
 const figure2 = [
     [0, 0, 0, 0],
     [0, 1, 1, 0],
     [0, 1, 0, 0],
     [0, 1, 0, 0],
-]
+];
 const figure3 = [
     [0, 1, 0, 0],
     [0, 1, 0, 0],
     [0, 1, 0, 0],
     [0, 1, 0, 0],
-]
+];
 const figure4 = [
     [0, 0, 0, 0],
     [1, 1, 1, 0],
     [0, 1, 0, 0],
     [0, 0, 0, 0],
-]
+];
 const figure5 = [
     [0, 0, 0, 0],
     [0, 1, 0, 0],
     [0, 1, 1, 0],
     [0, 0, 1, 0],
-]
+];
 const figure6 = [
     [0, 0, 0, 0],
     [1, 1, 0, 0],
     [0, 1, 1, 0],
     [0, 0, 0, 0],
-]
+];
 const figure7 = [
     [0, 0, 0, 0],
     [1, 1, 1, 0],
     [1, 0, 0, 0],
     [0, 0, 0, 0],
-]
+];
 
 const listFigure = []; // буфер фигур
 // первичное заполнение буфера фигурами
@@ -107,13 +109,13 @@ if (listFigure.concat.length < 2) {
             break;
         case 5:
             currentFigure0 = figure6;
-            currentColor = 'brown'
+            currentColor = 'brown';
             break;
         default:
             currentFigure0 = figure7;
             currentColor = 'blue';
     }
-    listFigure.push(currentFigure0)
+    listFigure.push(currentFigure0);
 }
 
 let nextFigure;
@@ -143,18 +145,18 @@ function figure() {
             break;
         case 5:
             currentFigure0 = figure6;
-            currentColor = 'brown'
+            currentColor = 'brown';
             break;
         default:
             currentFigure0 = figure7;
             currentColor = 'blue';
     }
-    listFigure.unshift(currentFigure0)
-    delete listFigure[2]
-    nextFigure = listFigure[0]
-    console.log(nextFigure)
-    turnNextFigure = 0
-    return listFigure[1]
+    listFigure.unshift(currentFigure0);
+    delete listFigure[2];
+    nextFigure = listFigure[0];
+    console.log(nextFigure);
+    turnNextFigure = 0;
+    return listFigure[1];
 }
 
 function internalDraw(x, y, color, canvas) {
@@ -209,7 +211,7 @@ function restoreNext() {
     for (let i = 0; i < arrNext.length; i++) {
         for (let j = 0; j < arrNext[0].length; j++) {
             if (arrNext[i][j] !== 0) {
-                drawNext(j, i, arrNext[i][j])
+                drawNext(j, i, arrNext[i][j]);
             }
         }
     }
@@ -223,7 +225,7 @@ function clearNext() {
 }
 
 function drawNextFigure() {
-    clearNext()
+    clearNext();
     restoreNext();
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
@@ -267,34 +269,34 @@ const blockTimeOfTurn = [1000, 650, 500, 300, 160];
 
 function plusGameSpeed() {
     if (level.levelNumber < 5) {
-        level.levelNumber = level.levelNumber + 1
-        level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1]
+        level.levelNumber = level.levelNumber + 1;
+        level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1];
 
-        document.getElementById('outSpeed').innerHTML = level.levelNumber
-        console.log(level.timeOfTurn)
-        console.log(level)
+        document.getElementById('outSpeed').innerHTML = level.levelNumber;
+        console.log(level.timeOfTurn);
+        console.log(level);
 
-        clearInterval(interval)
-        interval = setInterval(funcInterval, level.timeOfTurn)
+        clearInterval(interval);
+        interval = setInterval(funcInterval, level.timeOfTurn);
     }
 }
 
 function minusGameSpeed() {
     if (level.levelNumber > 1) {
-        level.levelNumber = level.levelNumber - 1
-        level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1]
+        level.levelNumber = level.levelNumber - 1;
+        level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1];
 
-        document.getElementById('outSpeed').innerHTML = level.levelNumber
-        console.log(level.timeOfTurn)
-        console.log(level)
+        document.getElementById('outSpeed').innerHTML = level.levelNumber;
+        console.log(level.timeOfTurn);
+        console.log(level);
 
-        clearInterval(interval)
-        interval = setInterval(funcInterval, level.timeOfTurn)
+        clearInterval(interval);
+        interval = setInterval(funcInterval, level.timeOfTurn);
     }
 }
 
-keySpeedUp.addEventListener('click', plusGameSpeed)
-keySpeedDown.addEventListener('click', minusGameSpeed)
+keySpeedUp.addEventListener('click', plusGameSpeed);
+keySpeedDown.addEventListener('click', minusGameSpeed);
 
 document.addEventListener('keydown', (event) => {
     if (isGameOver || pause) return;
@@ -343,24 +345,24 @@ function save() {
 function isStop() {
     for (let i = 0; i < arr[0].length; i++) {
         if (arr[0][i] !== 0) {
-            return true
+            return true;
         }
     }
-    return false
+    return false;
 }
 
 function restore() {
     for (let i = 0; i < arr.length; i++) {
         for (let j = 0; j < arr[0].length; j++) {
             if (arr[i][j] !== 0) {
-                draw(j * SQUARE_SIZE, i * SQUARE_SIZE, arr[i][j])
+                draw(j * SQUARE_SIZE, i * SQUARE_SIZE, arr[i][j]);
             }
         }
     }
 }
 
 // счетчик очков (линий)/ переменная, для блокировки авторазнога уровня сразу до максиума
-const countRow = {count: 0, nextLevelCount: 2}
+const countRow = {count: 0, nextLevelCount: 2};
 
 function deleteRow() {
     for (let i = 0; i < arr.length; i++) {
@@ -375,27 +377,27 @@ function deleteRow() {
             arr.splice(i, 1);
             arr.unshift(emptyRow);
             countRow.count++;
-
+            lineClearSound.play();
             document.getElementById('count_row').innerHTML = countRow.count;
             console.log(countRow.count);
-            return countRow.count
+            return countRow.count;
         }
 
         if (countRow.count == 5 && countRow.nextLevelCount == 2) {
-            plusGameSpeed()
-            countRow.nextLevelCount++
+            plusGameSpeed();
+            countRow.nextLevelCount++;
         }
         if (countRow.count == 10 && countRow.nextLevelCount == 3) {
-            plusGameSpeed()
-            countRow.nextLevelCount++
+            plusGameSpeed();
+            countRow.nextLevelCount++;
         }
         if (countRow.count == 15 && countRow.nextLevelCount == 4) {
-            plusGameSpeed()
-            countRow.nextLevelCount++
+            plusGameSpeed();
+            countRow.nextLevelCount++;
         }
         if (countRow.count == 20 && countRow.nextLevelCount == 5) {
-            plusGameSpeed()
-            countRow.nextLevelCount++
+            plusGameSpeed();
+            countRow.nextLevelCount++;
         }
     }
 }
@@ -413,12 +415,12 @@ function isCollision(dx, dy) {
                     return true;
                 }
                 if (arr[y / SQUARE_SIZE + j + dy][x / SQUARE_SIZE + i + dx] !== 0) {
-                    return true
+                    return true;
                 }
             }
         }
     }
-    return false
+    return false;
 }
 
 function turn(matrix) {
@@ -434,7 +436,7 @@ function turn(matrix) {
     return result;
 }
 
-let turnNextFigure = 0 // счетчик подачи след. фигуры
+let turnNextFigure = 0; // счетчик подачи след. фигуры
 
 function funcInterval() {
     if (pause) return;
@@ -444,8 +446,8 @@ function funcInterval() {
     drawLines();
 
     if (turnNextFigure < 4) {
-        drawNextFigure()
-        turnNextFigure++
+        drawNextFigure();
+        turnNextFigure++;
     }
     // убраны странные условия на max_height
     if (!isCollision(0, 1)) {
@@ -455,9 +457,10 @@ function funcInterval() {
         console.log(arr);
         currentFigure = figure();
         if (isStop()) {
-            alert('!game over!')
-            clearInterval(interval)
-            isGameOver = true
+            gameOverSound.play();
+            alert('!game over!');
+            clearInterval(interval);
+            isGameOver = true;
         }
         y = -SQUARE_SIZE * (heightFigure() + 1);
         x = SQUARE_SIZE;

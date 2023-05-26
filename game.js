@@ -82,6 +82,15 @@ const figure7 = [
     [1, 0, 0, 0],
     [0, 0, 0, 0],
 ];
+const figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
+const colors = ['green', 'red', 'yellow', 'pink', '#ec12a8', 'brown', 'blue'];
+
+function getFigure() {
+    const index = getRandom(0, figures.length);
+    const color = colors[index];
+    const figure = figures[index];
+    return {color: color, figure: figure}
+}
 
 const listFigure = []; // буфер фигур
 // первичное заполнение буфера фигурами
@@ -121,37 +130,37 @@ if (listFigure.concat.length < 2) {
 let nextFigure;
 
 function figure() {
-    let currentFigure0;
+    let currentFigure;
     switch (getRandom(0, 7)) {
         case 0:
-            currentFigure0 = figure1;
+            currentFigure = figure1;
             currentColor = 'green';
             break;
         case 1:
-            currentFigure0 = figure2;
+            currentFigure = figure2;
             currentColor = 'red';
             break;
         case 2:
-            currentFigure0 = figure3;
+            currentFigure = figure3;
             currentColor = 'yellow';
             break;
         case 3:
-            currentFigure0 = figure4;
+            currentFigure = figure4;
             currentColor = 'pink';
             break;
         case 4:
-            currentFigure0 = figure5;
+            currentFigure = figure5;
             currentColor = '#ec12a8';
             break;
         case 5:
-            currentFigure0 = figure6;
+            currentFigure = figure6;
             currentColor = 'brown';
             break;
         default:
-            currentFigure0 = figure7;
+            currentFigure = figure7;
             currentColor = 'blue';
     }
-    listFigure.unshift(currentFigure0);
+    listFigure.unshift(currentFigure);
     delete listFigure[2];
     nextFigure = listFigure[0];
     console.log(nextFigure);

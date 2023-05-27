@@ -38,7 +38,7 @@ function getRandom(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
-let currentColor;
+
 
 const figure1 = [
     [0, 0, 0, 0],
@@ -82,82 +82,21 @@ const figure7 = [
     [1, 0, 0, 0],
     [0, 0, 0, 0],
 ];
+const figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
+const colors = ['green', 'red', 'yellow', 'pink', '#ec12a8', 'brown', 'blue'];
 
-const listFigure = []; // буфер фигур
-// первичное заполнение буфера фигурами
-if (listFigure.concat.length < 2) {
-    switch (getRandom(0, 7)) {
-        case 0:
-            currentFigure0 = figure1;
-            currentColor = 'green';
-            break;
-        case 1:
-            currentFigure0 = figure2;
-            currentColor = 'red';
-            break;
-        case 2:
-            currentFigure0 = figure3;
-            currentColor = 'yellow';
-            break;
-        case 3:
-            currentFigure0 = figure4;
-            currentColor = 'pink';
-            break;
-        case 4:
-            currentFigure0 = figure5;
-            currentColor = '#ec12a8';
-            break;
-        case 5:
-            currentFigure0 = figure6;
-            currentColor = 'brown';
-            break;
-        default:
-            currentFigure0 = figure7;
-            currentColor = 'blue';
-    }
-    listFigure.push(currentFigure0);
+function getFigure() {
+    const index = getRandom(0, figures.length);
+    const color = colors[index];
+    const figure = figures[index];
+    return {color: color, figure: figure}
 }
-
-let nextFigure;
-
-function figure() {
-    let currentFigure0;
-    switch (getRandom(0, 7)) {
-        case 0:
-            currentFigure0 = figure1;
-            currentColor = 'green';
-            break;
-        case 1:
-            currentFigure0 = figure2;
-            currentColor = 'red';
-            break;
-        case 2:
-            currentFigure0 = figure3;
-            currentColor = 'yellow';
-            break;
-        case 3:
-            currentFigure0 = figure4;
-            currentColor = 'pink';
-            break;
-        case 4:
-            currentFigure0 = figure5;
-            currentColor = '#ec12a8';
-            break;
-        case 5:
-            currentFigure0 = figure6;
-            currentColor = 'brown';
-            break;
-        default:
-            currentFigure0 = figure7;
-            currentColor = 'blue';
-    }
-    listFigure.unshift(currentFigure0);
-    delete listFigure[2];
-    nextFigure = listFigure[0];
-    console.log(nextFigure);
-    turnNextFigure = 0;
-    return listFigure[1];
-}
+let figure = getFigure();
+let currentFigure = figure.figure;
+let currentColor = figure.color;
+figure = getFigure();
+let nextFigure = figure.figure;
+let nextColor = figure.color;
 
 function internalDraw(x, y, color, canvas) {
     if (canvas.getContext) {
@@ -207,15 +146,6 @@ for (let i = 0; i < 4; i++) {
         arrNext[i][j] = 0;
     }
 }
-function restoreNext() {
-    for (let i = 0; i < arrNext.length; i++) {
-        for (let j = 0; j < arrNext[0].length; j++) {
-            if (arrNext[i][j] !== 0) {
-                drawNext(j, i, arrNext[i][j]);
-            }
-        }
-    }
-}
 
 function clearNext() {
     if (canvasNextFigure.getContext) {
@@ -226,11 +156,10 @@ function clearNext() {
 
 function drawNextFigure() {
     clearNext();
-    restoreNext();
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (nextFigure[i][j] === 1) {
-                drawNext(i * SQUARE_SIZE, j * SQUARE_SIZE, currentColor);
+                drawNext(i * SQUARE_SIZE, j * SQUARE_SIZE, nextColor);
             }
         }
     }
@@ -265,7 +194,7 @@ const keySpeedDown = document.querySelector('#minusSpeed');
 
 // список скоростей
 // список времени ожидения хода фигуры
-const blockTimeOfTurn = [1000, 650, 500, 300, 160];
+const blockTimeOfTurn = [1000, 850, 700, 550, 350];
 
 function plusGameSpeed() {
     if (level.levelNumber < 5) {
@@ -335,8 +264,10 @@ for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
 function save() {
     for (let i = 0; i < currentFigure.length; i++) {
         for (let j = 0; j < currentFigure[0].length; j++) {
-            if (currentFigure[i][j] === 1 && y >= 0) {
-                arr[y / SQUARE_SIZE + j][x / SQUARE_SIZE + i] = currentColor;
+            const indexX = x / SQUARE_SIZE + i;
+            const indexY = y / SQUARE_SIZE + j;
+            if (currentFigure[i][j] === 1 && indexY >= 0) {
+                arr[indexY][indexX] = currentColor;
             }
         }
     }
@@ -383,19 +314,12 @@ function deleteRow() {
             return countRow.count;
         }
 
-        if (countRow.count == 5 && countRow.nextLevelCount == 2) {
-            plusGameSpeed();
-            countRow.nextLevelCount++;
-        }
-        if (countRow.count == 10 && countRow.nextLevelCount == 3) {
-            plusGameSpeed();
-            countRow.nextLevelCount++;
-        }
-        if (countRow.count == 15 && countRow.nextLevelCount == 4) {
-            plusGameSpeed();
-            countRow.nextLevelCount++;
-        }
-        if (countRow.count == 20 && countRow.nextLevelCount == 5) {
+        if (
+            countRow.count == 5 && countRow.nextLevelCount == 2 ||
+            countRow.count == 10 && countRow.nextLevelCount == 3 ||
+            countRow.count == 15 && countRow.nextLevelCount == 4 ||
+            countRow.count == 20 && countRow.nextLevelCount == 5
+        ) {
             plusGameSpeed();
             countRow.nextLevelCount++;
         }
@@ -405,16 +329,19 @@ function deleteRow() {
 function isCollision(dx, dy) {
     for (let i = 0; i < currentFigure.length; i++) {
         for (let j = 0; j < currentFigure[0].length; j++) {
-            if (currentFigure[i][j] === 1 && y >= 0) {
-                const calculatedX = x + (i + dx) * SQUARE_SIZE;
-                const calculatedY = y + (j + dy + 1) * SQUARE_SIZE;
+            if (currentFigure[i][j] === 1) {
+                const indexX = x / SQUARE_SIZE + i + dx;
+                const indexY = y / SQUARE_SIZE + j + dy;
+
                 if (
-                    calculatedY > MAX_HEIGHT ||
-                    calculatedX < 0 || calculatedX > MAX_WIDTH
+                    indexY >= MAX_HEIGHT / SQUARE_SIZE ||
+                    indexX < 0 ||
+                    indexX > MAX_WIDTH / SQUARE_SIZE
                 ) {
                     return true;
                 }
-                if (arr[y / SQUARE_SIZE + j + dy][x / SQUARE_SIZE + i + dx] !== 0) {
+                console.log(indexX, indexY)
+                if (indexY >= 0 && arr[indexY][indexX] !== 0) {
                     return true;
                 }
             }
@@ -436,26 +363,27 @@ function turn(matrix) {
     return result;
 }
 
-let turnNextFigure = 0; // счетчик подачи след. фигуры
-
 function funcInterval() {
-    if (pause) return;
+    if (pause || isGameOver) return;
+
+    deleteRow();
 
     drawFullFigure();
-    deleteRow();
+    drawNextFigure();
+
     drawLines();
 
-    if (turnNextFigure < 4) {
-        drawNextFigure();
-        turnNextFigure++;
-    }
     // убраны странные условия на max_height
     if (!isCollision(0, 1)) {
         y += SQUARE_SIZE;
     } else {
         save();
         console.log(arr);
-        currentFigure = figure();
+        currentFigure = nextFigure;
+        currentColor = nextColor;
+        figure = getFigure();
+        nextFigure = figure.figure;
+        nextColor = figure.color;
         if (isStop()) {
             gameOverSound.play();
             alert('!game over!');
@@ -470,6 +398,5 @@ function funcInterval() {
 // таймер обновления шага фигуры
 let interval = setInterval(funcInterval, level.timeOfTurn);
 
-currentFigure = figure();
 y = -SQUARE_SIZE * heightFigure();
 drawLines();

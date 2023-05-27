@@ -98,9 +98,6 @@ figure = getFigure();
 let nextFigure = figure.figure;
 let nextColor = figure.color;
 
-
-
-
 function internalDraw(x, y, color, canvas) {
     if (canvas.getContext) {
         const ctx = canvas.getContext('2d');
@@ -338,7 +335,7 @@ function isCollision(dx, dy) {
 
                 if (
                     indexY >= MAX_HEIGHT / SQUARE_SIZE ||
-                    indexX < 0 || 
+                    indexX < 0 ||
                     indexX > MAX_WIDTH / SQUARE_SIZE
                 ) {
                     return true;

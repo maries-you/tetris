@@ -22,13 +22,13 @@ TD {
     vertical-align: top; /* Вертикальное выравнивание в ячейках */
     padding: 10px; /* Поля вокруг ячеек */
 }
-TD.leftcol {
-    width: 400px; /* Ширина левой колонки */
+/* TD.leftcol {
+    width: 400px;
 }
 TD.rightcol {
     width: 400px;
-    background-color: #fc3; /* Цвет фона правой колонки */
-}
+    background-color: #fc3;
+} */
 p {
     font-size: 2em
 }

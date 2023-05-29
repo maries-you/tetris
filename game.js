@@ -8,11 +8,11 @@ const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
 const lineClearSound = new Audio('./audio/line.wav');
 const gameOverSound = new Audio('./audio/gameover.wav');
-const levelPlusKey = document.querySelector("#plusLevel");
-const levelMinusKey = document.querySelector("#minusLevel");
+const levelPlusKey = document.querySelector('#plusLevel');
+const levelMinusKey = document.querySelector('#minusLevel');
 
 const keyRestart = document.querySelector('#restart')
-keyRestart.addEventListener('click', get_array);
+keyRestart.addEventListener('click', getArray);
 
 let x = SQUARE_SIZE;
 let y = 0;
@@ -85,7 +85,7 @@ const figure7 = [
 ];
 const figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 const colors = ['green', 'red', 'yellow', 'pink', '#ec12a8', 'brown', 'blue'];
-let levelObject = { level: 1, index: 19 };
+const levelObject = { level: 1, index: 19 };
 function getInsexForLevel() {
     switch (levelObject.level) {
         case (2):
@@ -103,8 +103,8 @@ function getInsexForLevel() {
     return levelObject.index
 }
 
-let arr = new Array();
-function get_array() {
+const arr = new Array();
+function getArray() {
     for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
         arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);
         for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
@@ -113,19 +113,18 @@ function get_array() {
             } else {
                 arr[i][j] = 0;
             };
-
         };
     };
     return arr;
 };
 console.log(arr);
-get_array();
+getArray();
 
 function plusGameLevel() {
     if (levelObject.level < 4) {
         levelObject.level = levelObject.level + 1;
         getInsexForLevel();
-        get_array();
+        getArray();
         document.querySelector('#levelGame').innerHTML = levelObject.level;
     }
 }
@@ -133,7 +132,7 @@ function minusGameLevel() {
     if (levelObject.level > 1) {
         levelObject.level = levelObject.level - 1;
         getInsexForLevel();
-        get_array();
+        getArray();
         document.querySelector('#levelGame').innerHTML = levelObject.level;
     }
 }

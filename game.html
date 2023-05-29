@@ -16,15 +16,20 @@
                     <canvas id="canvasid" height="600" width="300"></canvas>
                 </td>
                 <td class="rightcol">
-                    </br></br></br></br></br></br>
+                    </br></br></br></br><p></p>
+                    <canvas id="nextFigure" height="120" width="120"></canvas>
+					</br>
                     <button id="pause">Пауза</button> <button id="restart">Рестарт Tetris</button>
                     </br></br>
                     <button id="plusSpeed">+ к скорости игры </button> <button id="minusSpeed">- к скорости
                         игры</button>
                     <p>Счет - <span id="count_row">0</span>
-                    <p>
-                    <p> Скорость игры: &nbsp <output id="outSpeed" value="1">1</output></p>
-                    <canvas id="nextFigure" height="120" width="120"></canvas>
+                    <p></p>
+                    <p> Скорость игры: &nbsp <output id="level" value="1">1</output></p>
+					<p></p>
+					<button id="plusLevel">+ к сложности</button><p> Сложность игры: &nbsp <output id="levelGame" value="1">1</output></p><button id="minusLevel">- к скорости игры </button>
+					</br>
+					
                 </td>
                 <td>
                     Release date {{ release_date }}

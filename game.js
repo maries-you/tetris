@@ -8,9 +8,11 @@ const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
 const lineClearSound = new Audio('./audio/line.wav');
 const gameOverSound = new Audio('./audio/gameover.wav');
+const levelPlusKey = document.querySelector("#plusLevel");
+const levelMinusKey = document.querySelector("#minusLevel");
 
-// const keyRestart = document.querySelector('#restart')
-// keyRestart.addEventListener('click', () => location.reload());
+const keyRestart = document.querySelector('#restart')
+keyRestart.addEventListener('click',get_array); /////////////////////// рестарт
 
 let x = SQUARE_SIZE;
 let y = 0;
@@ -38,7 +40,6 @@ function getRandom(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
-
 
 const figure1 = [
     [0, 0, 0, 0],
@@ -84,6 +85,62 @@ const figure7 = [
 ];
 const figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 const colors = ['green', 'red', 'yellow', 'pink', '#ec12a8', 'brown', 'blue'];
+//////////////////////////////////////////////////////////////////////////////////////////////
+let levelObject = {level:1, index:19};
+function getInsexForLevel(){
+switch (levelObject.level){
+    case (2):
+        levelObject.index = 17;
+    break;
+ 
+    case (3):
+        levelObject.index = 15;
+    break;
+    case (4):
+        levelObject.index = 13;
+    break;
+    default:
+        levelObject.index = 19;    
+}
+return levelObject.index
+}
+
+let arr = new Array();
+function get_array (){
+    for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
+        arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);
+                for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
+                    if(i>levelObject.index ){
+                    arr[i][j] = getRandom(0,2);
+                    } else {
+                    arr[i][j] = 0;
+                    };
+            
+            };
+};
+return arr;
+};
+console.log(arr);
+get_array();
+
+function plusGameLevel(){
+    if (levelObject.level<4){
+        levelObject.level = levelObject.level +1; 
+        getInsexForLevel();
+        get_array();
+        document.querySelector('#levelGame').innerHTML = levelObject.level;
+    }
+}
+function minusGameLevel(){
+    if (levelObject.level>1){
+        levelObject.level = levelObject.level -1; 
+        getInsexForLevel();
+        get_array();
+        document.querySelector('#levelGame').innerHTML = levelObject.level;
+    }
+}
+levelPlusKey.addEventListener('click', plusGameLevel);
+levelMinusKey.addEventListener('click',minusGameLevel);
 
 function getFigure() {
     const index = getRandom(0, figures.length);
@@ -192,7 +249,6 @@ const level = {levelNumber: 1, timeOfTurn: 1000};
 const keySpeedUp = document.querySelector('#plusSpeed');
 const keySpeedDown = document.querySelector('#minusSpeed');
 
-// список скоростей
 // список времени ожидения хода фигуры
 const blockTimeOfTurn = [1000, 850, 700, 550, 350];
 
@@ -253,13 +309,6 @@ document.addEventListener('keydown', (event) => {
     drawLines();
 });
 
-const arr = new Array();
-for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
-    arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);
-    for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
-        arr[i][j] = 0;
-    }
-}
 
 function save() {
     for (let i = 0; i < currentFigure.length; i++) {
@@ -340,7 +389,6 @@ function isCollision(dx, dy) {
                 ) {
                     return true;
                 }
-                console.log(indexX, indexY)
                 if (indexY >= 0 && arr[indexY][indexX] !== 0) {
                     return true;
                 }

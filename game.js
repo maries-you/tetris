@@ -12,7 +12,7 @@ const levelPlusKey = document.querySelector("#plusLevel");
 const levelMinusKey = document.querySelector("#minusLevel");
 
 const keyRestart = document.querySelector('#restart')
-keyRestart.addEventListener('click',get_array); /////////////////////// рестарт
+keyRestart.addEventListener('click', get_array);
 
 let x = SQUARE_SIZE;
 let y = 0;
@@ -85,68 +85,66 @@ const figure7 = [
 ];
 const figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 const colors = ['green', 'red', 'yellow', 'pink', '#ec12a8', 'brown', 'blue'];
-//////////////////////////////////////////////////////////////////////////////////////////////
-let levelObject = {level:1, index:19};
-function getInsexForLevel(){
-switch (levelObject.level){
-    case (2):
-        levelObject.index = 17;
-    break;
- 
-    case (3):
-        levelObject.index = 15;
-    break;
-    case (4):
-        levelObject.index = 13;
-    break;
-    default:
-        levelObject.index = 19;    
-}
-return levelObject.index
+let levelObject = { level: 1, index: 19 };
+function getInsexForLevel() {
+    switch (levelObject.level) {
+        case (2):
+            levelObject.index = 17;
+            break;
+        case (3):
+            levelObject.index = 15;
+            break;
+        case (4):
+            levelObject.index = 13;
+            break;
+        default:
+            levelObject.index = 19;
+    }
+    return levelObject.index
 }
 
 let arr = new Array();
-function get_array (){
+function get_array() {
     for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
         arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);
-                for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
-                    if(i>levelObject.index ){
-                    arr[i][j] = getRandom(0,2);
-                    } else {
-                    arr[i][j] = 0;
-                    };
-            
+        for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
+            if (i > levelObject.index) {
+                arr[i][j] = getRandom(0, 2);
+            } else {
+                arr[i][j] = 0;
             };
-};
-return arr;
+
+        };
+    };
+    return arr;
 };
 console.log(arr);
 get_array();
 
-function plusGameLevel(){
-    if (levelObject.level<4){
-        levelObject.level = levelObject.level +1; 
+function plusGameLevel() {
+    if (levelObject.level < 4) {
+        levelObject.level = levelObject.level + 1;
         getInsexForLevel();
         get_array();
         document.querySelector('#levelGame').innerHTML = levelObject.level;
     }
 }
-function minusGameLevel(){
-    if (levelObject.level>1){
-        levelObject.level = levelObject.level -1; 
+function minusGameLevel() {
+    if (levelObject.level > 1) {
+        levelObject.level = levelObject.level - 1;
         getInsexForLevel();
         get_array();
         document.querySelector('#levelGame').innerHTML = levelObject.level;
     }
 }
 levelPlusKey.addEventListener('click', plusGameLevel);
-levelMinusKey.addEventListener('click',minusGameLevel);
+levelMinusKey.addEventListener('click', minusGameLevel);
 
 function getFigure() {
     const index = getRandom(0, figures.length);
     const color = colors[index];
     const figure = figures[index];
-    return {color: color, figure: figure}
+    return { color: color, figure: figure }
 }
 let figure = getFigure();
 let currentFigure = figure.figure;
@@ -244,7 +242,7 @@ function editPause() {
 // вызываем изменение переменной паузы кликом по кнопке
 keyPause.addEventListener('click', editPause);
 // объект уровень, значения в начале игры
-const level = {levelNumber: 1, timeOfTurn: 1000};
+const level = { levelNumber: 1, timeOfTurn: 1000 };
 
 const keySpeedUp = document.querySelector('#plusSpeed');
 const keySpeedDown = document.querySelector('#minusSpeed');
@@ -342,7 +340,7 @@ function restore() {
 }
 
 // счетчик очков (линий)/ переменная, для блокировки авторазнога уровня сразу до максиума
-const countRow = {count: 0, nextLevelCount: 2};
+const countRow = { count: 0, nextLevelCount: 2 };
 
 function deleteRow() {
     for (let i = 0; i < arr.length; i++) {

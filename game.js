@@ -104,7 +104,7 @@ function updateExsistingBlocks() {
 }
 updateExsistingBlocks();
 
-function  addGameLevelVisual() {
+function addGameLevelVisual() {
     updateExsistingBlocks();
     document.querySelector('#levelGame').innerHTML = numberLevel;
 }
@@ -113,7 +113,7 @@ function plusGameLevel() {
     if (numberLevel < MAX_HEIGHT / SQUARE_SIZE) {
         stringSetLevel--;
         numberLevel++;
-         addGameLevelVisual();
+        addGameLevelVisual();
     }
 }
 
@@ -121,7 +121,7 @@ function minusGameLevel() {
     if (numberLevel > 1) {
         stringSetLevel++;
         numberLevel--;
-         addGameLevelVisual();
+        addGameLevelVisual();
     }
 }
 

@@ -8,9 +8,11 @@ const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
 const lineClearSound = new Audio('./audio/line.wav');
 const gameOverSound = new Audio('./audio/gameover.wav');
+const levelPlusKey = document.querySelector('#plusLevel');
+const levelMinusKey = document.querySelector('#minusLevel');
 
-// const keyRestart = document.querySelector('#restart')
-// keyRestart.addEventListener('click', () => location.reload());
+const keyRestart = document.querySelector('#restart')
+keyRestart.addEventListener('click', updateExsistingBlocks);
 
 let x = SQUARE_SIZE;
 let y = 0;
@@ -38,7 +40,6 @@ function getRandom(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
-
 
 const figure1 = [
     [0, 0, 0, 0],
@@ -85,12 +86,52 @@ const figure7 = [
 const figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 const colors = ['green', 'red', 'yellow', 'pink', '#ec12a8', 'brown', 'blue'];
 
+let numberLevel = 1;
+
+const arr = new Array();
+function updateExsistingBlocks() {
+    for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
+        arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);
+        for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
+            if (i > MAX_HEIGHT / SQUARE_SIZE - numberLevel) {
+                arr[i][j] = getRandom(0, 2);
+            } else {
+                arr[i][j] = 0;
+            };
+        };
+    };
+}
+updateExsistingBlocks();
+
+function addGameLevelVisual() {
+    updateExsistingBlocks();
+    document.querySelector('#levelGame').innerHTML = numberLevel;
+}
+
+function plusGameLevel() {
+    if (numberLevel < MAX_HEIGHT / SQUARE_SIZE) {
+        numberLevel++;
+        addGameLevelVisual();
+    }
+}
+
+function minusGameLevel() {
+    if (numberLevel > 1) {
+        numberLevel--;
+        addGameLevelVisual();
+    }
+}
+
+levelPlusKey.addEventListener('click', plusGameLevel);
+levelMinusKey.addEventListener('click', minusGameLevel);
+
 function getFigure() {
     const index = getRandom(0, figures.length);
     const color = colors[index];
     const figure = figures[index];
-    return {color: color, figure: figure}
+    return { color: color, figure: figure }
 }
+
 let figure = getFigure();
 let currentFigure = figure.figure;
 let currentColor = figure.color;
@@ -187,26 +228,19 @@ function editPause() {
 // вызываем изменение переменной паузы кликом по кнопке
 keyPause.addEventListener('click', editPause);
 // объект уровень, значения в начале игры
-const level = {levelNumber: 1, timeOfTurn: 1000};
+const level = { levelNumber: 1, timeOfTurn: 1000 };
 
 const keySpeedUp = document.querySelector('#plusSpeed');
 const keySpeedDown = document.querySelector('#minusSpeed');
 
-// список скоростей
 // список времени ожидения хода фигуры
-const blockTimeOfTurn = [1000, 850, 700, 550, 350];
+const blockTimeOfTurn = [900, 750, 600, 520, 300];
 
 function plusGameSpeed() {
     if (level.levelNumber < 5) {
         level.levelNumber = level.levelNumber + 1;
         level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1];
-
-        document.getElementById('outSpeed').innerHTML = level.levelNumber;
-        console.log(level.timeOfTurn);
-        console.log(level);
-
-        clearInterval(interval);
-        interval = setInterval(funcInterval, level.timeOfTurn);
+        addGameSpeedEdit();
     }
 }
 
@@ -214,14 +248,14 @@ function minusGameSpeed() {
     if (level.levelNumber > 1) {
         level.levelNumber = level.levelNumber - 1;
         level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1];
-
-        document.getElementById('outSpeed').innerHTML = level.levelNumber;
-        console.log(level.timeOfTurn);
-        console.log(level);
-
-        clearInterval(interval);
-        interval = setInterval(funcInterval, level.timeOfTurn);
+        addGameSpeedEdit();
     }
+}
+
+function addGameSpeedEdit() {
+    document.querySelector('#outSpeed').innerHTML = level.levelNumber;
+    clearInterval(interval);
+    interval = setInterval(funcInterval, level.timeOfTurn);
 }
 
 keySpeedUp.addEventListener('click', plusGameSpeed);
@@ -248,18 +282,9 @@ document.addEventListener('keydown', (event) => {
     if (keyName === 'ArrowDown' && !isCollision(0, 1)) {
         y += SQUARE_SIZE;
     }
-
     drawFullFigure();
     drawLines();
 });
-
-const arr = new Array();
-for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
-    arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);
-    for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
-        arr[i][j] = 0;
-    }
-}
 
 function save() {
     for (let i = 0; i < currentFigure.length; i++) {
@@ -293,7 +318,7 @@ function restore() {
 }
 
 // счетчик очков (линий)/ переменная, для блокировки авторазнога уровня сразу до максиума
-const countRow = {count: 0, nextLevelCount: 2};
+const countRow = { count: 0, nextLevelCount: 2 };
 
 function deleteRow() {
     for (let i = 0; i < arr.length; i++) {
@@ -340,7 +365,6 @@ function isCollision(dx, dy) {
                 ) {
                     return true;
                 }
-                console.log(indexX, indexY)
                 if (indexY >= 0 && arr[indexY][indexX] !== 0) {
                     return true;
                 }
@@ -365,14 +389,9 @@ function turn(matrix) {
 
 function funcInterval() {
     if (pause || isGameOver) return;
-
-    deleteRow();
-
     drawFullFigure();
     drawNextFigure();
-
     drawLines();
-
     // убраны странные условия на max_height
     if (!isCollision(0, 1)) {
         y += SQUARE_SIZE;
@@ -397,6 +416,7 @@ function funcInterval() {
 }
 // таймер обновления шага фигуры
 let interval = setInterval(funcInterval, level.timeOfTurn);
-
-y = -SQUARE_SIZE * heightFigure();
+// функция удаления сложенной линии рабоатет отдельно от основного генератора хода
+setInterval(deleteRow, 250);
 drawLines();
+y = -SQUARE_SIZE * heightFigure();

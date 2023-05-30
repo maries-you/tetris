@@ -421,5 +421,5 @@ function funcInterval() {
 let interval = setInterval(funcInterval, level.timeOfTurn);
 drawLines();
 y = -SQUARE_SIZE * heightFigure();
-// функция удаления сложенной линии рабоатет отдельно от основного генератора хода. 
-const delitSpeedLines = setInterval(deleteRow, 100);
+// функция удаления сложенной линии рабоатет отдельно от основного генератора хода
+setInterval(deleteRow, 100);

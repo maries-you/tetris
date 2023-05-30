@@ -110,7 +110,7 @@ function addGameLevelFunction() {
 }
 
 function plusGameLevel() {
-    if (numberLevel < MAX_WIDTH / SQUARE_SIZE) {
+    if (numberLevel < MAX_HEIGHT / SQUARE_SIZE) {
         stringSetLevel--;
         numberLevel++;
         addGameLevelFunction();

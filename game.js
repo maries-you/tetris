@@ -85,57 +85,46 @@ const figure7 = [
 ];
 const figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 const colors = ['green', 'red', 'yellow', 'pink', '#ec12a8', 'brown', 'blue'];
-const levelObject = { level: 1, index: 19 };
-function getInsexForLevel() {
-    switch (levelObject.level) {
-        case (2):
-            levelObject.index = 17;
-            break;
-        case (3):
-            levelObject.index = 15;
-            break;
-        case (4):
-            levelObject.index = 13;
-            break;
-        default:
-            levelObject.index = 19;
-    }
-    return levelObject.index
-}
+
+let stringSetLevel = 19;
+let numberLevel = 1;
 
 const arr = new Array();
 function getArray() {
     for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
         arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);
         for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
-            if (i > levelObject.index) {
+            if (i > stringSetLevel) {
                 arr[i][j] = getRandom(0, 2);
             } else {
                 arr[i][j] = 0;
             };
         };
     };
-    return arr;
-};
-console.log(arr);
+}
 getArray();
 
+function addGameLevelFunction() {
+    getArray();
+    document.querySelector('#levelGame').innerHTML = numberLevel;
+}
+
 function plusGameLevel() {
-    if (levelObject.level < 4) {
-        levelObject.level = levelObject.level + 1;
-        getInsexForLevel();
-        getArray();
-        document.querySelector('#levelGame').innerHTML = levelObject.level;
+    if (numberLevel < MAX_WIDTH / SQUARE_SIZE) {
+        stringSetLevel--;
+        numberLevel++;
+        addGameLevelFunction();
     }
 }
+
 function minusGameLevel() {
-    if (levelObject.level > 1) {
-        levelObject.level = levelObject.level - 1;
-        getInsexForLevel();
-        getArray();
-        document.querySelector('#levelGame').innerHTML = levelObject.level;
+    if (numberLevel > 1) {
+        stringSetLevel++;
+        numberLevel--;
+        addGameLevelFunction();
     }
 }
+
 levelPlusKey.addEventListener('click', plusGameLevel);
 levelMinusKey.addEventListener('click', minusGameLevel);
 
@@ -145,6 +134,7 @@ function getFigure() {
     const figure = figures[index];
     return { color: color, figure: figure }
 }
+
 let figure = getFigure();
 let currentFigure = figure.figure;
 let currentColor = figure.color;
@@ -247,19 +237,13 @@ const keySpeedUp = document.querySelector('#plusSpeed');
 const keySpeedDown = document.querySelector('#minusSpeed');
 
 // список времени ожидения хода фигуры
-const blockTimeOfTurn = [1000, 850, 700, 550, 350];
+const blockTimeOfTurn = [900, 750, 600, 520, 300];
 
 function plusGameSpeed() {
     if (level.levelNumber < 5) {
         level.levelNumber = level.levelNumber + 1;
         level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1];
-
-        document.getElementById('outSpeed').innerHTML = level.levelNumber;
-        console.log(level.timeOfTurn);
-        console.log(level);
-
-        clearInterval(interval);
-        interval = setInterval(funcInterval, level.timeOfTurn);
+        addGameSpeedEdit();
     }
 }
 
@@ -267,14 +251,14 @@ function minusGameSpeed() {
     if (level.levelNumber > 1) {
         level.levelNumber = level.levelNumber - 1;
         level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1];
-
-        document.getElementById('outSpeed').innerHTML = level.levelNumber;
-        console.log(level.timeOfTurn);
-        console.log(level);
-
-        clearInterval(interval);
-        interval = setInterval(funcInterval, level.timeOfTurn);
+        addGameSpeedEdit();
     }
+}
+
+function addGameSpeedEdit() {
+    document.querySelector('#outSpeed').innerHTML = level.levelNumber;
+    clearInterval(interval);
+    interval = setInterval(funcInterval, level.timeOfTurn);
 }
 
 keySpeedUp.addEventListener('click', plusGameSpeed);
@@ -301,11 +285,9 @@ document.addEventListener('keydown', (event) => {
     if (keyName === 'ArrowDown' && !isCollision(0, 1)) {
         y += SQUARE_SIZE;
     }
-
     drawFullFigure();
     drawLines();
 });
-
 
 function save() {
     for (let i = 0; i < currentFigure.length; i++) {
@@ -347,7 +329,7 @@ function deleteRow() {
         for (let j = 0; j < arr[0].length; j++) {
             if (arr[i][j] === 0) {
                 count++;
-            }
+            };
         }
         if (count === 0) {
             const emptyRow = new Array(arr[0].length).fill(0);
@@ -358,7 +340,7 @@ function deleteRow() {
             document.getElementById('count_row').innerHTML = countRow.count;
             console.log(countRow.count);
             return countRow.count;
-        }
+        };
 
         if (
             countRow.count == 5 && countRow.nextLevelCount == 2 ||
@@ -410,14 +392,9 @@ function turn(matrix) {
 
 function funcInterval() {
     if (pause || isGameOver) return;
-
-    deleteRow();
-
     drawFullFigure();
     drawNextFigure();
-
     drawLines();
-
     // убраны странные условия на max_height
     if (!isCollision(0, 1)) {
         y += SQUARE_SIZE;
@@ -442,6 +419,7 @@ function funcInterval() {
 }
 // таймер обновления шага фигуры
 let interval = setInterval(funcInterval, level.timeOfTurn);
-
-y = -SQUARE_SIZE * heightFigure();
 drawLines();
+y = -SQUARE_SIZE * heightFigure();
+// функция удаления сложенной линии рабоатет отдельно от основного генератора хода. 
+const delitSpeedLines = setInterval(deleteRow, 100);

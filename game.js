@@ -86,7 +86,6 @@ const figure7 = [
 const figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 const colors = ['green', 'red', 'yellow', 'pink', '#ec12a8', 'brown', 'blue'];
 
-let stringSetLevel = (MAX_HEIGHT / SQUARE_SIZE) - 1;
 let numberLevel = 1;
 
 const arr = new Array();
@@ -94,7 +93,7 @@ function updateExsistingBlocks() {
     for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
         arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);
         for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
-            if (i > stringSetLevel) {
+            if (i > MAX_HEIGHT / SQUARE_SIZE - numberLevel) {
                 arr[i][j] = getRandom(0, 2);
             } else {
                 arr[i][j] = 0;
@@ -111,7 +110,6 @@ function addGameLevelVisual() {
 
 function plusGameLevel() {
     if (numberLevel < MAX_HEIGHT / SQUARE_SIZE) {
-        stringSetLevel--;
         numberLevel++;
         addGameLevelVisual();
     }
@@ -119,7 +117,6 @@ function plusGameLevel() {
 
 function minusGameLevel() {
     if (numberLevel > 1) {
-        stringSetLevel++;
         numberLevel--;
         addGameLevelVisual();
     }

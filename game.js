@@ -12,7 +12,7 @@ const levelPlusKey = document.querySelector('#plusLevel');
 const levelMinusKey = document.querySelector('#minusLevel');
 
 const keyRestart = document.querySelector('#restart')
-keyRestart.addEventListener('click', getArray);
+keyRestart.addEventListener('click', updateExsistingBlocks);
 
 let x = SQUARE_SIZE;
 let y = 0;
@@ -86,11 +86,11 @@ const figure7 = [
 const figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 const colors = ['green', 'red', 'yellow', 'pink', '#ec12a8', 'brown', 'blue'];
 
-let stringSetLevel = 19;
+let stringSetLevel = (MAX_HEIGHT / SQUARE_SIZE) - 1;
 let numberLevel = 1;
 
 const arr = new Array();
-function getArray() {
+function updateExsistingBlocks() {
     for (let i = 0; i < MAX_HEIGHT / SQUARE_SIZE; i++) {
         arr[i] = new Array(MAX_WIDTH / SQUARE_SIZE);
         for (let j = 0; j < MAX_WIDTH / SQUARE_SIZE; j++) {
@@ -102,10 +102,10 @@ function getArray() {
         };
     };
 }
-getArray();
+updateExsistingBlocks();
 
-function addGameLevelFunction() {
-    getArray();
+function  addGameLevelVisual() {
+    updateExsistingBlocks();
     document.querySelector('#levelGame').innerHTML = numberLevel;
 }
 
@@ -113,7 +113,7 @@ function plusGameLevel() {
     if (numberLevel < MAX_HEIGHT / SQUARE_SIZE) {
         stringSetLevel--;
         numberLevel++;
-        addGameLevelFunction();
+         addGameLevelVisual();
     }
 }
 
@@ -121,7 +121,7 @@ function minusGameLevel() {
     if (numberLevel > 1) {
         stringSetLevel++;
         numberLevel--;
-        addGameLevelFunction();
+         addGameLevelVisual();
     }
 }
 
@@ -329,7 +329,7 @@ function deleteRow() {
         for (let j = 0; j < arr[0].length; j++) {
             if (arr[i][j] === 0) {
                 count++;
-            };
+            }
         }
         if (count === 0) {
             const emptyRow = new Array(arr[0].length).fill(0);
@@ -340,7 +340,7 @@ function deleteRow() {
             document.getElementById('count_row').innerHTML = countRow.count;
             console.log(countRow.count);
             return countRow.count;
-        };
+        }
 
         if (
             countRow.count == 5 && countRow.nextLevelCount == 2 ||
@@ -392,8 +392,6 @@ function turn(matrix) {
 
 function funcInterval() {
     if (pause || isGameOver) return;
-    // функция удаления сложенной линии рабоатет отдельно от основного генератора хода
-    setInterval(deleteRow, 100);
     drawFullFigure();
     drawNextFigure();
     drawLines();
@@ -421,5 +419,7 @@ function funcInterval() {
 }
 // таймер обновления шага фигуры
 let interval = setInterval(funcInterval, level.timeOfTurn);
+// функция удаления сложенной линии рабоатет отдельно от основного генератора хода
+setInterval(deleteRow, 250);
 drawLines();
 y = -SQUARE_SIZE * heightFigure();

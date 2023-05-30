@@ -392,6 +392,8 @@ function turn(matrix) {
 
 function funcInterval() {
     if (pause || isGameOver) return;
+    // функция удаления сложенной линии рабоатет отдельно от основного генератора хода
+    setInterval(deleteRow, 100);
     drawFullFigure();
     drawNextFigure();
     drawLines();
@@ -421,5 +423,3 @@ function funcInterval() {
 let interval = setInterval(funcInterval, level.timeOfTurn);
 drawLines();
 y = -SQUARE_SIZE * heightFigure();
-// функция удаления сложенной линии рабоатет отдельно от основного генератора хода
-setInterval(deleteRow, 100);

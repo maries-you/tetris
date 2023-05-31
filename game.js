@@ -442,6 +442,6 @@ function funcInterval() {
 // таймер обновления шага фигуры
 let interval = setInterval(funcInterval, level.timeOfTurn);
 // функция удаления сложенной линии рабоатет отдельно от основного генератора хода
-setInterval(deleteRow, 50);
+setInterval(deleteRow, 250);
 drawLines();
 y = -SQUARE_SIZE * heightFigure();

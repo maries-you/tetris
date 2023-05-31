@@ -171,10 +171,26 @@ function clear() {
 function drawFullFigure() {
     clear();
     restore();
+    drawProjection();
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (currentFigure[i][j] === 1) {
                 draw(x + i * SQUARE_SIZE, y + j * SQUARE_SIZE, currentColor);
+            }
+        }
+    }
+}
+
+function drawProjection() {
+    let k = 0;
+    while (!isCollision(0, k)) {
+        k++;
+    }
+    k--;
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (currentFigure[i][j] === 1) {
+                draw(x + i * SQUARE_SIZE, y + (j + k) * SQUARE_SIZE, '#e6e8e6');
             }
         }
     }

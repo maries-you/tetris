@@ -278,8 +278,12 @@ keySpeedUp.addEventListener('click', plusGameSpeed);
 keySpeedDown.addEventListener('click', minusGameSpeed);
 
 document.addEventListener('keydown', (event) => {
-    if (isGameOver || pause) return;
     const keyName = event.key;
+    if (keyName != 'F5') {
+        event.preventDefault();
+    }
+    if (isGameOver || pause) return;
+
     console.log('Событие keydown:' + keyName);
 
     if (keyName === 'ArrowLeft' && !isCollision(-1, 0)) {
@@ -297,6 +301,11 @@ document.addEventListener('keydown', (event) => {
     }
     if (keyName === 'ArrowDown' && !isCollision(0, 1)) {
         y += SQUARE_SIZE;
+    }
+    if (keyName === ' ') {
+        while (!isCollision(0, 1)) {
+            y += SQUARE_SIZE;
+        }
     }
     drawFullFigure();
     drawLines();
@@ -425,7 +434,7 @@ function funcInterval() {
             clearInterval(interval);
             isGameOver = true;
         }
-        y = -SQUARE_SIZE * (heightFigure() + 1);
+        y = -SQUARE_SIZE * heightFigure();
         x = SQUARE_SIZE;
         console.log('save');
     }
@@ -433,6 +442,6 @@ function funcInterval() {
 // таймер обновления шага фигуры
 let interval = setInterval(funcInterval, level.timeOfTurn);
 // функция удаления сложенной линии рабоатет отдельно от основного генератора хода
-setInterval(deleteRow, 250);
+setInterval(deleteRow, 50);
 drawLines();
 y = -SQUARE_SIZE * heightFigure();

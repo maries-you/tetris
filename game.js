@@ -439,6 +439,17 @@ function funcInterval() {
         console.log('save');
     }
 }
+
+function sampleRequest() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://localhost:5000');
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+        }
+    }
+    xhr.send();
+}
 // таймер обновления шага фигуры
 let interval = setInterval(funcInterval, level.timeOfTurn);
 // функция удаления сложенной линии рабоатет отдельно от основного генератора хода

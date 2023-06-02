@@ -1,11 +1,15 @@
 import json
 from flask import Flask, request, Response
+from flask_cors import CORS, cross_origin
+
 app = Flask(__name__)
+CORS(app)
 
 with open('database.json', 'r', encoding='utf8') as read_file:
     records = json.load(read_file)
 
 
+@cross_origin
 @app.route('/')
 def hello_world():
     return 'Hello, World!'

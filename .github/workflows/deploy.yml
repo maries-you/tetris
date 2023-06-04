@@ -32,4 +32,17 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
         script: |
           cd tetris/
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install wheel
+          pip install Flask gunicorn
           ./insert_release_date.sh
+          search="http:\/\/localhost:5000"
+          replace="https:\/\/server.pet-projets.ru"
+          sed -i "s/$search/$replace/" game.js
+
+          search="database.json"
+          replace="..\/database.json"
+          sed -i "s/$search/$replace/" server.py
+
+          sudo systemctl restart server

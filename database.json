@@ -1,14 +1,22 @@
 [
     {
         "username": "Marina",
-        "score": 11111
+        "score": 11111,
+        "complexity": 5
     },
     {
-        "username": "Player",
-        "score": 0
+        "username": "Игрок",
+        "score": 2,
+        "complexity": 1
     },
     {
-        "username": "Player",
-        "score": 4
+        "username": "Игрок",
+        "score": 7,
+        "complexity": 1
+    },
+    {
+        "username": "Игрок",
+        "score": 18,
+        "complexity": 7
     }
 ]

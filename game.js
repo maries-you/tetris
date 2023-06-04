@@ -459,6 +459,22 @@ function getRecords() {
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log(xhr.responseText);
+            const response = JSON.parse(xhr.response);
+            const html = [];
+            html.push('<tr>');
+            html.push('<th>Имя Игрока</th>');
+            html.push('<th>Счет</th>');
+            html.push('<th>Сложность игры</th>');
+            html.push('</tr>');
+            for (let i = 0, length = response.length; i < length; i++) {
+                html.push('<tr>');
+                html.push(`<td>${response[i].username}</td>`);
+                html.push(`<td>${response[i].score}</td>`);
+                html.push(`<td>${response[i].complexity}</td>`);
+                html.push('</tr>');
+                console.log(response[i])
+            }
+            document.querySelector('#leaderBoard').innerHTML = html.join('');
         }
     }
     xhr.send();
@@ -466,8 +482,9 @@ function getRecords() {
 
 function addRecord() {
     const json = JSON.stringify({
-        username: 'Player',
-        score: countRow.count
+        username: 'Игрок',
+        score: countRow.count,
+        complexity: numberLevel,
     });
     let xhr = new XMLHttpRequest();
     xhr.open('POST', BASE_URL + '/records');

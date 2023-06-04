@@ -3,6 +3,7 @@ const MAX_HEIGHT = 600;
 const MAX_WIDTH = 300;
 const MAX_HEIGHT_NEXT_FIGURE = 120;
 const MAX_WIDTH_NEXT_FIGURE = 120;
+const BASE_URL = 'http://localhost:5000';
 let isGameOver = false;
 const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
@@ -422,23 +423,72 @@ function funcInterval() {
         y += SQUARE_SIZE;
     } else {
         save();
-        console.log(arr);
+        // console.log(arr);
         currentFigure = nextFigure;
         currentColor = nextColor;
         figure = getFigure();
         nextFigure = figure.figure;
         nextColor = figure.color;
         if (isStop()) {
+            isGameOver = true;
+            addRecord();
+            clearInterval(interval);
             gameOverSound.play();
             alert('!game over!');
-            clearInterval(interval);
-            isGameOver = true;
         }
         y = -SQUARE_SIZE * heightFigure();
         x = SQUARE_SIZE;
         console.log('save');
     }
 }
+
+function getRecords() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', BASE_URL + '/records');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log(xhr.responseText);
+            const response = JSON.parse(xhr.response);
+            const html = [];
+            html.push('<tr>');
+            html.push('<th>Имя Игрока</th>');
+            html.push('<th>Счет</th>');
+            html.push('<th>Сложность игры</th>');
+            html.push('</tr>');
+            for (let i = 0, length = response.length; i < length; i++) {
+                html.push('<tr>');
+                html.push(`<td>${response[i].username}</td>`);
+                html.push(`<td>${response[i].score}</td>`);
+                html.push(`<td>${response[i].complexity}</td>`);
+                html.push('</tr>');
+                console.log(response[i])
+            }
+            document.querySelector('#leaderBoard').innerHTML = html.join('');
+        }
+    }
+    xhr.send();
+}
+
+function addRecord() {
+    const json = JSON.stringify({
+        username: 'Игрок',
+        score: countRow.count,
+        complexity: numberLevel,
+    });
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', BASE_URL + '/records');
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    }
+    xhr.send(json);
+}
+
+getRecords();
+
+
 // таймер обновления шага фигуры
 let interval = setInterval(funcInterval, level.timeOfTurn);
 // функция удаления сложенной линии рабоатет отдельно от основного генератора хода

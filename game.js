@@ -3,6 +3,7 @@ const MAX_HEIGHT = 600;
 const MAX_WIDTH = 300;
 const MAX_HEIGHT_NEXT_FIGURE = 120;
 const MAX_WIDTH_NEXT_FIGURE = 120;
+const BASE_URL = 'http://localhost:5000';
 let isGameOver = false;
 const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
@@ -422,17 +423,18 @@ function funcInterval() {
         y += SQUARE_SIZE;
     } else {
         save();
-        console.log(arr);
+        // console.log(arr);
         currentFigure = nextFigure;
         currentColor = nextColor;
         figure = getFigure();
         nextFigure = figure.figure;
         nextColor = figure.color;
         if (isStop()) {
+            isGameOver = true;
+            addRecord();
+            clearInterval(interval);
             gameOverSound.play();
             alert('!game over!');
-            clearInterval(interval);
-            isGameOver = true;
         }
         y = -SQUARE_SIZE * heightFigure();
         x = SQUARE_SIZE;
@@ -442,14 +444,45 @@ function funcInterval() {
 
 function sampleRequest() {
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://localhost:5000');
+    xhr.open('GET', BASE_URL);
     xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
+        if (xhr.readyState === 4 && xhr.status === 200) {
             console.log(xhr.responseText);
         }
     }
     xhr.send();
 }
+
+function getRecords() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', BASE_URL + '/records');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    }
+    xhr.send();
+}
+
+function addRecord() {
+    const json = JSON.stringify({
+        username: 'Player',
+        score: countRow.count
+    });
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', BASE_URL + '/records');
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    }
+    xhr.send(json);
+}
+
+getRecords();
+
+
 // таймер обновления шага фигуры
 let interval = setInterval(funcInterval, level.timeOfTurn);
 // функция удаления сложенной линии рабоатет отдельно от основного генератора хода

@@ -5,9 +5,6 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 CORS(app)
 
-with open('database.json', 'r', encoding='utf8') as read_file:
-    records = json.load(read_file)
-
 
 @cross_origin
 @app.route('/')
@@ -17,12 +14,16 @@ def hello_world():
 
 @app.route('/records', methods=['GET'])
 def get_records():
+    with open('database.json', 'r', encoding='utf8') as read_file:
+        records = json.load(read_file)
     records_data = json.dumps(records, ensure_ascii=False)
     return Response(records_data, content_type='application/json')
 
 
 @app.route('/records', methods=['POST'])
 def add_record():
+    with open('database.json', 'r', encoding='utf8') as read_file:
+        records = json.load(read_file)
     print(request.json)
     records.append(request.json)
     with open('database.json', 'w', encoding='utf8') as write_file:

@@ -34,8 +34,9 @@ jobs:
           cd tetris/
           python3 -m venv venv
           source venv/bin/activate
-          pip install wheel
-          pip install Flask gunicorn
+
+          pip install -r requirements.txt
+
           ./insert_release_date.sh
           search="http:\/\/localhost:5000"
           replace="https:\/\/server.pet-projets.ru"

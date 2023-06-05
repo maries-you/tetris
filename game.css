@@ -1,3 +1,7 @@
+body {
+    font-family: math !important;
+  }
+
 #canvasid {
     border: 1px solid blue;
 }   
@@ -15,12 +19,12 @@ canvas{
     text-align: center;
 	float: center; 
 }
- .layout {
+.layout {
     width: 60%; /* Ширина всей таблицы */
 }
-TD {
-    vertical-align: top; /* Вертикальное выравнивание в ячейках */
-    padding: 10px; /* Поля вокруг ячеек */
+td {
+    /* vertical-align: top;  */
+    padding: 10px;
 }
 /* TD.leftcol {
     width: 400px;
@@ -29,6 +33,3 @@ TD.rightcol {
     width: 400px;
     background-color: #fc3;
 } */
-p {
-    font-size: 2em
-}

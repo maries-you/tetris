@@ -17,6 +17,9 @@ keyRestart.addEventListener('click', updateExsistingBlocks);
 
 let x = SQUARE_SIZE;
 let y = 0;
+
+document.getElementById('name').innerHTML = localStorage['tetris.username'];
+
 // рисует сетку на поле
 function drawLines() {
     const ctx = canvas.getContext('2d');
@@ -471,7 +474,7 @@ function getRecords() {
 
 function addRecord() {
     const json = JSON.stringify({
-        username: 'Игрок',
+        username: localStorage['tetris.username'],
         score: countRow.count,
         complexity: numberLevel,
     });

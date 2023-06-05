@@ -18,5 +18,20 @@
         "username": "Игрок",
         "score": 18,
         "complexity": 7
+    },
+    {
+        "username": "Игрок",
+        "score": 0,
+        "complexity": 1
+    },
+    {
+        "username": "Marina",
+        "score": 0,
+        "complexity": 1
+    },
+    {
+        "username": "Marina",
+        "score": 0,
+        "complexity": 1
     }
 ]

@@ -236,11 +236,11 @@ function heightFigure() {
 }
 
 function dravGameOver() {
-    const example = document.getElementById("canvasid").getContext('2d'); 
-    var pic = document.createElement("img");
+    const field = canvas.getContext('2d');
+    let pic = document.createElement("img");
     pic.src = "go.jpg";
-    example.clearRect(0, 0, 300, 600)
-    example.drawImage(pic, 0, 150, 300, 300);
+    field.clearRect(0, 0, 300, 600)
+    field.drawImage(pic, 0, 150, 300, 300);
 }
 
 // кнопка паузы

@@ -236,8 +236,7 @@ function heightFigure() {
 }
 
 function dravGameOver() {
-    var example = document.getElementById("canvasid").getContext('2d');
-    //let pic = new Image(); 
+    const example = document.getElementById("canvasid").getContext('2d'); 
     var pic = document.createElement("img");
     pic.src = "go.jpg";
     example.clearRect(0, 0, 300, 600)
@@ -444,7 +443,6 @@ function funcInterval() {
             addRecord();
             clearInterval(interval);
             gameOverSound.play();
-            //alert('!game over!');
             dravGameOver();
         }
         y = -SQUARE_SIZE * heightFigure();

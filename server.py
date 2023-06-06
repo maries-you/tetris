@@ -18,8 +18,7 @@ def hello_world():
 def get_records():
     with open(DATABASE_PATH, 'r', encoding='utf8') as read_file:
         records = json.load(read_file)
-    records = sorted(records, key=lambda d: d['score'], reverse=True)
-    records_data = json.dumps(records[:10], ensure_ascii=False)
+    records_data = json.dumps(records, ensure_ascii=False)
     return Response(records_data, content_type='application/json')
 
 

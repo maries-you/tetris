@@ -17,9 +17,6 @@ keyRestart.addEventListener('click', updateExsistingBlocks);
 
 let x = SQUARE_SIZE;
 let y = 0;
-
-document.getElementById('name').innerHTML = localStorage['tetris.username'];
-
 // рисует сетку на поле
 function drawLines() {
     const ctx = canvas.getContext('2d');
@@ -237,6 +234,16 @@ function heightFigure() {
     }
     return Math.max.apply(null, myArray);
 }
+
+function dravGameOver() {
+    var example = document.getElementById("canvasid").getContext('2d');
+    //let pic = new Image(); 
+    var pic = document.createElement("img");
+    pic.src = "go.jpg";
+    example.clearRect(0, 0, 300, 600)
+    example.drawImage(pic, 0, 150, 300, 300);
+}
+
 // кнопка паузы
 const keyPause = document.querySelector('#pause');
 let pause = false;
@@ -437,7 +444,8 @@ function funcInterval() {
             addRecord();
             clearInterval(interval);
             gameOverSound.play();
-            alert('!game over!');
+            //alert('!game over!');
+            dravGameOver();
         }
         y = -SQUARE_SIZE * heightFigure();
         x = SQUARE_SIZE;
@@ -448,7 +456,7 @@ function funcInterval() {
 function getRecords() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', BASE_URL + '/records');
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (xhr.status === 200) {
             console.log(xhr.responseText);
             const response = JSON.parse(xhr.response);
@@ -474,14 +482,14 @@ function getRecords() {
 
 function addRecord() {
     const json = JSON.stringify({
-        username: localStorage['tetris.username'],
+        username: 'Игрок',
         score: countRow.count,
         complexity: numberLevel,
     });
     const xhr = new XMLHttpRequest();
     xhr.open('POST', BASE_URL + '/records');
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (xhr.status === 200) {
             console.log(xhr.responseText);
         }

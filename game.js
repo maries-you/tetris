@@ -109,7 +109,7 @@ updateExsistingBlocks();
 
 function dravGameOver() {
     const field = canvas.getContext('2d');
-    let pic = document.createElement("img");
+    const pic = document.createElement("img");
     pic.src = "go.jpg";
     field.clearRect(0, 0, 300, 600)
     field.drawImage(pic, 0, 150, 300, 300);
@@ -445,7 +445,7 @@ function funcInterval() {
             addRecord();
             clearInterval(interval);
             gameOverSound.play();
-            alert('!game over!');
+            dravGameOver();
         }
         y = -SQUARE_SIZE * heightFigure();
         x = SQUARE_SIZE;

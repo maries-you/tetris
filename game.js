@@ -107,6 +107,14 @@ function updateExsistingBlocks() {
 }
 updateExsistingBlocks();
 
+function dravGameOver() {
+    const field = canvas.getContext('2d');
+    let pic = document.createElement("img");
+    pic.src = "go.jpg";
+    field.clearRect(0, 0, 300, 600)
+    field.drawImage(pic, 0, 150, 300, 300);
+}
+
 function addGameLevelVisual() {
     updateExsistingBlocks();
     document.querySelector('#levelGame').innerHTML = numberLevel;
@@ -254,7 +262,7 @@ const keySpeedUp = document.querySelector('#plusSpeed');
 const keySpeedDown = document.querySelector('#minusSpeed');
 
 // список времени ожидения хода фигуры
-const blockTimeOfTurn = [900, 750, 600, 520, 300];
+const blockTimeOfTurn = [800, 600, 450, 340, 240];
 
 function plusGameSpeed() {
     if (level.levelNumber < 5) {

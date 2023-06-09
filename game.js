@@ -262,7 +262,7 @@ const keySpeedUp = document.querySelector('#plusSpeed');
 const keySpeedDown = document.querySelector('#minusSpeed');
 
 // список времени ожидения хода фигуры
-const blockTimeOfTurn = [800, 600, 450, 340, 240];
+const blockTimeOfTurn = [900, 750, 600, 520, 300];
 
 function plusGameSpeed() {
     if (level.levelNumber < 5) {

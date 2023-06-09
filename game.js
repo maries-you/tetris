@@ -454,7 +454,7 @@ function funcInterval() {
 function getRecords() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', BASE_URL + '/records');
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (xhr.status === 200) {
             console.log(xhr.responseText);
             const response = JSON.parse(xhr.response);
@@ -487,7 +487,7 @@ function addRecord() {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', BASE_URL + '/records');
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (xhr.status === 200) {
             console.log(xhr.responseText);
         }

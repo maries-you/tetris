@@ -111,8 +111,8 @@ function dravGameOver() {
     const field = canvas.getContext('2d');
     const pic = document.createElement('img');
     pic.src = 'game_over.jpg';
-    field.clearRect(0, 0, 300, 600)
-    field.drawImage(pic, 0, 150, 300, 300);
+    field.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
+    field.drawImage(pic, 0, MAX_HEIGHT/4, MAX_WIDTH, MAX_WIDTH);
 }
 
 function addGameLevelVisual() {

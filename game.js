@@ -107,6 +107,16 @@ function updateExsistingBlocks() {
 }
 updateExsistingBlocks();
 
+function drawGameOver() {
+    const field = canvas.getContext('2d');
+    const image = new Image();
+    image.onload = function() {
+        field.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
+        field.drawImage(image, 0, MAX_HEIGHT / 4, MAX_WIDTH, MAX_WIDTH);
+    }
+    image.src = 'game_over.jpg';
+}
+
 function addGameLevelVisual() {
     updateExsistingBlocks();
     document.querySelector('#levelGame').innerHTML = numberLevel;
@@ -437,7 +447,7 @@ function funcInterval() {
             addRecord();
             clearInterval(interval);
             gameOverSound.play();
-            alert('!game over!');
+            drawGameOver();
         }
         y = -SQUARE_SIZE * heightFigure();
         x = SQUARE_SIZE;

@@ -13,9 +13,9 @@ const levelPlusKey = document.querySelector('#plusLevel');
 const levelMinusKey = document.querySelector('#minusLevel');
 
 const keyRestart = document.querySelector('#restart')
-keyRestart.addEventListener('click', updateExsistingBlocks);
+keyRestart.addEventListener('click', restartGame);
 
-let x = SQUARE_SIZE;
+let x = SQUARE_SIZE*3;
 let y = 0;
 
 document.getElementById('name').innerHTML = localStorage['tetris.username'];
@@ -106,6 +106,19 @@ function updateExsistingBlocks() {
     };
 }
 updateExsistingBlocks();
+
+function restartGame(){
+    x = SQUARE_SIZE*3;
+    y = -(SQUARE_SIZE*3);
+    updateExsistingBlocks();
+    drawFullFigure();
+    drawNextFigure();
+    drawLines();
+    if(pause){
+        pause = false;
+        return pause;
+    }
+}
 
 function drawGameOver() {
     const field = canvas.getContext('2d');

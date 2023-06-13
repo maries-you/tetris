@@ -107,14 +107,14 @@ function updateExsistingBlocks() {
 }
 updateExsistingBlocks();
 
-function restartGame(){
+function restartGame() {
     x = SQUARE_SIZE*3;
     y = -(SQUARE_SIZE*3);
     updateExsistingBlocks();
     drawFullFigure();
     drawNextFigure();
     drawLines();
-    if(pause){
+    if (pause) {
         pause = false;
         return pause;
     }
@@ -123,7 +123,7 @@ function restartGame(){
 function drawGameOver() {
     const field = canvas.getContext('2d');
     const image = new Image();
-    image.onload = function () {
+    image.onload = function() {
         field.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
         field.drawImage(image, 0, MAX_HEIGHT / 4, MAX_WIDTH, MAX_WIDTH);
     }
@@ -471,7 +471,7 @@ function funcInterval() {
 function getRecords() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', BASE_URL + '/records');
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (xhr.status === 200) {
             console.log(xhr.responseText);
             const response = JSON.parse(xhr.response);
@@ -504,7 +504,7 @@ function addRecord() {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', BASE_URL + '/records');
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (xhr.status === 200) {
             console.log(xhr.responseText);
         }

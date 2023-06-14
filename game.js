@@ -116,6 +116,10 @@ function restartGame() {
     if (pause) {
         pause = false;
     }
+    isGameOver = false;
+    level.levelNumber = 1;
+    level.timeOfTurn = blockTimeOfTurn[0];
+    addGameSpeedEdit();
 }
 
 function drawGameOver() {

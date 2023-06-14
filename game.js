@@ -108,7 +108,6 @@ function updateExsistingBlocks() {
 updateExsistingBlocks();
 
 function restartGame() {
-    x = SQUARE_SIZE*3;
     y = -(SQUARE_SIZE);
     updateExsistingBlocks();
     drawFullFigure();

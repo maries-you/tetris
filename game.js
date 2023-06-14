@@ -4,6 +4,7 @@ const MAX_WIDTH = 300;
 const MAX_HEIGHT_NEXT_FIGURE = 120;
 const MAX_WIDTH_NEXT_FIGURE = 120;
 const BASE_URL = 'http://localhost:5000';
+const CENTER_FIELD = Math.floor((MAX_WIDTH / SQUARE_SIZE) / 2) - 2; // последняя 2ка - это средняя ширина фигуры (элементов)
 let isGameOver = false;
 const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
@@ -13,9 +14,9 @@ const levelPlusKey = document.querySelector('#plusLevel');
 const levelMinusKey = document.querySelector('#minusLevel');
 
 const keyRestart = document.querySelector('#restart')
-keyRestart.addEventListener('click', updateExsistingBlocks);
+keyRestart.addEventListener('click', restartGame);
 
-let x = SQUARE_SIZE;
+let x = SQUARE_SIZE * CENTER_FIELD;
 let y = 0;
 
 document.getElementById('name').innerHTML = localStorage['tetris.username'];
@@ -106,6 +107,20 @@ function updateExsistingBlocks() {
     };
 }
 updateExsistingBlocks();
+
+function restartGame() {
+    y = -SQUARE_SIZE * heightFigure();
+    x = SQUARE_SIZE * CENTER_FIELD;
+    updateExsistingBlocks();
+    drawFullFigure();
+    drawNextFigure();
+    drawLines();
+    pause = false;
+    isGameOver = false;
+    level.levelNumber = 1;
+    level.timeOfTurn = blockTimeOfTurn[0];
+    addGameSpeedEdit();
+}
 
 function drawGameOver() {
     const field = canvas.getContext('2d');
@@ -450,7 +465,7 @@ function funcInterval() {
             drawGameOver();
         }
         y = -SQUARE_SIZE * heightFigure();
-        x = SQUARE_SIZE;
+        x = SQUARE_SIZE * CENTER_FIELD;
         console.log('save');
     }
 }

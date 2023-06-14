@@ -120,6 +120,8 @@ function restartGame() {
     level.levelNumber = 1;
     level.timeOfTurn = blockTimeOfTurn[0];
     addGameSpeedEdit();
+    countRow.count = 0;
+    document.getElementById('count_row').innerHTML = countRow.count;
 }
 
 function drawGameOver() {

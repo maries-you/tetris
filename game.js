@@ -15,7 +15,7 @@ const levelMinusKey = document.querySelector('#minusLevel');
 const keyRestart = document.querySelector('#restart')
 keyRestart.addEventListener('click', restartGame);
 
-let x = SQUARE_SIZE*3;
+let x = SQUARE_SIZE * 3;
 let y = 0;
 
 document.getElementById('name').innerHTML = localStorage['tetris.username'];
@@ -109,14 +109,13 @@ updateExsistingBlocks();
 
 function restartGame() {
     x = SQUARE_SIZE*3;
-    y = -(SQUARE_SIZE*3);
+    y = -(SQUARE_SIZE);
     updateExsistingBlocks();
     drawFullFigure();
     drawNextFigure();
     drawLines();
     if (pause) {
         pause = false;
-        return pause;
     }
 }
 
@@ -463,7 +462,7 @@ function funcInterval() {
             drawGameOver();
         }
         y = -SQUARE_SIZE * heightFigure();
-        x = SQUARE_SIZE;
+        x = SQUARE_SIZE * 3;
         console.log('save');
     }
 }

@@ -1,11 +1,18 @@
 import json
 from flask import Flask, request, Response
 from flask_cors import CORS, cross_origin
+from marshmallow import Schema, fields, ValidationError, validate
 
 app = Flask(__name__)
 CORS(app)
 
 DATABASE_PATH = 'database.json'
+
+
+class RecordSchema(Schema):
+    username = fields.String(required=True)
+    score = fields.Integer(required=True, validate=validate.Range(min=1))
+    complexity = fields.Integer(required=True, validate=validate.Range(min=1, max=19))
 
 
 @cross_origin
@@ -27,8 +34,11 @@ def get_records():
 def add_record():
     with open(DATABASE_PATH, 'r', encoding='utf8') as read_file:
         records = json.load(read_file)
-    print(request.json)
-    records.append(request.json)
+    try:
+        validated_record = RecordSchema().load(request.json)
+    except ValidationError:
+        return 'error', 400
+    records.append(validated_record)
     with open(DATABASE_PATH, 'w', encoding='utf8') as write_file:
         json.dump(records, write_file, indent=4, ensure_ascii=False)
     return 'success'

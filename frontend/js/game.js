@@ -131,7 +131,7 @@ function drawGameOver() {
         field.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
         field.drawImage(image, 0, MAX_HEIGHT / 4, MAX_WIDTH, MAX_WIDTH);
     }
-    image.src = 'game_over.jpg';
+    image.src = 'img/game_over.jpg';
 }
 
 function addGameLevelVisual() {

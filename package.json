@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "lint": "eslint . --ext .js",
+    "lint-fix": "eslint . --ext .js --fix"
+  },
+  "devDependencies": {
+    "eslint": "^8.40.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}

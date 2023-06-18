@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Tetris</title>
+	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <center>
+    <table cellspacing="0" class="layout">
+        <tr>
+            <td>
+                <p>Игрок <span id="name"></span></p>
+                <p>Счет - <span id="count_row">0</span></p>
+                <p>Скорость игры - <span id="outSpeed">1</span></p>
+                <p>Сложность игры - <span id="levelGame">1</span></p>
+
+                <button class="play btn btn-outline-primary btn-block m-1">Play Music</button>
+                <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5">
+                <audio id="backgroundSound" src="./audio/game.ogg" loop></audio>
+                <button class="pause btn btn-outline-primary btn-block m-1">Shut Down Music</button>
+            </td>
+            <td>
+                <h1>Tetris</h1>
+                <canvas id="canvasid" height="600" width="300"></canvas>
+                <img src="img/game_over.jpg" id="game_over width="10" overflow: hidden>
+            </td>
+            <td>
+                <br>
+                <canvas id="nextFigure" height="120" width="120"></canvas>
+                <br>
+                <button id="pause" class="btn btn-outline-primary btn-block m-1">Пауза</button>
+                <button id="restart" class="btn btn-outline-primary btn-block m-1">Рестарт Tetris</button>
+                <br>
+                <button id="plusSpeed" class="btn btn-outline-primary btn-block m-1">+ к скорости игры </button>
+                <button id="minusSpeed" class="btn btn-outline-primary btn-block m-1">- к скорости игры</button>
+                <br>
+                <button id="plusLevel" class="btn btn-outline-primary btn-block m-1">+ к сложности</button>
+                <button id="minusLevel" class="btn btn-outline-primary btn-block m-1">- к сложности игры </button>
+                <br>
+                
+            </td>
+            <td>
+                <table id="leaderBoard" class="table table-striped table-bordered" border="1"></table>
+            </td>
+            <td>
+                Release date {{ release_date }}
+            </td>
+        </tr>
+    </table>
+    </center>
+    <script src="js/game.js"></script>
+    <script src="js//audio.js"></script>
+</body>
+</html>

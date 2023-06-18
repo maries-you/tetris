@@ -1,0 +1,25 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": [
+        "google"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "rules": {
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "camelcase": "warn",
+        "quotes": "warn",
+        "object-curly-spacing": "off",
+        "no-console": "off",
+        "no-array-constructor": "off",
+        "semi": "off",
+        "linebreak-style": "off",
+        "require-jsdoc": "off",
+        "max-len": "off"
+    }
+}

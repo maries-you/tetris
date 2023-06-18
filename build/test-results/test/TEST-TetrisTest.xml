@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TetrisTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-06-18T17:22:05" hostname="DESKTOP-68SVGNT" time="14.524">
+  <properties/>
+  <testcase name="tetrisOpen()" classname="TetrisTest" time="4.709"/>
+  <testcase name="saveNickname()" classname="TetrisTest" time="3.158"/>
+  <testcase name="gameLevel()" classname="TetrisTest" time="3.306"/>
+  <testcase name="gameSpeed()" classname="TetrisTest" time="3.351"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[июн. 18, 2023 8:22:05 PM org.openqa.selenium.remote.service.DriverService$Builder getLogOutput
+INFO: Driver logs no longer sent to console by default; https://www.selenium.dev/documentation/webdriver/drivers/service/#setting-log-output
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+июн. 18, 2023 8:22:10 PM org.openqa.selenium.remote.service.DriverService$Builder getLogOutput
+INFO: Driver logs no longer sent to console by default; https://www.selenium.dev/documentation/webdriver/drivers/service/#setting-log-output
+июн. 18, 2023 8:22:13 PM org.openqa.selenium.remote.service.DriverService$Builder getLogOutput
+INFO: Driver logs no longer sent to console by default; https://www.selenium.dev/documentation/webdriver/drivers/service/#setting-log-output
+июн. 18, 2023 8:22:16 PM org.openqa.selenium.remote.service.DriverService$Builder getLogOutput
+INFO: Driver logs no longer sent to console by default; https://www.selenium.dev/documentation/webdriver/drivers/service/#setting-log-output
+]]></system-err>
+</testsuite>

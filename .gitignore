@@ -1,0 +1,14 @@
+.vscode/*
+.gradle/
+# Local History for Visual Studio Code
+.history/
+.build/
+.idea
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+node_modules/
+venv/
+__pycache__/
+package-lock.json

@@ -28,7 +28,7 @@ public class TetrisTest {
         IndexPage service = new IndexPage(driver);
         TetrisPage tetris = new TetrisPage(driver);
 
-        String nick = DataGeneration.getNickname();
+        String nick = DataGeneration.generateNick();
         service.authorization(nick);
         Thread.sleep(1000);
 
@@ -43,7 +43,7 @@ public class TetrisTest {
         IndexPage service = new IndexPage(driver);
         TetrisPage tetris = new TetrisPage(driver);
 
-        String generatedNick = DataGeneration.getNickname();
+        String generatedNick = DataGeneration.generateNick();
         service.authorization(generatedNick);
         Thread.sleep(1000);
 
@@ -57,7 +57,7 @@ public class TetrisTest {
         IndexPage service = new IndexPage(driver);
         TetrisPage tetris = new TetrisPage(driver);
 
-        String generatedNick = DataGeneration.getNickname();
+        String generatedNick = DataGeneration.generateNick();
         service.authorization(generatedNick);
         Thread.sleep(1000);
 
@@ -73,7 +73,7 @@ public class TetrisTest {
         IndexPage service = new IndexPage(driver);
         TetrisPage tetris = new TetrisPage(driver);
 
-        String generatedNick = DataGeneration.getNickname();
+        String generatedNick = DataGeneration.generateNick();
         service.authorization(generatedNick);
         Thread.sleep(1000);
 

@@ -7,8 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class TetrisTest {
     private WebDriver driver;
-    final private String firstPage = "http://localhost:63342/tetris/frontend/index.html?_ijt=mog1i22qnu9etr2bvohietrrhh&_ij_reload=RELOAD_ON_SAVE";
-    final private String secondPage = "http://localhost:63342/tetris/frontend/game.html?_ijt=mog1i22qnu9etr2bvohietrrhh&_ij_reload=RELOAD_ON_SAVE";
+    static final private String firstPage = "http://localhost:63342/tetris/frontend/index.html?_ijt=mog1i22qnu9etr2bvohietrrhh&_ij_reload=RELOAD_ON_SAVE";
+    static final private String secondPage = "http://localhost:63342/tetris/frontend/game.html?_ijt=mog1i22qnu9etr2bvohietrrhh&_ij_reload=RELOAD_ON_SAVE";
 
 
     @BeforeEach

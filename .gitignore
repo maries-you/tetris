@@ -4,8 +4,9 @@
 # Local History for Visual Studio Code
 .history/
 .idea
-.driver/
-.build/
+driver/
+build/
+.jar
 
 # Built Visual Studio Code Extensions
 *.vsix

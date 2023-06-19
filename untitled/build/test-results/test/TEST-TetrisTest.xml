@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TetrisTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-19T07:57:33" hostname="DESKTOP-68SVGNT" time="6.026">
+  <properties/>
+  <testcase name="tetrisOpen()" classname="TetrisTest" time="6.026"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[июн. 19, 2023 10:57:33 AM org.openqa.selenium.remote.service.DriverService$Builder getLogOutput
+INFO: Driver logs no longer sent to console by default; https://www.selenium.dev/documentation/webdriver/drivers/service/#setting-log-output
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+]]></system-err>
+</testsuite>

@@ -7,5 +7,4 @@ public class DataGeneration {
         Faker faker = new Faker();
         return faker.name().firstName();
     }
-
 }

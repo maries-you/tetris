@@ -1,9 +1,11 @@
 .vscode/*
+
 .gradle/
 # Local History for Visual Studio Code
 .history/
-.build/
+.seleniumTests/build/
 .idea
+.driver/
 
 # Built Visual Studio Code Extensions
 *.vsix

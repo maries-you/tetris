@@ -1,9 +1,9 @@
-name: Deploy
+name: Selenium tests
 
 on: [push]
 
 jobs:
-  build:
+  dev_deploy:
 
     runs-on: ubuntu-latest
 

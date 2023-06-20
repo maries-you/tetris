@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+
+  nginx:
+   image: nginx:alpine
+   volumes:
+      - ./frontend/.:/usr/share/nginx/html
+   ports:
+      - "63342:80"

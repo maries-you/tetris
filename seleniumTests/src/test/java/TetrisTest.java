@@ -3,14 +3,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TetrisTest {
     private WebDriver driver;
     static final private String firstPage = "http://dev.tetris.pet-projets.ru/";
     static final private String secondPage = "http://dev.tetris.pet-projets.ru/game.html";
-
 
     @BeforeEach
     void setUp() {
@@ -23,7 +21,6 @@ public class TetrisTest {
     void tearDown() {
         driver.quit();
     }
-
 
     @Test
     void tetrisOpen() throws InterruptedException {
@@ -84,10 +81,5 @@ public class TetrisTest {
         int levelAfterClick = tetris.getCurrentGameLevel();
 
         Assertions.assertEquals(levelBeforeClick + 1, levelAfterClick);
-    }
-
-    @Test
-    void myTest() throws InterruptedException {
-        Assertions.assertEquals(2 + 2, 4);
     }
 }

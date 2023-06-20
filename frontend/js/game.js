@@ -417,7 +417,7 @@ function isCollision(dx, dy) {
                 if (
                     indexY >= MAX_HEIGHT / SQUARE_SIZE ||
                     indexX < 0 ||
-                    indexX > MAX_WIDTH / SQUARE_SIZE
+                    indexX >= MAX_WIDTH / SQUARE_SIZE
                 ) {
                     return true;
                 }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TetrisTest {
     private WebDriver driver;
@@ -13,7 +14,8 @@ public class TetrisTest {
 
     @BeforeEach
     void setUp() {
-        driver = new ChromeDriver();
+        System.setProperty("webdriver.gecko.driver", "/home/kirillkry/tetris/driver/geckodriver");
+        driver = new FirefoxDriver();
         driver.get(firstPage);
     }
 
@@ -82,5 +84,10 @@ public class TetrisTest {
         int levelAfterClick = tetris.getCurrentGameLevel();
 
         Assertions.assertEquals(levelBeforeClick + 1, levelAfterClick);
+    }
+
+    @Test
+    void myTest() throws InterruptedException {
+        Assertions.assertEquals(2 + 2, 4);
     }
 }

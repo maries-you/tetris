@@ -6,6 +6,7 @@
 .idea
 driver/
 build/
+bin/
 .jar
 
 # Built Visual Studio Code Extensions

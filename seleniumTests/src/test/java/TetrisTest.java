@@ -12,7 +12,7 @@ public class TetrisTest {
 
     @BeforeEach
     void setUp() {
-        System.setProperty("webdriver.gecko.driver", "./tetris/driver/geckodriver");
+//        System.setProperty("webdriver.gecko.driver", "./tetris/driver/geckodriver.exe");
         driver = new FirefoxDriver();
         driver.get(firstPage);
     }

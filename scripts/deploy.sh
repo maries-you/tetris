@@ -11,4 +11,4 @@ replace="..\/..\/database.json"
 filename="./backend/server.py"
 sed -i "s/$search/$replace/" $filename
 
-./start_backend.sh
+./scripts/start_backend.sh

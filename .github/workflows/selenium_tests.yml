@@ -29,4 +29,4 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
         script: |
           cd dev_tetris/
-          ./scripts/deploy.sh
+          ./scripts/dev_deploy.sh

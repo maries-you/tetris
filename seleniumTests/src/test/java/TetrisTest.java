@@ -3,17 +3,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TetrisTest {
     private WebDriver driver;
-    static final private String firstPage = "http://localhost:63342/tetris/frontend/index.html?_ijt=mog1i22qnu9etr2bvohietrrhh&_ij_reload=RELOAD_ON_SAVE";
-    static final private String secondPage = "http://localhost:63342/tetris/frontend/game.html?_ijt=mog1i22qnu9etr2bvohietrrhh&_ij_reload=RELOAD_ON_SAVE";
-
+    static final private String firstPage = "http://dev.tetris.pet-projets.ru/";
+    static final private String secondPage = "http://dev.tetris.pet-projets.ru/game.html";
 
     @BeforeEach
     void setUp() {
-        driver = new ChromeDriver();
+        driver = new FirefoxDriver();
         driver.get(firstPage);
     }
 
@@ -21,7 +20,6 @@ public class TetrisTest {
     void tearDown() {
         driver.quit();
     }
-
 
     @Test
     void tetrisOpen() throws InterruptedException {

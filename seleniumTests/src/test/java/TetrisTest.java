@@ -12,7 +12,6 @@ public class TetrisTest {
 
     @BeforeEach
     void setUp() {
-        System.setProperty("webdriver.gecko.driver", "/home/kirillkry/tetris/driver/geckodriver");
         driver = new FirefoxDriver();
         driver.get(firstPage);
     }

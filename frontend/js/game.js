@@ -315,8 +315,6 @@ document.addEventListener('keydown', (event) => {
     }
     if (isGameOver || pause) return;
 
-    console.log('Событие keydown:' + keyName);
-
     if (keyName === 'ArrowLeft' && !isCollision(-1, 0)) {
         x -= SQUARE_SIZE;
     }
@@ -334,13 +332,18 @@ document.addEventListener('keydown', (event) => {
         y += SQUARE_SIZE;
     }
     if (keyName === ' ') {
-        while (!isCollision(0, 1)) {
-            y += SQUARE_SIZE;
-        }
+        dropFigure();
     }
     drawFullFigure();
     drawLines();
 });
+
+function dropFigure() {
+    while (!isCollision(0, 1)) {
+        y += SQUARE_SIZE;
+    }
+    saveState();
+}
 
 function save() {
     for (let i = 0; i < currentFigure.length; i++) {
@@ -391,7 +394,6 @@ function deleteRow() {
             countRow.count++;
             lineClearSound.play();
             document.getElementById('count_row').innerHTML = countRow.count;
-            console.log(countRow.count);
             return countRow.count;
         }
 
@@ -443,32 +445,33 @@ function turn(matrix) {
     return result;
 }
 
+function saveState() {
+    save();
+    currentFigure = nextFigure;
+    currentColor = nextColor;
+    figure = getFigure();
+    nextFigure = figure.figure;
+    nextColor = figure.color;
+    if (isStop()) {
+        isGameOver = true;
+        addRecord();
+        clearInterval(interval);
+        gameOverSound.play();
+        drawGameOver();
+    }
+    y = -SQUARE_SIZE * heightFigure();
+    x = SQUARE_SIZE * CENTER_FIELD;
+}
+
 function funcInterval() {
     if (pause || isGameOver) return;
     drawFullFigure();
     drawNextFigure();
     drawLines();
-    // убраны странные условия на max_height
     if (!isCollision(0, 1)) {
         y += SQUARE_SIZE;
     } else {
-        save();
-        // console.log(arr);
-        currentFigure = nextFigure;
-        currentColor = nextColor;
-        figure = getFigure();
-        nextFigure = figure.figure;
-        nextColor = figure.color;
-        if (isStop()) {
-            isGameOver = true;
-            addRecord();
-            clearInterval(interval);
-            gameOverSound.play();
-            drawGameOver();
-        }
-        y = -SQUARE_SIZE * heightFigure();
-        x = SQUARE_SIZE * CENTER_FIELD;
-        console.log('save');
+        saveState();
     }
 }
 
@@ -477,7 +480,6 @@ function getRecords() {
     xhr.open('GET', BASE_URL + '/records');
     xhr.onload = function() {
         if (xhr.status === 200) {
-            console.log(xhr.responseText);
             const response = JSON.parse(xhr.response);
             const html = [];
             html.push('<tr>');
@@ -491,7 +493,6 @@ function getRecords() {
                 html.push(`<td>${response[i].score}</td>`);
                 html.push(`<td>${response[i].complexity}</td>`);
                 html.push('</tr>');
-                console.log(response[i])
             }
             document.querySelector('#leaderBoard').innerHTML = html.join('');
         }
@@ -511,6 +512,7 @@ function addRecord() {
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log(xhr.responseText);
+            getRecords();
         }
     }
     xhr.send(json);

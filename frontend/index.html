@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <meta name="description" content="JavaScript Tetris Game " />
+        <meta
+            name="keywords"
+            content="tetris, brick game, block game, game, javascript, square, ninetees, 90', puzzle, tetramino, tetris javascript"
+        />
+
+        <title>Tetris</title>
+        <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="css/game.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="page">
+            <div class="background">
+                <div class="container">
+                    <form action="game.html" method="get" class="form">
+                        <label for="username" class="label">
+                            Введите имя:
+                            <input
+                                id="name"
+                                name="username"
+                                class="username"
+                                type="text"
+                                placeholder="Имя пользователя"
+                                maxlength="20"
+
+                                required
+                            />
+                        </label>
+                        <input
+                            onclick="store()"
+                            class="submit"
+                            type="submit"
+                            value="Ввод"
+                        />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/index.js"></script>
+    </body>
+</html>

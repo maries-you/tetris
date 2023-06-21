@@ -1,5 +1,0 @@
-Flask
-flask_cors
-gunicorn
-wheel
-marshmallow

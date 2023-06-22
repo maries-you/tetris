@@ -3,10 +3,12 @@ import static io.restassured.RestAssured.given;
 
 public class TetrisApiTests {
 
+    static final private String Uri = "https://tetris.pet-projets.ru";
+
     @Test
     void audioJS200() {
         given()
-                .baseUri("http://dev.tetris.pet-projets.ru")
+                .baseUri(Uri)
                 .when().get("/js//audio.js")
                 .then().statusCode(200);
     }
@@ -14,7 +16,7 @@ public class TetrisApiTests {
     @Test
     void gameJS200() {
         given()
-                .baseUri("http://dev.tetris.pet-projets.ru")
+                .baseUri(Uri)
                 .when().get("/js/game.js")
                 .then().statusCode(200);
     }
@@ -22,7 +24,7 @@ public class TetrisApiTests {
     @Test
     void cssGameCSS200() {
         given()
-                .baseUri("http://dev.tetris.pet-projets.ru")
+                .baseUri(Uri)
                 .when().get("/css/game.css")
                 .then().statusCode(200);
     }
@@ -30,7 +32,7 @@ public class TetrisApiTests {
     @Test
     void gaveOverJPG200() {
         given()
-                .baseUri("http://dev.tetris.pet-projets.ru")
+                .baseUri(Uri)
                 .when().get("img/game_over.jpg")
                 .then().statusCode(200);
     }
@@ -38,7 +40,7 @@ public class TetrisApiTests {
     @Test
     void whenPostThen405() {
         given()
-                .baseUri("http://dev.tetris.pet-projets.ru")
+                .baseUri(Uri)
                 .when().post()
                 .then().statusCode(405);
     }

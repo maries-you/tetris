@@ -41,7 +41,11 @@ public class TetrisPage {
         driver.findElement(plusLevel).click();
     }
 
-    public void clickOnMinusSpeed(){driver.findElement(minusSpeed).click();}
+    public void clickOnMinusSpeed() {
+        driver.findElement(minusSpeed).click();
+    }
 
-    public void clickOnMinusLevel(){driver.findElement(minusLevel).click();}
+    public void clickOnMinusLevel() {
+        driver.findElement(minusLevel).click();
+    }
 }

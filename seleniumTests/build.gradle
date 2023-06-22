@@ -9,11 +9,17 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    webdrivermanager = '5.3.3'
+}
+
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.3.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.10.0'
-    testImplementation 'com.github.javafaker:javafaker:1.0.1'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+    testImplementation 'io.rest-assured:rest-assured:5.3.0'
 }
 
 test {

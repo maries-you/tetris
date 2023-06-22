@@ -1,7 +1,9 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -9,6 +11,11 @@ public class TetrisTest {
     private WebDriver driver;
     static final private String firstPage = "http://dev.tetris.pet-projets.ru/";
     static final private String secondPage = "http://dev.tetris.pet-projets.ru/game.html";
+
+    @BeforeAll
+    static void driverDownload() {
+        WebDriverManager.firefoxdriver().setup();
+    }
 
     @BeforeEach
     void setUp() {
@@ -51,7 +58,7 @@ public class TetrisTest {
     }
 
     @Test
-    void gameSpeed() throws InterruptedException {
+    void gameSpeedPlus() throws InterruptedException {
         IndexPage service = new IndexPage(driver);
         TetrisPage tetris = new TetrisPage(driver);
 
@@ -67,7 +74,24 @@ public class TetrisTest {
     }
 
     @Test
-    void gameLevel() throws InterruptedException {
+    void gameSpeedMinus() throws InterruptedException {
+        IndexPage service = new IndexPage(driver);
+        TetrisPage tetris = new TetrisPage(driver);
+
+        String generatedNick = DataGeneration.generateNick();
+        service.authorization(generatedNick);
+        Thread.sleep(1000);
+
+        tetris.clickOnPlusSpeed();
+        int speedBeforeClick = tetris.getCurrentGameSpeed();
+        tetris.clickOnMinusSpeed();
+        int speedAfterClick = tetris.getCurrentGameSpeed();
+
+        Assertions.assertEquals(speedAfterClick, speedBeforeClick - 1);
+    }
+
+    @Test
+    void gameLevelPlus() throws InterruptedException {
         IndexPage service = new IndexPage(driver);
         TetrisPage tetris = new TetrisPage(driver);
 
@@ -80,5 +104,22 @@ public class TetrisTest {
         int levelAfterClick = tetris.getCurrentGameLevel();
 
         Assertions.assertEquals(levelBeforeClick + 1, levelAfterClick);
+    }
+
+    @Test
+    void gameLevelMinus() throws InterruptedException {
+        IndexPage service = new IndexPage(driver);
+        TetrisPage tetris = new TetrisPage(driver);
+
+        String generatedNick = DataGeneration.generateNick();
+        service.authorization(generatedNick);
+        Thread.sleep(1000);
+
+        tetris.clickOnPlusLevel();
+        int levelBeforeClick = tetris.getCurrentGameLevel();
+        tetris.clickOnMinusLevel();
+        int levelAfterClick = tetris.getCurrentGameLevel();
+
+        Assertions.assertEquals(levelAfterClick, levelBeforeClick - 1);
     }
 }

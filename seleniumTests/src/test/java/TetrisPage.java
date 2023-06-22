@@ -40,4 +40,12 @@ public class TetrisPage {
     public void clickOnPlusLevel() {
         driver.findElement(plusLevel).click();
     }
+
+    public void clickOnMinusSpeed() {
+        driver.findElement(minusSpeed).click();
+    }
+
+    public void clickOnMinusLevel() {
+        driver.findElement(minusLevel).click();
+    }
 }

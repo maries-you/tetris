@@ -1,7 +1,6 @@
 import com.github.javafaker.Faker;
 
 public class DataGeneration {
-
     private DataGeneration() {
     }
 

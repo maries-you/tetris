@@ -12,7 +12,6 @@ public class TetrisTest {
 
     @BeforeEach
     void setUp() {
-//        System.setProperty("webdriver.gecko.driver", "./tetris/driver/geckodriver.exe");
         driver = new FirefoxDriver();
         driver.get(firstPage);
     }
@@ -21,7 +20,6 @@ public class TetrisTest {
     void tearDown() {
         driver.quit();
     }
-
 
     @Test
     void tetrisOpen() throws InterruptedException {

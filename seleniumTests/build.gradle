@@ -15,7 +15,6 @@ ext {
 
 dependencies {
     testImplementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.3.3'
-//    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.3.3'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.10.0'

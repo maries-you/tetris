@@ -1,6 +1,7 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TetrisTest {
     private WebDriver driver;
@@ -8,13 +9,13 @@ public class TetrisTest {
     static final private String secondPage = "http://dev.tetris.pet-projets.ru/game.html";
 
     @BeforeAll
-    void driverDownload() {
-        driver = WebDriverManager
+    static void driverDownload() {
+        WebDriverManager.firefoxdriver().setup();
     }
+
     @BeforeEach
     void setUp() {
-//        WebDriverManager
-//        driver = new FirefoxDriver();
+        driver = new FirefoxDriver();
         driver.get(firstPage);
     }
 

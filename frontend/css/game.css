@@ -58,7 +58,7 @@ TD.rightcol {
     overflow: hidden;
 
     background: rgb(215, 179, 248);
-    background-image: url(../img/tetris.jpg);
+    background-image: url(/img/tetris.jpg);
     background-repeat: repeat;
     background-size: 40%;
 }

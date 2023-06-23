@@ -530,16 +530,16 @@ y = -SQUARE_SIZE * heightFigure();
 
 // Dark Mode Button
 let dark = false;
-const body = document.getElementById("main");
-const button = document.getElementById("darkTheme")
+const body = document.getElementById('main');
+const button = document.getElementById('darkTheme')
 
-function darkLight() {
+button.addEventListener('click', function darkLight() {
     if (!dark) {
         body.className = 'theme-dark';
         button.innerHTML = 'Включить светлую тему';
     } else {
         body.className = 'theme-light';
         button.innerHTML = 'Включить тёмную тему';
-	}
-	dark = !dark;
-}
+    }
+    dark = !dark;
+})

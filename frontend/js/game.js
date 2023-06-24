@@ -527,3 +527,19 @@ let interval = setInterval(funcInterval, level.timeOfTurn);
 setInterval(deleteRow, 250);
 drawLines();
 y = -SQUARE_SIZE * heightFigure();
+
+// Dark Mode Button
+let dark = true;
+const body = document.getElementById('main');
+const button = document.getElementById('darkTheme')
+
+button.addEventListener('click', () => {
+    if (dark) {
+        body.className = 'theme-light';
+        button.innerHTML = 'Включить тёмную тему';
+    } else {
+        body.className = 'theme-dark';
+        button.innerHTML = 'Включить светлую тему';
+    }
+    dark = !dark;
+})

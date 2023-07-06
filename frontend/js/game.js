@@ -120,8 +120,8 @@ function restartGame() {
     level.levelNumber = 1;
     level.timeOfTurn = blockTimeOfTurn[0];
     addGameSpeedEdit();
-    countRow.count = 0;
-    document.getElementById('count_row').innerHTML = countRow.count;
+    rowCount = 0;
+    document.getElementById('count_row').innerHTML = rowCount;
 }
 
 function drawGameOver() {
@@ -283,18 +283,23 @@ const keySpeedDown = document.querySelector('#minusSpeed');
 // список времени ожидения хода фигуры
 const blockTimeOfTurn = [900, 750, 600, 520, 300];
 
+// 130 + 700 / (n + 1) ^ 0.5
+
+function timeForLevel(n) {
+    return 130 + 700 / n ** 0.5;
+}
+
+
 function plusGameSpeed() {
-    if (level.levelNumber < 5) {
-        level.levelNumber = level.levelNumber + 1;
-        level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1];
-        addGameSpeedEdit();
-    }
+    level.levelNumber++;
+    level.timeOfTurn = timeForLevel(level.levelNumber);
+    addGameSpeedEdit();
 }
 
 function minusGameSpeed() {
     if (level.levelNumber > 1) {
-        level.levelNumber = level.levelNumber - 1;
-        level.timeOfTurn = blockTimeOfTurn[level.levelNumber - 1];
+        level.levelNumber--;
+        level.timeOfTurn = timeForLevel(level.levelNumber);
         addGameSpeedEdit();
     }
 }
@@ -377,7 +382,7 @@ function restore() {
 }
 
 // счетчик очков (линий)/ переменная, для блокировки авторазнога уровня сразу до максиума
-const countRow = { count: 0, nextLevelCount: 2 };
+let rowCount = 0;
 
 function deleteRow() {
     for (let i = 0; i < arr.length; i++) {
@@ -391,20 +396,13 @@ function deleteRow() {
             const emptyRow = new Array(arr[0].length).fill(0);
             arr.splice(i, 1);
             arr.unshift(emptyRow);
-            countRow.count++;
+            rowCount++;
             lineClearSound.play();
-            document.getElementById('count_row').innerHTML = countRow.count;
-            return countRow.count;
-        }
-
-        if (
-            countRow.count == 5 && countRow.nextLevelCount == 2 ||
-            countRow.count == 10 && countRow.nextLevelCount == 3 ||
-            countRow.count == 15 && countRow.nextLevelCount == 4 ||
-            countRow.count == 20 && countRow.nextLevelCount == 5
-        ) {
-            plusGameSpeed();
-            countRow.nextLevelCount++;
+            document.getElementById('count_row').innerHTML = rowCount;
+            if (rowCount % 5 === 0) {
+                plusGameSpeed();
+            }
+            return rowCount;
         }
     }
 }
@@ -503,7 +501,7 @@ function getRecords() {
 function addRecord() {
     const json = JSON.stringify({
         username: localStorage['tetris.username'],
-        score: countRow.count,
+        score: rowCount,
         complexity: numberLevel,
     });
     const xhr = new XMLHttpRequest();

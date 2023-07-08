@@ -272,14 +272,14 @@ function drawNextFigure() {
 function drawHoldFigure() {
     clearHold();
     if (holdFigure != undefined) {
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-            if (holdFigure[i][j] === 1) {
-                drawHold(i * SQUARE_SIZE, j * SQUARE_SIZE, holdColor);
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                if (holdFigure[i][j] === 1) {
+                    drawHold(i * SQUARE_SIZE, j * SQUARE_SIZE, holdColor);
+                }
             }
         }
     }
-}
 }
 
 function heightFigure() {
@@ -306,7 +306,6 @@ keyPause.addEventListener('click', editPause);
 // объект уровень, значения в начале игры
 const level = { levelNumber: 1, timeOfTurn: 1000 };
 
-
 // список времени ожидения хода фигуры
 const blockTimeOfTurn = [900, 750, 600, 520, 300];
 
@@ -316,19 +315,10 @@ function timeForLevel(n) {
     return 130 + 700 / n ** 0.5;
 }
 
-
 function plusGameSpeed() {
     level.levelNumber++;
     level.timeOfTurn = timeForLevel(level.levelNumber);
     addGameSpeedEdit();
-}
-
-function minusGameSpeed() {
-    if (level.levelNumber > 1) {
-        level.levelNumber--;
-        level.timeOfTurn = timeForLevel(level.levelNumber);
-        addGameSpeedEdit();
-    }
 }
 
 function addGameSpeedEdit() {
@@ -336,11 +326,11 @@ function addGameSpeedEdit() {
     clearInterval(interval);
     interval = setInterval(funcInterval, level.timeOfTurn);
 }
-//функция работы с карманной фигурой
+// функция работы с карманной фигурой
 function functionHoldFigure() {
-    if (holdFigure  != undefined) {
-        let bufferFigure = currentFigure;
-        let bufferColor = currentColor;
+    if (holdFigure != undefined) {
+        const bufferFigure = currentFigure;
+        const bufferColor = currentColor;
         currentFigure = holdFigure;
         currentColor = holdColor;
         holdFigure = bufferFigure; 
@@ -386,9 +376,9 @@ document.addEventListener('keydown', (event) => {
     if (keyName === ' ') {
         dropFigure();
     }
-    //назанчение клавиши для работы обмена с карманной фигурой 
+// назанчение клавиши для работы обмена с карманной фигурой 
     if (keyName === 'Control') {
-        functionHoldFigure() 
+    functionHoldFigure() 
     }
     drawFullFigure();
     drawLines();

@@ -8,6 +8,7 @@ const CENTER_FIELD = Math.floor((MAX_WIDTH / SQUARE_SIZE) / 2) - 2; // посл�
 let isGameOver = false;
 const canvas = document.getElementById('canvasid');
 const canvasNextFigure = document.getElementById('nextFigure');
+const canvasHoldFigure = document.getElementById('holdFigure');
 const lineClearSound = new Audio('./audio/line.wav');
 const gameOverSound = new Audio('./audio/gameover.wav');
 const levelPlusKey = document.querySelector('#plusLevel');
@@ -122,6 +123,8 @@ function restartGame() {
     addGameSpeedEdit();
     rowCount = 0;
     document.getElementById('count_row').innerHTML = rowCount;
+    holdFigure = undefined;
+    holdColor = undefined;
 }
 
 function drawGameOver() {
@@ -169,6 +172,8 @@ let currentColor = figure.color;
 figure = getFigure();
 let nextFigure = figure.figure;
 let nextColor = figure.color;
+let holdFigure;
+let holdColor;
 
 function internalDraw(x, y, color, canvas) {
     if (canvas.getContext) {
@@ -190,6 +195,10 @@ function draw(x, y, color) {
 
 function drawNext(x, y, color) {
     internalDraw(x, y, color, canvasNextFigure);
+}
+
+function drawHold(x, y, color) {
+    internalDraw(x, y, color, canvasHoldFigure);
 }
 
 function clear() {
@@ -242,12 +251,33 @@ function clearNext() {
     }
 }
 
+function clearHold() {
+    if (canvasHoldFigure.getContext) {
+        const ctx = canvasHoldFigure.getContext('2d');
+        ctx.clearRect(0, 0, MAX_WIDTH_NEXT_FIGURE, MAX_HEIGHT_NEXT_FIGURE);
+    }
+}
+
 function drawNextFigure() {
     clearNext();
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (nextFigure[i][j] === 1) {
                 drawNext(i * SQUARE_SIZE, j * SQUARE_SIZE, nextColor);
+            }
+        }
+    }
+}
+
+function drawHoldFigure() {
+    clearHold();
+    if (holdFigure === undefined) {
+        return
+    }
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (holdFigure[i][j] === 1) {
+                drawHold(i * SQUARE_SIZE, j * SQUARE_SIZE, holdColor);
             }
         }
     }
@@ -277,9 +307,6 @@ keyPause.addEventListener('click', editPause);
 // объект уровень, значения в начале игры
 const level = { levelNumber: 1, timeOfTurn: 1000 };
 
-const keySpeedUp = document.querySelector('#plusSpeed');
-const keySpeedDown = document.querySelector('#minusSpeed');
-
 // список времени ожидения хода фигуры
 const blockTimeOfTurn = [900, 750, 600, 520, 300];
 
@@ -289,19 +316,10 @@ function timeForLevel(n) {
     return 130 + 700 / n ** 0.5;
 }
 
-
 function plusGameSpeed() {
     level.levelNumber++;
     level.timeOfTurn = timeForLevel(level.levelNumber);
     addGameSpeedEdit();
-}
-
-function minusGameSpeed() {
-    if (level.levelNumber > 1) {
-        level.levelNumber--;
-        level.timeOfTurn = timeForLevel(level.levelNumber);
-        addGameSpeedEdit();
-    }
 }
 
 function addGameSpeedEdit() {
@@ -310,8 +328,29 @@ function addGameSpeedEdit() {
     interval = setInterval(funcInterval, level.timeOfTurn);
 }
 
-keySpeedUp.addEventListener('click', plusGameSpeed);
-keySpeedDown.addEventListener('click', minusGameSpeed);
+// функция работы с карманной фигурой
+function functionHoldFigure() {
+    if (holdFigure != undefined) {
+        const bufferFigure = currentFigure;
+        const bufferColor = currentColor;
+        currentFigure = holdFigure;
+        currentColor = holdColor;
+        holdFigure = bufferFigure;
+        holdColor = bufferColor;
+        y = -SQUARE_SIZE * heightFigure();
+        x = SQUARE_SIZE * CENTER_FIELD;
+    } else {
+        holdFigure = currentFigure;
+        holdColor = currentColor;
+        currentFigure = nextFigure;
+        currentColor = nextColor;
+        figure = getFigure();
+        nextFigure = figure.figure;
+        nextColor = figure.color;
+        y = -SQUARE_SIZE * heightFigure();
+        x = SQUARE_SIZE * CENTER_FIELD;
+    }
+}
 
 document.addEventListener('keydown', (event) => {
     const keyName = event.key;
@@ -338,6 +377,10 @@ document.addEventListener('keydown', (event) => {
     }
     if (keyName === ' ') {
         dropFigure();
+    }
+
+    if (keyName === 'Control') {
+        functionHoldFigure()
     }
     drawFullFigure();
     drawLines();
@@ -465,6 +508,7 @@ function funcInterval() {
     if (pause || isGameOver) return;
     drawFullFigure();
     drawNextFigure();
+    drawHoldFigure();
     drawLines();
     if (!isCollision(0, 1)) {
         y += SQUARE_SIZE;

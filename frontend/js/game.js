@@ -326,6 +326,7 @@ function addGameSpeedEdit() {
     clearInterval(interval);
     interval = setInterval(funcInterval, level.timeOfTurn);
 }
+
 // функция работы с карманной фигурой
 function functionHoldFigure() {
     if (holdFigure != undefined) {
@@ -333,7 +334,7 @@ function functionHoldFigure() {
         const bufferColor = currentColor;
         currentFigure = holdFigure;
         currentColor = holdColor;
-        holdFigure = bufferFigure; 
+        holdFigure = bufferFigure;
         holdColor = bufferColor;
         y = -SQUARE_SIZE * heightFigure();
         x = SQUARE_SIZE * CENTER_FIELD;
@@ -376,9 +377,9 @@ document.addEventListener('keydown', (event) => {
     if (keyName === ' ') {
         dropFigure();
     }
-// назанчение клавиши для работы обмена с карманной фигурой 
+
     if (keyName === 'Control') {
-    functionHoldFigure() 
+        functionHoldFigure()
     }
     drawFullFigure();
     drawLines();

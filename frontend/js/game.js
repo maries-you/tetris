@@ -250,7 +250,7 @@ function clearNext() {
         ctx.clearRect(0, 0, MAX_WIDTH_NEXT_FIGURE, MAX_HEIGHT_NEXT_FIGURE);
     }
 }
-// функции hold фигуры
+
 function clearHold() {
     if (canvasNextFigure.getContext) {
         const ctx = canvasHoldFigure.getContext('2d');
@@ -271,12 +271,13 @@ function drawNextFigure() {
 
 function drawHoldFigure() {
     clearHold();
-    if (holdFigure != undefined) {
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                if (holdFigure[i][j] === 1) {
-                    drawHold(i * SQUARE_SIZE, j * SQUARE_SIZE, holdColor);
-                }
+    if (holdFigure === undefined) {
+        return
+    }
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (holdFigure[i][j] === 1) {
+                drawHold(i * SQUARE_SIZE, j * SQUARE_SIZE, holdColor);
             }
         }
     }

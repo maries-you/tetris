@@ -252,7 +252,7 @@ function clearNext() {
 }
 
 function clearHold() {
-    if (canvasNextFigure.getContext) {
+    if (canvasHoldFigure.getContext) {
         const ctx = canvasHoldFigure.getContext('2d');
         ctx.clearRect(0, 0, MAX_WIDTH_NEXT_FIGURE, MAX_HEIGHT_NEXT_FIGURE);
     }

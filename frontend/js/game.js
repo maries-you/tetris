@@ -444,20 +444,15 @@ function deleteRow() {
     }
     if (x === 0) {
         return
-    }
-    else if (x === 1) {
+    } else if (x === 1) {
         rowCount += 1;
-    }
-    else if (x === 2) {
+    } else if (x === 2) {
         rowCount += 4;
-    }
-    else if (x === 3) {
+    } else if (x === 3) {
         rowCount += 8;
-    }
-    else if (x === 4) {
+    } else if (x === 4) {
         rowCount += 16;
-    }
-    else if (x === 5) {
+    } else if (x === 5) {
         rowCount += 32;
     }
     lineClearSound.play();

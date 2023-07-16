@@ -119,7 +119,7 @@ function restartGame() {
     pause = false;
     isGameOver = false;
     level.levelNumber = 1;
-    level.timeOfTurn = blockTimeOfTurn[0];
+    level.timeOfTurn = 1000;
     addGameSpeedEdit();
     rowCount = 0;
     document.getElementById('count_row').innerHTML = rowCount;
@@ -307,9 +307,6 @@ function editPause() {
 keyPause.addEventListener('click', editPause);
 // объект уровень, значения в начале игры
 const level = { levelNumber: 1, timeOfTurn: 1000 };
-
-// список времени ожидения хода фигуры
-const blockTimeOfTurn = [900, 750, 600, 520, 300];
 
 // 130 + 700 / (n + 1) ^ 0.5
 

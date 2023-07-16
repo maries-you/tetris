@@ -119,7 +119,7 @@ function restartGame() {
     pause = false;
     isGameOver = false;
     level.levelNumber = 1;
-    level.timeOfTurn = 1000;
+    level.timeOfTurn = timeForLevel(1);
     addGameSpeedEdit();
     rowCount = 0;
     document.getElementById('count_row').innerHTML = rowCount;
@@ -305,14 +305,16 @@ function editPause() {
 }
 // вызываем изменение переменной паузы кликом по кнопке
 keyPause.addEventListener('click', editPause);
-// объект уровень, значения в начале игры
-const level = { levelNumber: 1, timeOfTurn: 1000 };
 
 // 130 + 700 / (n + 1) ^ 0.5
 
 function timeForLevel(n) {
     return 130 + 700 / n ** 0.5;
 }
+
+// объект уровень, значения в начале игры
+const level = { levelNumber: 1, timeOfTurn: timeForLevel(1) };
+
 
 function plusGameSpeed() {
     level.levelNumber++;

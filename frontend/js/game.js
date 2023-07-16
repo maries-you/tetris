@@ -160,7 +160,8 @@ levelPlusKey.addEventListener('click', plusGameLevel);
 levelMinusKey.addEventListener('click', minusGameLevel);
 
 function getFigure() {
-    const index = getRandom(0, figures.length);
+    // const index = getRandom(0, figures.length);
+    const index = 2;
     const color = colors[index];
     const figure = figures[index];
     return { color: color, figure: figure }
@@ -337,8 +338,6 @@ function functionHoldFigure() {
         currentColor = holdColor;
         holdFigure = bufferFigure;
         holdColor = bufferColor;
-        y = -SQUARE_SIZE * heightFigure();
-        x = SQUARE_SIZE * CENTER_FIELD;
     } else {
         holdFigure = currentFigure;
         holdColor = currentColor;
@@ -347,9 +346,9 @@ function functionHoldFigure() {
         figure = getFigure();
         nextFigure = figure.figure;
         nextColor = figure.color;
-        y = -SQUARE_SIZE * heightFigure();
-        x = SQUARE_SIZE * CENTER_FIELD;
     }
+    y = -SQUARE_SIZE * heightFigure();
+    x = SQUARE_SIZE * CENTER_FIELD;
 }
 
 document.addEventListener('keydown', (event) => {
@@ -428,6 +427,7 @@ function restore() {
 let rowCount = 0;
 
 function deleteRow() {
+    let x = 0;
     for (let i = 0; i < arr.length; i++) {
         let count = 0;
         for (let j = 0; j < arr[0].length; j++) {
@@ -439,14 +439,31 @@ function deleteRow() {
             const emptyRow = new Array(arr[0].length).fill(0);
             arr.splice(i, 1);
             arr.unshift(emptyRow);
-            rowCount++;
-            lineClearSound.play();
-            document.getElementById('count_row').innerHTML = rowCount;
-            if (rowCount % 5 === 0) {
-                plusGameSpeed();
-            }
-            return rowCount;
+            x++;
         }
+    }
+    if (x === 0) {
+        return
+    }
+    else if (x === 1) {
+        rowCount += 1;
+    }
+    else if (x === 2) {
+        rowCount += 4;
+    }
+    else if (x === 3) {
+        rowCount += 8;
+    }
+    else if (x === 4) {
+        rowCount += 16;
+    }
+    else if (x === 5) {
+        rowCount += 32;
+    }
+    lineClearSound.play();
+    document.getElementById('count_row').innerHTML = rowCount;
+    if (rowCount % 5 === 0) {
+        plusGameSpeed();
     }
 }
 
@@ -571,7 +588,7 @@ drawLines();
 y = -SQUARE_SIZE * heightFigure();
 
 // Dark Mode Button
-let dark = true;
+let dark = false;
 const body = document.getElementById('main');
 const button = document.getElementById('darkTheme')
 

@@ -445,7 +445,7 @@ function deleteRow() {
     if (x === 0) {
         return
     } else if (x === 1) {
-        rowCount += 1;
+        rowCount += 2;
     } else if (x === 2) {
         rowCount += 4;
     } else if (x === 3) {

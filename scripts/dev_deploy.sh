@@ -12,3 +12,4 @@ filename="./backend/server.py"
 sed -i "s/$search/$replace/" $filename
 
 ./scripts/start_backend.sh
+sudo systemctl restart dev_server

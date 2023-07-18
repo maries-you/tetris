@@ -119,7 +119,7 @@ function restartGame() {
     pause = false;
     isGameOver = false;
     level.levelNumber = 1;
-    level.timeOfTurn = blockTimeOfTurn[0];
+    level.timeOfTurn = timeForLevel(1);
     addGameSpeedEdit();
     rowCount = 0;
     document.getElementById('count_row').innerHTML = rowCount;
@@ -304,17 +304,16 @@ function editPause() {
 }
 // вызываем изменение переменной паузы кликом по кнопке
 keyPause.addEventListener('click', editPause);
-// объект уровень, значения в начале игры
-const level = { levelNumber: 1, timeOfTurn: 1000 };
-
-// список времени ожидения хода фигуры
-const blockTimeOfTurn = [900, 750, 600, 520, 300];
 
 // 130 + 700 / (n + 1) ^ 0.5
 
 function timeForLevel(n) {
     return 130 + 700 / n ** 0.5;
 }
+
+// объект уровень, значения в начале игры
+const level = { levelNumber: 1, timeOfTurn: timeForLevel(1) };
+
 
 function plusGameSpeed() {
     level.levelNumber++;
@@ -337,8 +336,6 @@ function functionHoldFigure() {
         currentColor = holdColor;
         holdFigure = bufferFigure;
         holdColor = bufferColor;
-        y = -SQUARE_SIZE * heightFigure();
-        x = SQUARE_SIZE * CENTER_FIELD;
     } else {
         holdFigure = currentFigure;
         holdColor = currentColor;
@@ -347,9 +344,9 @@ function functionHoldFigure() {
         figure = getFigure();
         nextFigure = figure.figure;
         nextColor = figure.color;
-        y = -SQUARE_SIZE * heightFigure();
-        x = SQUARE_SIZE * CENTER_FIELD;
     }
+    y = -SQUARE_SIZE * heightFigure();
+    x = SQUARE_SIZE * CENTER_FIELD;
 }
 
 document.addEventListener('keydown', (event) => {
@@ -428,6 +425,7 @@ function restore() {
 let rowCount = 0;
 
 function deleteRow() {
+    let x = 0;
     for (let i = 0; i < arr.length; i++) {
         let count = 0;
         for (let j = 0; j < arr[0].length; j++) {
@@ -439,14 +437,17 @@ function deleteRow() {
             const emptyRow = new Array(arr[0].length).fill(0);
             arr.splice(i, 1);
             arr.unshift(emptyRow);
-            rowCount++;
-            lineClearSound.play();
-            document.getElementById('count_row').innerHTML = rowCount;
-            if (rowCount % 5 === 0) {
-                plusGameSpeed();
-            }
-            return rowCount;
+            x++;
         }
+    }
+    if (x === 0) {
+        return
+    }
+    rowCount += 2 ** x;
+    lineClearSound.play();
+    document.getElementById('count_row').innerHTML = rowCount;
+    while (rowCount >= level.levelNumber * 5) {
+        plusGameSpeed();
     }
 }
 
@@ -571,7 +572,7 @@ drawLines();
 y = -SQUARE_SIZE * heightFigure();
 
 // Dark Mode Button
-let dark = true;
+let dark = false;
 const body = document.getElementById('main');
 const button = document.getElementById('darkTheme')
 

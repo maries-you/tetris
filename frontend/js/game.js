@@ -160,8 +160,7 @@ levelPlusKey.addEventListener('click', plusGameLevel);
 levelMinusKey.addEventListener('click', minusGameLevel);
 
 function getFigure() {
-    // const index = getRandom(0, figures.length);
-    const index = 2;
+    const index = getRandom(0, figures.length);
     const color = colors[index];
     const figure = figures[index];
     return { color: color, figure: figure }
@@ -443,20 +442,11 @@ function deleteRow() {
     }
     if (x === 0) {
         return
-    } else if (x === 1) {
-        rowCount += 2;
-    } else if (x === 2) {
-        rowCount += 4;
-    } else if (x === 3) {
-        rowCount += 8;
-    } else if (x === 4) {
-        rowCount += 16;
-    } else if (x === 5) {
-        rowCount += 32;
     }
+    rowCount += 2 ** x;
     lineClearSound.play();
     document.getElementById('count_row').innerHTML = rowCount;
-    if (rowCount % 5 === 0) {
+    while (rowCount >= level.levelNumber * 5) {
         plusGameSpeed();
     }
 }

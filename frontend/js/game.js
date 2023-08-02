@@ -137,6 +137,15 @@ function drawGameOver() {
     image.src = 'img/game_over.jpg';
 }
 
+// Проверка, что пользователь не отвлекся от основной страницы
+window.addEventListener('focus', function() {
+    pause = false;
+})
+
+window.addEventListener('blur', function() {
+    pause = true;
+})
+
 function addGameLevelVisual() {
     updateExsistingBlocks();
     document.querySelector('#levelGame').innerHTML = numberLevel;

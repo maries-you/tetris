@@ -146,6 +146,28 @@ window.addEventListener('blur', function() {
     pause = true;
 })
 
+
+// следующий код добавляет очки за нажатия клавиш пробела и стрелка вниз
+function handleKeyPress(event) {
+    if (event.key === 'ArrowDown') {
+        if ((isGameOver || pause) != true) {
+            rowCount = (rowCount+0.1).toFixed(1);
+            rowCount = parseFloat(rowCount);
+            document.getElementById('count_row').innerHTML = rowCount;
+        }
+    }
+
+    if (event.key === ' ') {
+        if ((isGameOver || pause) != true) {
+            rowCount += 1;
+            document.getElementById('count_row').innerHTML = rowCount;
+        }
+    }
+}
+
+document.addEventListener('keydown', handleKeyPress);
+
+
 function addGameLevelVisual() {
     updateExsistingBlocks();
     document.querySelector('#levelGame').innerHTML = numberLevel;

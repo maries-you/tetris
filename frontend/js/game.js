@@ -379,9 +379,14 @@ document.addEventListener('keydown', (event) => {
         }
     }
     if (keyName === 'ArrowDown' && !isCollision(0, 1)) {
+        rowCount = (rowCount + 0.1).toFixed(1);
+        rowCount = parseFloat(rowCount);
+        document.getElementById('count_row').innerHTML = rowCount;
         y += SQUARE_SIZE;
     }
     if (keyName === ' ') {
+        rowCount += 1;
+        document.getElementById('count_row').innerHTML = rowCount;
         dropFigure();
     }
 

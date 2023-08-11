@@ -12,7 +12,6 @@ body {
     margin: 0;
     font-size: 1rem;
     line-height: 1.6;
-
 }
 
 #canvasid {
@@ -164,7 +163,7 @@ TD.rightcol {
 
 /* Темная тема */
 .theme-dark {
-    background: rgb(68, 68, 68);
+    background: RGB(52, 58, 64);
     color: white;
     transition: all 0.5s;
   }
@@ -173,6 +172,9 @@ TD.rightcol {
     background: white;
     color: rgb(0, 0, 0);
     transition: all 0.5s;
+  }
+  .hamburger-btn {
+    display: none;
   }
 
 /* Адаптивка */
@@ -224,6 +226,12 @@ TD.rightcol {
     }
 }
 
+@media (max-width: 772px) {
+    .release__date {
+        display: none;
+    }
+}
+
 @media (max-width: 820px) {
     .container {
         border-radius: 15px;
@@ -246,6 +254,72 @@ TD.rightcol {
         margin-left: 95px;
         font-size: 8px;
         padding: 4px 8px;
+    }
+}
+
+@media (max-width: 656px) {
+    .change-level__buttons {
+        position: absolute;
+        top: 400px;
+        display: flex;
+        margin-top: 30px;
+
+    }
+    .change-level__buttons button {
+        padding: 0;
+        margin-top: 30px;
+        font-size: 12px;
+    }
+    .game__statistic {
+        display: block;
+        position: absolute;
+        font-size: 15px;
+        padding: 10px;
+        right: 10px;
+        top: 500px;
+    }
+    .hamburger-data {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 700px;
+        background-color: #ffffff;
+        z-index: 30;
+        height: 100%;
+        width:100%;
+        padding: 20px;
+    }
+    .hamburger-data button {
+        width: 90%;
+    }
+    .hamburger-btn {
+        z-index: 99;
+        display: block;
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        top:300px;
+        border: 1px solid #0000ff;
+    }
+    .right_0 {
+        right: 0;
+    }
+    .left_0 {
+        left: 0
+    }
+    .td-middle {
+        position: relative;
+        left: 10px;
+    }
+    .td-right button {
+        width: 95%;
+        position: relative;
+        top: -50px;
+        
+    }
+    .td-right canvas {
+        position: relative;
+        top: -50px;
     }
 }
 

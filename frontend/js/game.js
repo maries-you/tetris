@@ -314,6 +314,7 @@ function editPause() {
 // вызываем изменение переменной паузы кликом по кнопке
 keyPause.addEventListener('click', editPause);
 
+
 // 130 + 700 / (n + 1) ^ 0.5
 
 function timeForLevel(n) {
@@ -589,14 +590,44 @@ y = -SQUARE_SIZE * heightFigure();
 let dark = false;
 const body = document.getElementById('main');
 const button = document.getElementById('darkTheme')
-
+const hamburgerData = document.querySelector('.hamburger-data');
 button.addEventListener('click', () => {
     if (dark) {
         body.className = 'theme-light';
+        hamburgerData.classList.add('bg-light');
+        hamburgerData.classList.remove('bg-dark')
         button.innerHTML = 'Включить тёмную тему';
     } else {
         body.className = 'theme-dark';
+        hamburgerData.classList.add('bg-dark');
+        hamburgerData.classList.remove('bg-light')
         button.innerHTML = 'Включить светлую тему';
     }
     dark = !dark;
 })
+
+//hamburger button 
+
+const hamburgerBtn = document.querySelector('.hamburger-btn');
+
+hamburgerBtn.addEventListener('click', () => {
+    let pause = false;
+        hamburgerData.classList.toggle('d-block');
+        hamburgerData.style.right = "0px";
+        hamburgerBtn.classList.toggle('active');
+        if(hamburgerBtn.classList.contains('active')) {
+            hamburgerBtn.innerHTML = '<';
+            hamburgerBtn.classList.remove('left_0');
+            hamburgerBtn.classList.add('right_0');
+
+        } else {
+            hamburgerBtn.innerHTML = '>';
+            hamburgerBtn.classList.add('left_0');
+            hamburgerBtn.classList.remove('right_0');
+        }
+
+
+        editPause();
+})
+
+

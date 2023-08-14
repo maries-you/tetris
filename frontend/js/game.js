@@ -306,11 +306,25 @@ function heightFigure() {
 // кнопка паузы
 const keyPause = document.querySelector('#pause');
 let pause = false;
+//функция для паузы
+function drawPause() {
+    const field = canvas.getContext('2d');
+    const image = new Image();
+    image.onload = function() {
+        field.drawImage(image, 120, MAX_HEIGHT / 3, MAX_WIDTH/3, MAX_WIDTH/3);
+    }
+    image.src = 'img/pause.jpg';
+}
+
 // меняем переменную паузы.
 function editPause() {
     pause = !pause;
+    if(pause && (!isGameOver)) {
+        drawPause()
+    }
     return pause;
 }
+
 // вызываем изменение переменной паузы кликом по кнопке
 keyPause.addEventListener('click', editPause);
 
